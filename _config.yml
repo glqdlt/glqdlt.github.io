@@ -8,7 +8,7 @@ imgpath: glqdlt.github.io/_img
 title:          glqdlt's blog
 paginate:       5
 baseurl:        ""
-url:            "https://glqdlt.github.io/"
+url:            https://glqdlt.github.io/
 
 # Assets
 sass:
