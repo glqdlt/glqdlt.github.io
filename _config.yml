@@ -1,6 +1,9 @@
 # Permalinks
 permalink:      /:year-:month-:day/:title
 
+# img_path
+imgpath: glqdlt.github.io/_img
+
 # Setup
 title:          glqdlt's blog
 paginate:       5
@@ -29,3 +32,4 @@ github:
 # Gems
 gems:
   - jekyll-paginate
+
