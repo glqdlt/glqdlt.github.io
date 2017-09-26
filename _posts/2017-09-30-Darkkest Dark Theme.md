@@ -16,6 +16,6 @@ author: "glqdlt"
 
 ## Getting Start
 
-![img1]({{ site.imgpath }}/1.png)
+![img1](glqdlt.github.io/_img/1.png)
 ![img2]({{ site.imgpath }}/2.png)
 ![img3]({{ site.imgpath }}/3.png)
