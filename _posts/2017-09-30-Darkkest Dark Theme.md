@@ -16,6 +16,6 @@ author: "glqdlt"
 
 ## Getting Start
 
-![img1](../_img/1.png)
-![img2](../_img/2.png)
-![img3](../_img/3.png)
+![img1](/_img/1.png)
+![img2](/_img/2.png)
+![img3](/_img/3.png)
