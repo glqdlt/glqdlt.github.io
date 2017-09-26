@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Darkest Dark theme"
+title:  "Darkest Dark theme(작성중)"
 author: "glqdlt"
 ---
 
@@ -13,3 +13,9 @@ author: "glqdlt"
 ## Refernce
 
 공식 : [https://marketplace.eclipse.org/content/darkest-dark-theme#group-details](https://marketplace.eclipse.org/content/darkest-dark-theme#group-details)
+
+## Getting Start
+
+![img1](../_img/1.png)
+![img2](../_img/2.png)
+![img3](../_img/3.png)
