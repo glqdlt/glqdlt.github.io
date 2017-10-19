@@ -33,3 +33,9 @@ github:
 gems:
   - jekyll-paginate
 
+
+---
+layout: default
+comments: true
+# other options
+---
