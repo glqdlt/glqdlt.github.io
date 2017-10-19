@@ -25,6 +25,7 @@ author:
   email:        dlfdnd0725@gmail.com
 
 # Custom vars
+
 version:        3.4.1
 github:
   repo:         https://github.com/glqdlt/glqdlt.github.io
@@ -34,8 +35,9 @@ gems:
   - jekyll-paginate
 
 
+#disqus option
 ---
-layout: default
-comments: true
+#layout: default
+#comments: true
 # other options
 ---
