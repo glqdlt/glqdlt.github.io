@@ -1,0 +1,5 @@
+## Scala vs Kotlin
+
+I would say that Kotlin is essentially a better Java, but still very Java-like, while Scala is a different language. Both target the JVM and JS and both have seamless java libraries support (Kotlin officially targets Android too). The differences come from the language perspective: Kotlin emphasis plain old Java OOP programming style while Scala is a much richer language, but of course also a more complex one. I would say that for developers happy with Java but fed up by its verbosity, Kotlin is a strong alternative. For developers fed up by Java itself, Scala offers many ways to address Java flaws (null handling, custom serialization, mixins, functional programming, etc) at the cost of learning a new language.
+
+reddit: https://www.reddit.com/r/scala/comments/6ee77n/scala_vs_kotlin/
