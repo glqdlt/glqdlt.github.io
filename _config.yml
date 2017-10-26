@@ -5,7 +5,7 @@ permalink:      /:year-:month-:day/:title
 imgpath: glqdlt.github.io/_img
 
 # Setup
-title:          Glqdl's Blog
+title:          Glqdlt's Blog
 paginate:       5
 baseurl:        ""
 url:            https://glqdlt.github.io/
