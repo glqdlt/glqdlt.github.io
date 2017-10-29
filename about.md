@@ -5,16 +5,10 @@ author: "glqdlt"
 permalink: /about/
 ---
 
-Il Woong, Jhun.
+## glqdlt
++ Name: Il-woong,Jhun.
++ Position: Web Devleoper
++ Lang: Java, Scala, Js
++ Hobby: Write a tech note
 
-Web & Server Devleoper
-
-Java, Scala, Js
-
-Like Functional Programing
-
-
-## Contribute
-Feel free to create an issue or make a pull request on [GitHub](https://github.com/glqdlt).
-
-Thanks!
+Thanks.
