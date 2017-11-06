@@ -129,6 +129,9 @@ arguments : serve dev
 
 
 
+## where is angluarJs 3 ??
+
+앙귤러 버전의 설명..
 
 ## 인텔리J Live EDIT + NPM
 
