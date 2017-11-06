@@ -1,0 +1,225 @@
+---
+layout: post
+title:  "SPA(Single Page Application) 그리고 AngularJS"
+author: "glqdlt"
+---
+
+# SPA(Single Page Application) 그리고 AngularJS
+
+
+## Why SPA?
+
+요즘 웹 트랜드에서 자주 언급 되는 이야기들이 많다. AngularJS, React, Vue.JS .. AWS, 서버리스 참 많은 이야기가 오고 간다. 약 4년 전에는 MEAN Stack (Full Stack) 이란 말이 유행 했던 적도 있다.
+
+SPA를 캐지미어 새터노스(저. 클라이언트 서버 웹 앱 만들기) 는, '클라이언트 - 서버 웹 앱' 이라고 표현한다. 확실하게 맞는 말인 것 같다. SPA 는 자바 개발자 관점에서 보면 또 하나의 애플릿(Applet)이다, 즉 Html로 된 Application 이다. 
+
+SPA는 화면변환이 없는 단 하나의 페이지(인스턴스) 를 뜻 한다. 그것이 View 관점에서 역동적인 사용자 경험(Dynamic UX, 인터럭션 UI)을 뜻하는 말일 수도 있지만..
+
+SPA가 시사하는 것은 자원의 핸들링(컨트롤러)의 주객이 서버에서 -> 클라이언트로 바뀌었다는 점이다. 
+
+
+
+* 디바이스의 다양화
+
+가트너에서는 2014년에 PC의 자리를 위협하는 개인 클라우드화가 본격적으로 시장에 활성화 될 것이라고 이야기 했다. 이 말은 사용자로 하여금 다양한 방법으로 애플리케이션에 접근하고 사용할 수 있는 환경을 제공 받는 것이 당연시된다는 말이기도 한다. 이를 비추어서 우리 웹 개발자의 관점에서 생각해보면 웹 앱 개발에 중요 터닝 포인트로 받아들여야 한다.
+웹 서비스 관점에서 보면 요즘은 많은 디바이스를 지원 한다. 안드로이드, 아이폰, 웹 브라우저(pc) 를 대표적으로 둘 수 있는 데.. 웹 브라우저의 크로스브라우징 (pc, 태블릿, 스마트폰) 관점에서는 서버 중점으로 가더라도 괜찮지만, 안드로이드, IOS 등의 브라우저 기반이 아닌 App관점으로는 디바이스에 따라 제약이 많아지게 된다.
+
+* 클라이언트 하드웨어 스펙 업 (평준상향)
+
+나 같은 자바개발자 입장에서 대체로 서버에서 처리하는 동적 컨텐츠 방식(모노리틱 아키텍처 라고도 한다)에 친숙하다. 서블릿을 확장한(친숙한) JSP를 작성하면 (혹은 Thymleaf 와 같은 탬플릿 언어) JSP Parser 가 알아서 Html 을 만들어 준다(렌더링이라 표현하는 게 옳겠다). 이는 당시 클라이언트에서 Html View template을 렌더링하기에는 하드웨어 인프라가 부담스러웠기 때문이다. (당시에는 서버가 클라이언트보다 빨랐고, JS 엔진은 불안정하고 느렸다.) 
+이 와는 반대로 지금의 SPA 에서는 서버에서 데이터가 없는 WebAPP(index.html) 을 보내고, 클라이언트에서 필요한 데이터를 동기화하거나 요청하면서 클라이언트의 브라우저에서 View 가 렌더링되고 확장된다, 서버는 단순히 이벤트 요청에 대한 데이터만 제공할 뿐이다.(또는 커넥션 처리)
+
+* RestFul API
+
+사실 SPA도 그렇고, RestFul API도 그렇고 모두 다 웹 서비스의 비약적인 발전으로 탄생한 산물들이다.
+
+* MSA(Micro Service Architecture)
+
+개발론 중에 폭포수 모델을 들어보았는가? (필자는 강의 시간에 졸아서 잘 모른다), 간단하게 설명하면 어떠한 프로젝트를 하는 데에 있어 철저한 조사와 절차를 폭포가 흐르듯이 하는 개발 방법론이다. 거의 거대한 프로젝트에서 많이 쓰이던 방식인데, 폭포수 모델에 따라 진행된 프로젝트들은 실패했을 떄의 리스크가 너무나도 크다. 실제로 많은 수의 대형 프로젝트들이 실패하는 사례가 나타나면서 프로젝트의 궁극적인 성공을 위해서는 소규모로 잘게 나누어서 프로젝트를 유지하는 방식이 보다 성공 확률이 오를 수 있다는 것이 명확해졌다.
+
+* 프로젝트의 기술적인 부분을 점검 가능
+* 목업(프로토타입)을 통해 의도와 부합하는 지 확인이 가능하다.
+* 시스템과 시스템 간의 인터페이스와 데이터 구조가 명확해진다.
+* 개발자의 테스트와 릴리즈가 자유로워 진다.
+* 확장이 쉬워 진다.
+
+(MSA 의 설명)
+
+네이버나 다음(카카오)의 포탈 서비스의 메인 화면을 보면, 사용자는 html 페이지 하나를 보는 것 같지만(실제로 그러하다), 각 서비스 레이아웃(예: 뉴스 , 카페, 증권, 스포츠 등)은 각기 다른 서버와 커넥션 되어 있다. 여기서 뉴스 서버가 어떠한 사정으로 마비가 되더라도 전체 서버를 재기동하거나.. www.naver.com 의 메인이 접속 불가능해지지 않는다. 또는 동계올림픽 시즌이 되어서 스포츠 서비스의 부하가 예상되면 전체 서버를 확장할 필요 없이, 스포츠 서버만 스케일 업하면 된다.
+
+* 웹의 본질 (서버 중심 웹 서비스의 해로움)
+
+잘 디자인 된 웹 앱이란 잘 실행되고, 확장 가능하고, 간결하고 우아하게 설계되고, 쉽게 수정 가능하며 신뢰할 수 있는 앱을 뜻한다.
+이를 위해서 권위 있는 학자들과 w3c 에서 수 년에 걸쳐서 표준을 위한 고민을 한다.
+이런 관점에서 보면 서버 중심의 웹 개발(모노로틱)은 해롭다, 특정 포인트에 부하가 들어와서 스케일 업을 해야한다면 서버 전체를 스케일 업 해야 한다. 유저 입장에서는 윈도우 부팅을 빠르게 하기 위해서 돈 투자를 해서 SSD를 달았는 데.. 10년 된 삼보 매직스테이션을 쓰는 유저나 SSD가 달린 최신형 컴퓨터를 쓰는 사람이나.. 서버가 렌더링해주는 결과물을 똑같이 불합리하게 기다려야 한다.
+
+* stateful? no stateless
+
+(캐지미어 새터노스 37 page)
+
+(캐지미어 세터노스 72 page)
+
+
+## 그래서, 개발자 입장에서 SPA 의 장점은
+
+1. 코드 조직화/ 소프트웨어 아키텍처
+
+2. 디자인 유연성
+
+3. 프로토타입 제작
+
+4. 개발자 생산성 (테스트와 릴리즈, 배포의 자유로움)
+
+5. 앱 성능
+
+### SPA(Single Page Application) 이란?
+
+
+## 렌더링 엔진
+
+
+## 결국 이러한 것을 하려면 자바스크립트에 집중할 수 밖에 없다.
+
+
+
+# 그래서, 여기서 JS Framework 들이 나온다..
+
+## Angluar JS
+
+웹의 초창기에는 웹 페이지를 시작하는 것은, Text editer 에서 HTML 문서를 하드코딩하는 것이었다. 이런 방식은 불편함을 초래했고, 웹의 초창기에도 IDE개념의 (우리나라에는 나모웹에디터) 많은 워크 에디터가 생겨났다. 그때야 html 하나의 마크업 language 만 있었지만, 비약적으로 발전한 지금은 무수히 많은 컴포넌트들이 생겼다. 기본적으로 쪼개보면 js, css, html .. (typescrit, saas, xhtml, html5) 등 많다.
+
+
+## JS의 브라우저 호환성
+흔히들, 크로스 브라우징에서의 CSS와 같은 view관점의 layout만이 브라우저마다 특성이 다르다고 생각하는 데, 자바스크립트도 표준(ECMA Script) 언어 임에도 불구하고, 브라우저 마다 처리 방식이 조금씩 다르다. 이러다 보니 이를 해결하기 위해 Jquery(DOM 이벤트 조작) 와 같은 라이브러리들이 생겨나기 시작했다. Jquery를 예로 든다면 DOM 이벤트를 조작하는 관점에서는 중,소 규모의 프로젝트에 적합하다. 또 다른 View 관점에서는 Coffee, vue.js 등 다양한 라이브러리가 있다.
+
+## MVC 
+
+대표적으로 JS의 MVC 프레임워크를 뽑는다면, 백본, 앵귤러, 엠버 3가지를 둘 수 있다. (page 119)
+
+
+## AngularJS
+
+(page 209)
+
+
+
+## npm 이란
+
+npm 에 대해서..
+
+
+
+
+## intellij 로 시작하는 angularjs 
+
+1. angularCli 로 프로젝트를 시작한다.
+
+2. 프로젝트가 만들어지면 자동적으로 Git, Npm 이 Structure가 만들어진다.
+
+3. readme.md 를 읽어보면 지원하는 내용이 많다.
+
+edit run config..
+
+npm을 추가한다.
+
+npm serv dev 명령을 위해서
+
+command : run
+sciprts: ng
+arguments : serve dev 
+
+입력하고 RUn
+
+
+
+## where is angluarJs 3 ??
+
+앙귤러 버전의 설명..
+
+## ts(typeScript) ??
+
+type script 에 대한 설명..
+
+## AngularJs4
+
+[간단한 셋팅의 동영상](https://www.youtube.com/watch?v=ND0TugBPid8)
+[책 저자의 발표자료](https://www.slideshare.net/jwj0831/angular-seminar)
+[사려는 책 저자-1](https://www.youtube.com/watch?v=ynULx0mtQGE)
+[사려는 책 저자-2](https://www.youtube.com/watch?v=idUbhCegL9A)
+[사려는 책 저자-3](https://www.youtube.com/watch?v=XM4samWG9b0)
+
+
+
+
+* package.json 은, maven으로 치면 pom.xml 이다. 이곳에 dependencies가 있음.
+* mvn install == npm i
+
+* ng new 
+
+* ng serv 
+
+* ng generate --help (compile 하는 개념)
+
+
+## 인텔리J Live EDIT + NPM
+
+Npm serv 를 실행 된 상태에서, 크롬의 Live EDIT plugin 을 실행하게 한다. 그러면 자동으로 intellij 에 debug 모드로 동작하게 한다. 그 뒤로는 반영된다.
+
+
+
+## bowel 하고 webpack 이 같이 있다.
+
+* npm, yarn, bowel : 패키지 관리 도구 
+* grunt, gulp, npm : 컴파일 자동화 도구 (난독화 및 소스 코드 용량 줄이기)
+* babel, typescript, coffeescript : js port language (전처리 컴파일러, jsp 같은 느낌이라 보면 됨.)
+
+* (내가 카톡에 보낸 사진)
+* 모듈(빌드)화를 위한 노력 : webpack : Ecms6
+
+
+
+live edit 로 적용되서 save 하면 콘솔에  webpack 이 계속 빌드하는 것을 볼 수 있다.
+
+
+
+## 이클립스로 시작하는 angularjs
+
+start hehe
+
+## spring boot + anglura Cli
+
+1. ng build
+
+2. spring boot 
+
+3. spring boot 의 static 폴더를 연다
+
+4. 빌드 된 ng module을 /dist/**   - copy to /static/** 폴더로 복사한다.
+
+5. start spring boot 잘 된다 ^^
+
+요약을 하면..
+
+* ng cli ==> copy to /dist/** >>> /static/**  ==> mvn spring-boot:run 
+
+## node.js
+
+node.js는 그냥 js 를 실행하기 위한 인터프리터임.
+브라우저의 렌더엔진인 V8엔진을 가져다가 쓰고 (당연하지)
+
+JAVA 는 JRE > CLASS
+
+JS는 브라우저 > 렌더링 엔진 > JS 인터프리터 엔진 >  JS
+
+
+### 뽀너스  Vaadin
+
+Vaadin 은 AngularJS와 마찬가지로 SPA 기반의 아키텍처를 지원하는 Java Ui FrameWork 이다.
+
+Angular 는 Client 성격이 강하고, Vaadin 은 기존 자바 개발자들이 개발하던 Server Side 프로그래밍을 하면 SPA 구성의 WebApp을 자연스레 짤 수 있게 해준다.
+여기서 함정이 있는 것이, Vaadin 이 단순히 Render 엔진(Java Source를 Web Client 포팅)의 성격을 가진 프레임워크는 아니고, ( JSP 코딩을 하던 느낌을 생각하면 된다. )Full Structure를 지원한다.
+기본적으로 Vaadin 의 Architecrue를 보면서 느낀 것은 SPA기반의 서버 사이드 프로그래밍을 쉽게 도와준다 ==> 역동적인 Dynamic UI 컨테이너 기반 WebApp 제작을 지원해준다는 느낌이다.
+현재까지 Vaadin은 Tomcat 과 같은 서블릿 컨테이너가 없으면 동작하기 어려운 구조로 판단하고 있다.
+즉 내가 헤맸던 것처럼 Vaadin + NodeJS 와 같은 끔찍한 혼종은 만들어질 수 없는 구조이다.
+
+
