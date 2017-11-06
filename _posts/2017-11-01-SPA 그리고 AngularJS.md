@@ -156,6 +156,10 @@ start hehe
 
 5. start spring boot 잘 된다 ^^
 
+요약을 하면..
+
+* ng cli ==> copy to /dist/** >>> /static/**  ==> mvn spring-boot:run 
+
 
 ### 뽀너스  Vaadin
 
