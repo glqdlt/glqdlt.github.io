@@ -109,7 +109,17 @@ npm 에 대해서..
 
 ## intellij 로 시작하는 angularjs 
 
-npm start
+edit run config..
+
+npm을 추가한다.
+
+npm serv dev 명령을 위해서
+
+command : run
+sciprts: ng
+arguments : serve dev 
+
+입력하고 RUn
 
 ## 이클립스로 시작하는 angularjs
 
