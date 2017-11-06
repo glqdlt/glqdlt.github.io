@@ -109,6 +109,12 @@ npm 에 대해서..
 
 ## intellij 로 시작하는 angularjs 
 
+1. angularCli 로 프로젝트를 시작한다.
+
+2. 프로젝트가 만들어지면 자동적으로 Git, Npm 이 Structure가 만들어진다.
+
+3. readme.md 를 읽어보면 지원하는 내용이 많다.
+
 edit run config..
 
 npm을 추가한다.
@@ -120,6 +126,12 @@ sciprts: ng
 arguments : serve dev 
 
 입력하고 RUn
+
+
+## 인텔리J Live EDIT + NPM
+
+Npm serv 를 실행 된 상태에서, 크롬의 Live EDIT plugin 을 실행하게 한다. 그러면 자동으로 intellij 에 debug 모드로 동작하게 한다. 그 뒤로는 반영된다.
+
 
 ## 이클립스로 시작하는 angularjs
 
