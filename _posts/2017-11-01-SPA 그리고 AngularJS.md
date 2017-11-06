@@ -101,6 +101,21 @@ SPA가 시사하는 것은 자원의 핸들링(컨트롤러)의 주객이 서버
 
 
 
+## npm 이란
+
+npm 에 대해서..
+
+
+
+## intellij 로 시작하는 angularjs 
+
+npm start
+
+## 이클립스로 시작하는 angularjs
+
+start hehe
+
+
 ### 뽀너스  Vaadin
 
 Vaadin 은 AngularJS와 마찬가지로 SPA 기반의 아키텍처를 지원하는 Java Ui FrameWork 이다.
