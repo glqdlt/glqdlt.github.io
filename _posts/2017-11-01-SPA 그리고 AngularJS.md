@@ -107,6 +107,7 @@ npm 에 대해서..
 
 
 
+
 ## intellij 로 시작하는 angularjs 
 
 1. angularCli 로 프로젝트를 시작한다.
@@ -132,6 +133,10 @@ arguments : serve dev
 ## where is angluarJs 3 ??
 
 앙귤러 버전의 설명..
+
+## ts(typeScript) ??
+
+type script 에 대한 설명..
 
 ## 인텔리J Live EDIT + NPM
 
