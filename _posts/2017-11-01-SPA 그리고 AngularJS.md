@@ -99,3 +99,14 @@ SPA가 시사하는 것은 자원의 핸들링(컨트롤러)의 주객이 서버
 
 (page 209)
 
+
+
+### 뽀너스  Vaadin
+
+Vaadin 은 AngularJS와 마찬가지로 SPA 기반의 아키텍처를 지원하는 Java Ui FrameWork 이다.
+
+Angular 는 Client 성격이 강하고, Vaadin 은 기존 자바 개발자들이 개발하던 Server Side 프로그래밍을 하면 SPA 구성의 WebApp을 자연스레 짤 수 있게 해준다.
+여기서 함정이 있는 것이, Vaadin 이 단순히 Render 엔진(Java Source를 Web Client 포팅)의 성격을 가진 프레임워크는 아니고, ( JSP 코딩을 하던 느낌을 생각하면 된다. )Full Structure를 지원한다.
+기본적으로 Vaadin 의 Architecrue를 보면서 느낀 것은 SPA기반의 서버 사이드 프로그래밍을 쉽게 도와준다 ==> 역동적인 Dynamic UI 컨테이너 기반 WebApp 제작을 지원해준다는 느낌이다.
+현재까지 Vaadin은 Tomcat 과 같은 서블릿 컨테이너가 없으면 동작하기 어려운 구조로 판단하고 있다.
+즉 내가 헤맸던 것처럼 Vaadin + NodeJS 와 같은 끔찍한 혼종은 만들어질 수 없는 구조이다.
