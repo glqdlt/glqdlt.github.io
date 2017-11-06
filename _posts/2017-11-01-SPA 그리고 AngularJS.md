@@ -75,6 +75,8 @@ SPA가 시사하는 것은 자원의 핸들링(컨트롤러)의 주객이 서버
 ### SPA(Single Page Application) 이란?
 
 
+## 렌더링 엔진
+
 
 ## 결국 이러한 것을 하려면 자바스크립트에 집중할 수 밖에 없다.
 
@@ -138,15 +140,47 @@ arguments : serve dev
 
 type script 에 대한 설명..
 
+## AngularJs4
+
+[간단한 셋팅의 동영상](https://www.youtube.com/watch?v=ND0TugBPid8)
+[책 저자의 발표자료](https://www.slideshare.net/jwj0831/angular-seminar)
+[사려는 책 저자-1](https://www.youtube.com/watch?v=ynULx0mtQGE)
+[사려는 책 저자-2](https://www.youtube.com/watch?v=idUbhCegL9A)
+[사려는 책 저자-3](https://www.youtube.com/watch?v=XM4samWG9b0)
+
+
+
+
+* package.json 은, maven으로 치면 pom.xml 이다. 이곳에 dependencies가 있음.
+* mvn install == npm i
+
+* ng new 
+
+* ng serv 
+
+* ng generate --help (compile 하는 개념)
+
+
 ## 인텔리J Live EDIT + NPM
 
 Npm serv 를 실행 된 상태에서, 크롬의 Live EDIT plugin 을 실행하게 한다. 그러면 자동으로 intellij 에 debug 모드로 동작하게 한다. 그 뒤로는 반영된다.
 
 
 
-## bowler 하고 webpack 이 같이 있다.
+## bowel 하고 webpack 이 같이 있다.
+
+* npm, yarn, bowel : 패키지 관리 도구 
+* grunt, gulp, npm : 컴파일 자동화 도구 (난독화 및 소스 코드 용량 줄이기)
+* babel, typescript, coffeescript : js port language (전처리 컴파일러, jsp 같은 느낌이라 보면 됨.)
+
+* (내가 카톡에 보낸 사진)
+* 모듈(빌드)화를 위한 노력 : webpack : Ecms6
+
+
 
 live edit 로 적용되서 save 하면 콘솔에  webpack 이 계속 빌드하는 것을 볼 수 있다.
+
+
 
 ## 이클립스로 시작하는 angularjs
 
@@ -168,6 +202,15 @@ start hehe
 
 * ng cli ==> copy to /dist/** >>> /static/**  ==> mvn spring-boot:run 
 
+## node.js
+
+node.js는 그냥 js 를 실행하기 위한 인터프리터임.
+브라우저의 렌더엔진인 V8엔진을 가져다가 쓰고 (당연하지)
+
+JAVA 는 JRE > CLASS
+
+JS는 브라우저 > 렌더링 엔진 > JS 인터프리터 엔진 >  JS
+
 
 ### 뽀너스  Vaadin
 
@@ -178,3 +221,5 @@ Angular 는 Client 성격이 강하고, Vaadin 은 기존 자바 개발자들이
 기본적으로 Vaadin 의 Architecrue를 보면서 느낀 것은 SPA기반의 서버 사이드 프로그래밍을 쉽게 도와준다 ==> 역동적인 Dynamic UI 컨테이너 기반 WebApp 제작을 지원해준다는 느낌이다.
 현재까지 Vaadin은 Tomcat 과 같은 서블릿 컨테이너가 없으면 동작하기 어려운 구조로 판단하고 있다.
 즉 내가 헤맸던 것처럼 Vaadin + NodeJS 와 같은 끔찍한 혼종은 만들어질 수 없는 구조이다.
+
+
