@@ -101,11 +101,55 @@ SPA가 시사하는 것은 자원의 핸들링(컨트롤러)의 주객이 서버
 
 (page 209)
 
+angularjs 는 개발자의 타겟으로 된게아니라서.. (최초는 디자이너를 위했음)
+구글 팀 조차 만들다가 헷갈려서 때려치고 angular 로 (angularjs2) 통일하자고 리네이밍함.
+
 
 
 ## npm 이란
 
 npm 에 대해서..
+
+## framework 란 단어에 대해서..
+
+* vue.js 는 데이터를 바인딩하기 위한 좋은 라이브러리
+* react도 라이브러리
+
+프레임웍의 정의를 해보자.
+ANglur는 Client Application 을 만들려고 있는 프레임워크다.
+Angluar는 Webapp이 빠르지만, 사실 구글의 가장 큰 목표는 EE기반의 Native Mobile, Native Desktop, Native Mobile 까지 커버하는거임.. ㅅㅂ. what the?
+
+google 은 open source 지원을, 주간 회의 일정, 스케줄, 마일스톤도 공개해놓음.
+
+* Angular4 부터는 Typescript 를 정식 지원함.
+* Google 모든 javascript 는 typescript 로 포팅되고, 공식 프론트 언어로 선정함.
+* 웃긴건 이걸 만든 곳은 MS임..
+
+
+
+## Componenet
+
+web component 라는 브라우저의 원래 기본 개념이 있음. Angular는 이 아키텍처를 구현한 형태일 뿐.
+view의 기본 단위임.
+기존 App은 컴퍼넌트 개념이 있었음, 그래서 하나의 컴퍼넌트(네비게이션) 을 만들고 거기의 색상 크기 기능만 정의하고 갖다가 붙여쓰면 되는데.. 웹은 css ..하아 복잡하다.
+대부분의 웹 view template은 이러한 component가 있음.
+Componenet 간의 트리 리스트
+
+* import 구문 : 자바의 import 랑 같음 :: es6의 기본 문법
+* @ 데코레이터 : 자바로 치면 어노테이션 :: es7의 표준으로 감, 원래는 ts 의 문법임, class의 힌트를 주는 것.
+* select :: dom , custom tag 이름. 
+* template url: 실체화된 url이 있는 경로
+* style's url: 이 컴퍼넌트에만 해당하는 css의 경로
+
+## class
+
+js에서는 es6 부터 class란 문법이 생김.
+
+
+## 세미나의 마지막..
+
+어찌되었든 프레임워크가 만능은 아니다, 스프링을 안다고해서 그 사람이 개발을 잘하냐? 그건 NO 아닌가?
+결국 이걸 하려면 프론트 엔드 개발자의 기본 소양을 가져야함.. 이 소양에는 웹 디자인에 사용되는 웹 설계, 웹 디자인, 퍼블리싱 등의 모든 게 필요함.
 
 
 
