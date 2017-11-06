@@ -128,14 +128,33 @@ arguments : serve dev
 입력하고 RUn
 
 
+
+
 ## 인텔리J Live EDIT + NPM
 
 Npm serv 를 실행 된 상태에서, 크롬의 Live EDIT plugin 을 실행하게 한다. 그러면 자동으로 intellij 에 debug 모드로 동작하게 한다. 그 뒤로는 반영된다.
 
 
+
+## bowler 하고 webpack 이 같이 있다.
+
+live edit 로 적용되서 save 하면 콘솔에  webpack 이 계속 빌드하는 것을 볼 수 있다.
+
 ## 이클립스로 시작하는 angularjs
 
 start hehe
+
+## spring boot + anglura Cli
+
+1. ng build
+
+2. spring boot 
+
+3. spring boot 의 static 폴더를 연다
+
+4. 빌드 된 ng module을 /dist/**   - copy to /static/** 폴더로 복사한다.
+
+5. start spring boot 잘 된다 ^^
 
 
 ### 뽀너스  Vaadin
