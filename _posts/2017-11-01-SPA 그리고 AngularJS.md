@@ -288,7 +288,7 @@ npm init을 하고 나면, package.json 이 생기는 것을 볼 수 있는 데.
 
 ## TypeScript
 
-TypeScript 는 간단히 얘기하면, '자바스크립트를 확장하게 해주는 언어(MS, 아네르스 하일스베르)' 라고 말할 수 있다. 즉, 자바스크립트이고 그 이하도 아니지만 그 이상이다 (응?). 실제로 Google에서 TypeScript를 공식적인 자사 언어로 채택하고 마이그레이션 과정에서 별 어려움 없이 80%가 수월하게 했음을 이야기 한 건 유명한 일화다. 그러면 그들이 한 20%의 어려움은 무엇일까? 중요한 Core 로직을 리팩토링 하면서 TypeSafe만 적용한 것이다. 즉 변수에 Type을 명시 선언한 것 뿐. 재밌는 이야기로 순수 Javascript 언어로 작성 된 1.js 를 1.ts로 저장해서 Build하여도 동작 한다, 단 무수한 Warning 이 뜨겠지만..
+TypeScript 는 간단히 얘기하면, '자바스크립트를 확장하게 해주는 언어(MS, 아네르스 하일스베르)' 라고 말할 수 있다. 즉, 자바스크립트이고 그 이하도 아니지만 그 이상이다 (응?). 실제로 Google에서 TypeScript를 공식적인 자사 언어로 채택하고 마이그레이션 과정에서 별 어려움 없이 80%가 수월하게 했음을 이야기 한 건 유명한 일화다. 그러면 그들이 한 20%의 어려움은 무엇일까? 중요한 Core 로직을 리팩토링 하면서 TypeDeclration(TypeSafe) 적용한 것이다. 즉 변수에 Type을 명시 선언한 것 뿐. 재밌는 이야기로 순수 Javascript 언어로 작성 된 1.js 를 1.ts로 저장해서 Build하여도 동작 한다, 단 무수한 Warning 이 뜨겠지만..
 개인적으로 동적 언어를 극혐하는 데, 이러한 움직임은 좋은 것이라고 생각한다.
 기본적으로 TypeScript는 Javascript 로 컴파일할 때, ES3 코드로 변환한다고 한다. 설정에 따라서는 Es5,Es6 도 되는 듯 하다. 그리고 듣기 로는 es7에 공식적으로 반영 예정이라고 한다.
 
@@ -299,6 +299,27 @@ TypeScript 는 간단히 얘기하면, '자바스크립트를 확장하게 해�
 > tsc sampleCode.ts
 
 > tsc SampleCode.ts --target es6
+
+
+## AngularCli
+
+ng new 로 생성 된 프로젝트 구조에 대해 알아 보자.
+
+* e2e 폴더 : end-to-end 를 의미. protractor 툴을 이용해서 애플리케이션 통합 테스트.
+* src 폴더 : 애플리케이션 소스.
+* .angular-cli.json : angular-cli 의 metadata.
+* karma.conf.js : karma 단위 테스트 설정 파일.
+* protractor.conf.js : protractor 통합 테스트 설정 파일.
+* tslint.json : 타입스크립트용 구문 체크 파일.
+* tsconfig.json : 타입스크립트 컴파일 설정 파일.
+* src/typings.d.ts : 타입스크립트에서 사용 될 타입 선언 정보 파일.
+
+
+## Angular
+
+Angular 에 대해 다시 되짚어 보자, Angular는 Clint Side Application FrameWork 이다.
+프레임워크는 라이브러리랑 다르게, 어떠한 구성, 방식으로 개발하지는 못 한다. 어느 정도의 프레임워크에서 제공하는 일정한 틀에서 작업하는 것을 전제로 하기 때문이다. 다르게 얘기하면 개발자는 편하게 필요한 비지니스 로직만 작성하면 된다는 말이기도 하다.
+이 관점에서 앵귤러는 1. 사용자와 인터렉션 할 View를 개발 2. View에 표기할 데이터바인딩과 서버와의 상호작용 의 개발 을 뜻한다.
 
 
 
