@@ -6,6 +6,7 @@ author: "glqdlt"
 
 # SPA(Single Page Application) 그리고 AngularJS
 
+## 요즘 WebApp
 
 ## Why SPA?
 
@@ -283,3 +284,8 @@ Angular 는 Client 성격이 강하고, Vaadin 은 기존 자바 개발자들이
 즉 내가 헤맸던 것처럼 Vaadin + NodeJS 와 같은 끔찍한 혼종은 만들어질 수 없는 구조이다.
 
 
+
+## 참고
+
+* [앵귤러 첫걸음, 조우진](http://book.naver.com/bookdb/book_detail.nhn?bid=12096305)
+* [클라이언트-서버 웹 앱 만들기, 캐지미너 새터노스](http://book.naver.com/bookdb/book_detail.nhn?bid=8302910)
