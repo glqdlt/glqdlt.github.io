@@ -214,11 +214,8 @@ type script 에 대한 설명..
 
 * package.json 은, maven으로 치면 pom.xml 이다. 이곳에 dependencies가 있음.
 * mvn install == npm i
-
 * ng new 
-
-* ng serv 
-
+* ng serv
 * ng generate --help (compile 하는 개념)
 
 
@@ -263,14 +260,46 @@ start hehe
 
 * ng cli ==> copy to /dist/** >>> /static/**  ==> mvn spring-boot:run 
 
-## node.js
+## Node.Js 그리고 NPM
 
-node.js는 그냥 js 를 실행하기 위한 인터프리터임.
-브라우저의 렌더엔진인 V8엔진을 가져다가 쓰고 (당연하지)
+이벤트 루프, 코어 라이브러리로 구성 된 서버 사이드 자바스크립트 Runtime Enverimenet 이다. 한창 3~4년 전에 Vert.X vs Node.JS란 얘기가 트랜드(나는 이 떄 Vert.X에 관심을 가졌었다.)가 될 정도로 원래는 고성능 네트워킹 I/O 비동기 서버를 모토로 만들어졌었다. 문제는 자바스크립트 진영에서 이렇다고 할 마땅한 Js Runtimer(인바이런먼트) 가 없었기 때문에 (있기는 하지만 복잡하고 사용성이 떨어졌다) Node.JS의 출현은 한 줄기의 단비와도 같았다고 한다.
 
-JAVA 는 JRE > CLASS
+프론트 개발자의 입장에서 Node.JS가 설치된 곳이라면 어디서든 본인의 밥줄인 Javascript 로 여러가지 실험적인 것을 해볼 수가 있었다. 즉, 이 말은 JsApp 생태계의 탄생이라고도 볼 수 있는 데, 이런 환경 덕분에 NPM 이라는 Node Package Manager 의 생태계가 자연스럽게 만들어졌다. NPM은 Node.js에서 기본으로 사용하는 패키지 관리 도구이고(초기에는 아니었다), NPM을 이용해서 여러가지 리소스 or 라이브러리를 패키징해서 공유할 수가 있다. (나 같은 JVM 기반 개발자라면, Maven Community를 떠 올리면 적당할 것이다.)
 
-JS는 브라우저 > 렌더링 엔진 > JS 인터프리터 엔진 >  JS
+Angular에서는 프레임워크란 방대한 덩치 만큼이나마 많은 도구와 라이브러리를 내포하고 있다, 고로 NPM을 통해서 프로젝트를 구성하고 의존 패키지를 관리한다.
+
+정리를 하면 Node.JS는 JRE라고 보면 되고, NPM은 Maven 라고 생각하는 것이 속 편하다.
+> mkdir helloNode
+
+> cd helloNode
+
+> npm init
+
+> npm install jquery
+
+> npm list
+
+npm init을 하고 나면, package.json 이 생기는 것을 볼 수 있는 데.. 열어서 살펴 보면 pom.xml 과 흡사하다.
+
+
+더 자세한 사항이 궁금하면 [Node.js's Docs](https://nodejs.org/ko/docs/) 를 참고하자.
+
+
+
+## TypeScript
+
+TypeScript 는 간단히 얘기하면, '자바스크립트를 확장하게 해주는 언어(MS, 아네르스 하일스베르)' 라고 말할 수 있다. 즉, 자바스크립트이고 그 이하도 아니지만 그 이상이다 (응?). 실제로 Google에서 TypeScript를 공식적인 자사 언어로 채택하고 마이그레이션 과정에서 별 어려움 없이 80%가 수월하게 했음을 이야기 한 건 유명한 일화다. 그러면 그들이 한 20%의 어려움은 무엇일까? 중요한 Core 로직을 리팩토링 하면서 TypeSafe만 적용한 것이다. 즉 변수에 Type을 명시 선언한 것 뿐. 재밌는 이야기로 순수 Javascript 언어로 작성 된 1.js 를 1.ts로 저장해서 Build하여도 동작 한다, 단 무수한 Warning 이 뜨겠지만..
+개인적으로 동적 언어를 극혐하는 데, 이러한 움직임은 좋은 것이라고 생각한다.
+기본적으로 TypeScript는 Javascript 로 컴파일할 때, ES3 코드로 변환한다고 한다. 설정에 따라서는 Es5,Es6 도 되는 듯 하다. 그리고 듣기 로는 es7에 공식적으로 반영 예정이라고 한다.
+
+> npm install -g typescript
+
+> sampleCode.ts
+
+> tsc sampleCode.ts
+
+> tsc SampleCode.ts --target es6
+
 
 
 ### 뽀너스  Vaadin
