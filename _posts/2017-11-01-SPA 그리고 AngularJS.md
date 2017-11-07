@@ -126,6 +126,9 @@ google 은 open source 지원을, 주간 회의 일정, 스케줄, 마일스톤�
 * 웃긴건 이걸 만든 곳은 MS임..
 
 
+## ES 는 자바 EE와 같음
+
+
 
 ## Componenet
 
@@ -134,6 +137,19 @@ view의 기본 단위임.
 기존 App은 컴퍼넌트 개념이 있었음, 그래서 하나의 컴퍼넌트(네비게이션) 을 만들고 거기의 색상 크기 기능만 정의하고 갖다가 붙여쓰면 되는데.. 웹은 css ..하아 복잡하다.
 대부분의 웹 view template은 이러한 component가 있음.
 Componenet 간의 트리 리스트
+
+단 component는 컴퍼넌트 간의 데이터 바인딩이 관건임.
+
+
+spring bean 처럼 componenet 는 자기만의 라이프사이클을 프레임웍에서 관리 받음
+필요한 순간이 올떄 new  class() 처럼 new component로 그떄 생성이되는거임
+
+## template
+
+한마디로 우리가 친숙하게 아는 html, css 의 덩어리이다.
+반드시 view를 구성하기 위해서는 component 와 template 이 같이 있다.
+url 을 적거나, markup 을 바로 써도 됨.
+
 
 * import 구문 : 자바의 import 랑 같음 :: es6의 기본 문법
 * @ 데코레이터 : 자바로 치면 어노테이션 :: es7의 표준으로 감, 원래는 ts 의 문법임, class의 힌트를 주는 것.
