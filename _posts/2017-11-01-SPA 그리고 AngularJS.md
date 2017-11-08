@@ -399,6 +399,51 @@ ng new 로 생성 된 프로젝트 구조에 대해 알아 보자.
 * src/typings.d.ts : 타입스크립트에서 사용 될 타입 선언 정보 파일.
 
 
+## componnent & template
+
+
+
+## Directve 와 Pipe
+
+View(Template) 만을 위한 아키텍처관점에서의 요소
+
+* Structural Directives
+Dom 구조를 동적으로 변화시킬 때 사용
+
+
+* Attribute Directives
+컴포넌트, DOM 요소의 표현 및 동작 방식을 변경
+
+
+Pipe
+
+View에 노출하는 데이터를 변형할 때 사용
+데이터는 같은 데, 다르게 보여야할 때.. (Time, 화페 단위 등..)
+
+
+## Data Binding
+
+Componenet(+Template) 과 View 사이의 연결고리
+
+* 절차적인 방식
+* 선언적인 방식
+
+## Service & DI
+
+가장 중요한 개념.
+
+* Serverice : 순수한 자바스크립트 로직을 담고 있는 class, 단 이 Service 는 Angular에서 DI로 처리함. Bean이랑 비슷한거임.
+OOP에서 가장 중요한 SRP(단일) 을 구현한 형태임.
+
+* DI : 앵귤러에만 있는 거임, 우리가 아는 DI랑 같음.
+
+
+## module
+
+Angular 의 모든 요소들을 하나로 담은 컨테이너,
+자바로 치면 자바 라이브러리 (jar) 개념이라 보면 됨.
+
+
 ## Angular
 
 Angular 에 대해 다시 되짚어 보자, Angular는 Clint Side Application FrameWork 이다.
