@@ -4,14 +4,35 @@ title:  "SPA(Single Page Application)"
 author: "glqdlt"
 ---
 
-# Why Angular? (Single Page Application)
+# Why Single Page Application (Angluar) ?
+
+어느 화창한 주말 저녁, 곤히 꿀잠 자면서 뒹굴거리고 있었는 데 갑작스레 팀장님으로 부터 세미나 요청을 받았다. 주제로는 'Angular' 에 대해서 세미나를 준비해달라는 요청이었다.
+
+요청을 받자 마자 느낀 감정은, 아 왜 세미나 준비야..? 란 말보다는 왜? Angular를 ? 란 느낌이 가장 컸다.
+
+그도 그럴 것이 필자가 근무하고 있는 곳은 수 많은 데이터의 핸들링과 유저 커넥션을 처리하는 '데이터 딜리버리' 서비스를 구현 하는 서버 개발팀에서 근무하고 있다. 
+
+쉽게 얘기하면 외부의 데이터나 내부의 데이터를 취합하거나 변경하는 biz service를 만들고 Restful Api를 통해 내/외부에 제공하는.. 요즘 주변의 흔하게 볼 수 있는 서버 사이드(Server Side) 개발을 하고 있다. 우리 팀에 있어 Web Application은 서버 운영에 필요한 간단한 Admin Console Tool 정도로 활용하고 있다. Application은 간단한 CRUD 형태의 게시판이나 Config의 0 과 1 을 제어하는 일이 대부분이다. 이런 부서에서 갑작스레 Angular를 들고 세미나를 하겠다고 하는 것은 마치 분식집에서 일본식 돈코츠 라멘을 주문하는 것과 같다. 엉뚱한 주문이지만 만약 분식집의 주방 이모가 만들 수 있고, 재료가 있다면 만들어서 식탁에 내놓기야 할 수 있겠지만.. 이 처럼 팀장님의 세미나 요청은 굉장히 아이러니(?)한 주문인 셈이다.
 
 ## 요즘 JavaScript
  
 요즘 웹 트랜드에서 자주 언급 되는 이야기들이 많다. Angular, ReactJS, VueJS.. 이제는 많은 웹 개발자들이 자바스크립트에 대한 이야기와 트랜드에 화두에 올리고 있다. 약 4~5 년 전에는 Full Stack == MEAN Stack 이란 말이 유행 했던 적도 있을 정도로 자바스크립트는 이제 무시하지 못 할 만큼 자리를 잡았다. 
-예전처럼 단순히 User Event 를 제어하기 위한, 우리 개발자에게는 AJAX를 구현하기만 했던 Javascript 는 더 이상 찾아보기가 힘들어졌다. 이제는 웹서버의 구실도 하고 있고, Native Javascript Application 도 나오고 있는 추세이다. 컨버팅 도구만 있다면 Web App을 Device에 사용할 수 있는 Hybrid App으로 빌드가 가능해진다. 
 
-여기에 본격적인 대 클라우드 시대를 맞이하면서 서버와 프론트 개발 사이의 포지셔닝이 더욱 더 확고해지면서 자바스크립트의 인기는 가속도를 밟고 있다는 생각이다. 이를 증명이라도 하듯 많은 클라우드 벤더들은 유저 서비스에 집중한 User Application(그것이 WebApp 혹은 Device App 무관하게) 개발만 하면 웹 서비스를 시작할 수 있는 '서버리스' 라는 비지니스 모델을 제공하기 시작했다. 
+예전처럼 단순히 User Event 를 제어하기 위한 또는, 우리 개발자에게 친숙한 AJAX를 구현하기만 위했던 Javascript 는 더 이상 찾아보기가 힘들어졌다. 
+
+심지어 자바스크립트는 이제 웹서버의 구실도 하는 데다가, Native Javascript Application 이라는 Browser 밖에서 동작하는 Application으로 등장하고 있는 세상이다. (필자는 NodeJs --global 명령으로 윈도우 cmd 환경에서 Javascript App(Node Module) 을 동작 시켰을 떄의 쇼킹함은 아직도 잊지 못하고 있다.)
+
+또한 컨버팅 도구만 있다면 Web App을 Device에 사용할 수 있는 Hybrid App으로 빌드가 가능해진다고도 한다. (물론 Native App 보다는 성능 하락이 있지만.. ) 
+
+여기에 클라우드 서비스를 제공하는 여러 벤더들은 (AWS, Azure 등) User Interface Application (그것이 Web App일지, Device App 일지는 모르지만) 만 구현하면 빠른 비지니스 서비스를 시작할 수 있는 '서버리스' 라 불리우는 클라우드 비지니스 모델을 출시했다.
+
+마치 이야기만 듣고 보면 우리 서버 개발자들의 밥그릇은 깡통 차게 될 것만 같다. 
+
+
+( ... )
+
+그래서 조금이나마 내가 알고 있는 지식이 도움이 되기를 바라면서, 내 지식을 되돌이켜 볼 겸 이 포스팅을 작성하게 되었다.
+
 
 ## 요즘 Web : Single Page Application 
 
