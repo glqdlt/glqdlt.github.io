@@ -28,17 +28,15 @@ Application은 간단한 CRUD 형태의 게시판이나 Config의 0 과 1 을 �
 
 ## 요즘 JavaScript
  
-요즘 웹 트랜드에서 자주 언급 되는 이야기들이 많다. Angular, ReactJS, VueJS.. 이제는 많은 웹 개발자들이 자바스크립트에 대한 이야기와 트랜드에 화두에 올리고 있다. 약 4~5 년 전에는 Full Stack == MEAN Stack 이란 말이 유행 했던 적도 있을 정도로 자바스크립트는 이제 무시하지 못 할 만큼 자리를 잡았다. 
+요즘 웹 서비스에서 자바스크립트가 갖는 의미는 상당하다. 자바스크립트 프레임웍이나 라이브러리 갯수를 나열만 해봐도 (Angular, ReactJS, VueJS.. 등) 한 페이지를 채울 정도로 많이 발전했다고 생각한다. 지금은 자바 개발자로 먹고 살고 있지만, 약 4 년 전 사회 초년생 시절에는 MEAN Stack 이란 자바스크립트로 웹 서비스 전체를 구현(Full Stack)하는 것이 당시에 큰 화제가 됬던 적이 있는 데, 뭔가 Full Stack이라는 말에 훅해서 자바 보다 자바스크립트에 많은 관심을 가졌던 때가 있다. 만약 누군가가 조금이라도 등을 밀었더라면 지금은 자바가 아닌 자바스크립트로 밥을 먹고 살고 있을 지도 모르겠다.
 
-예전처럼 단순히 User Event 를 제어하기 위한 또는, 우리 개발자에게 친숙한 AJAX를 구현하기만 위했던 Javascript 는 더 이상 찾아보기가 힘들어졌다. 
-
-심지어 자바스크립트는 이제 웹서버의 구실도 하는 데다가, Native Javascript Application 이라는 Browser 밖에서 동작하는 Application으로 등장하고 있는 세상이다. (필자는 NodeJs --global 명령으로 윈도우 cmd 환경에서 Javascript App(Node Module) 을 동작 시켰을 떄의 쇼킹함은 아직도 잊지 못하고 있다.)
+오늘 날에 있어 자바스크립트는 단순히 브라우저의 스크립트 이상의 의미를 가지고 있다. Mean Stack(MongoDB - Elastick Search - Angular - NodeJS )이라는 말에서도 알 수 있지만, 이제 웹서버의 구실도 하는 데다가, Native Javascript Application 이라는 Browser 밖에서 동작하는 Application으로 등장하고 있는 세상이다. (최근이지만 필자는 NodeJs --global 명령으로 윈도우 cmd 환경에서 Javascript App(Node Module) 을 동작 시켰을 떄의 쇼킹함은 아직도 잊지 못하고 있다.)
 
 또한 컨버팅 도구만 있다면 Web App을 Device에 사용할 수 있는 Hybrid App으로 빌드가 가능해진다고도 한다. (물론 Native App 보다는 성능 하락이 있지만.. ) 
 
 여기에 클라우드 서비스를 제공하는 여러 벤더들은 (AWS, Azure 등) User Interface Application (그것이 Web App일지, Device App 일지는 모르지만) 만 구현하면 빠른 비지니스 서비스를 시작할 수 있는 '서버리스' 라 불리우는 클라우드 비지니스 모델을 출시했다.
 
-마치 이야기만 듣고 보면 우리 서버 개발자들의 밥그릇은 깡통 차게 될 것만 같다. 
+대부분의 Server Side 개발자가 UI를 만들 때 사용하는 Jquery를 이용해서 단순히 User Event 를 제어하기 위한 또는, 친숙한 AJAX를 사용하기만을 위했던 Javascript 는 더 이상 찾아보기가 힘들어졌다. 이야기만 놓고 보면, 서버 개발자들의 밥그릇에 대해서 걱정해야 하나 하는 생각도 문득 들지도 모르겠다.
 
 
 ( ... )
