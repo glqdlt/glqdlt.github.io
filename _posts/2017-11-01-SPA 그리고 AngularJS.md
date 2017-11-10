@@ -462,16 +462,21 @@ Angular 는 Client 성격이 강하고, Vaadin 은 기존 자바 개발자들이
 현재까지 Vaadin은 Tomcat 과 같은 서블릿 컨테이너가 없으면 동작하기 어려운 구조로 판단하고 있다.
 즉 내가 헤맸던 것처럼 Vaadin + NodeJS 와 같은 끔찍한 혼종은 만들어질 수 없는 구조이다.
 
+[바딘 DEMO](https://github.com/vaadin/dashboard-demo)
+
 
 ### 보너스 : WebApp을 Android IOS에 포팅해보자
 
-흔히 학원에서 강의를 홍보할 때 Html5 로 만드는 .. 하이브리드 앱, 웹 앱 이라는 말을 들어본 적이 있는가? Html5 하고 Javascript 로 앱에 포팅을하는 것으로 다 만들 수 있다고 홍보하는 데.. 터무니 없는 말은 아니다 가능 하다. 단, Native App에 비해서 퍼포먼스는 구더기이지만..
+흔히 학원에서 강의를 홍보할 때 Html5 로 만드는 .. 하이브리드 앱, 웹 앱 이라는 말을 들어본 적이 있는가? Html5 하고 Javascript 로 앱에 포팅을하는 것으로 다 만들 수 있다고 홍보하는 데.. 터무니 없는 말은 아니다 가능 하다. 단, Native App에 비해서 퍼포먼스는 구더기이지만.. 기본적으로 텍스트 기반의 또는 Webp의 레이아웃을 따르는 가벼운 Information app 이나, Server ontroler App, Community App 등의 제작을 할 수 있다. [link](https://thebhwgroup.com/blog/hybrid-mobile-apps)
 
 #### Apache Cordova
 
 [link](https://thebhwgroup.com/blog/converting-angularjs-website-cordova-app-ios-and-android)
 
 
+## 마무리 하며: Server 개발자 입장에서의 Spa에 대해
+
+[박재성님의 토론](https://www.slipp.net/questions/368)
 
 
 
