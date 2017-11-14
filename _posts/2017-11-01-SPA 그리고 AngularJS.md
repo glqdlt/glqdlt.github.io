@@ -1,10 +1,12 @@
 ---
 layout: post
-title:  "SPA(Single Page Application)"
+title:  "[Angular]#1, What is Single Page Application (Angular) ?"
 author: "glqdlt"
 ---
 
-# Why Single Page Application (Angluar) ?
+# What is Single Page Application (Angular)?
+
+이 포스트의 예제에 해당하는 데모 프로젝트를 준비했다, 자세한 것은 [Github](https://github.com/glqdlt/seminar_demo) 를 참고.
 
 ## Intro..
 
@@ -97,7 +99,7 @@ SPA 에서 Application이라는 단어가 있듯이, SPA 모델에서는 웹 서
 
 SPA 아키텍처 모델에서 프론트 와 벡엔드가 명확해지는 것은 마치 안드로이드 게임 개발 과 서버 개발의 포지셔닝과 같다. VIEW 개발이 무슨 안드로이드 게임과 견주냐고?
 
-요지는 이러하다 SPA 아키텍처 모델에서 VIEW는 우리 벡엔드 개발자가 기존에 생각하던 template관점의 VIEW와는 근간이 다르다. 후에 Angular 에서 더욱 자세히 이야기 하겠지만, SPA 에서 Web Application 은 기존 서블릿 MVC 디자인과 유사한 MVW(Model - View - Whatever) 디자인을 가진다. MVW는 MVC에서 조금 더 진화한 형태로, Model 과 View는 거의 흡사하고 W는 Web App 개발에 있어 필요한 모든 것을 뜻한다. 굉장히 추상적인 말이지만 C 외에도 더 필요한 요소가 있음을 뜻한다.
+요지는 이러하다 SPA 아키텍처 모델에서 VIEW는 우리 벡엔드 개발자가 기존에 생각하던 template관점의 VIEW와는 근간이 다르다. 후에 Angular 를 다루어보면 더욱 자세히 이해가 되겠지만, SPA 에서 Web Application 은 기존 서블릿 MVC 디자인과 유사한 MVW(Model - View - Whatever) 디자인을 가진다. MVW는 MVC에서 조금 더 진화한 형태로, Model 과 View는 거의 흡사하고 W는 Web App 개발에 있어 필요한 모든 것을 뜻한다. 굉장히 추상적인 말이지만 C 외에도 더 필요한 요소가 있음을 뜻한다.
 
 
 # 기초로 돌아가봅시다, 서버에서 브라우저로
@@ -219,6 +221,7 @@ SPA의 장점을 [Angular Tech Blog](https://blog.angular-university.io/why-a-si
 
 ## SEO 에 대해서
 
+
 SEO는 구글, 네이버와 같은 (크롤링을 통한 검색 엔진을 구현한) 검색 엔진을 제공하는 서비스에서 웹봇들이 데이터에 접근하지 (얻지) 못하는 것을 뜻한다. 이것은 SPA의 기본적인 CSR(Client Side Rendring) 의 특징 떄문인데, SPA 어플리케이션은 View 에 표현할 데이터를 Browser의 Rendring 과정에서 (정확히는 최초 Web Application 이 Load 되는 순간) 반영한다. 그렇다 보니 순수한 Http Request / Response 로 동작하는 웹 봇 입장에서는 데이터가 반영 되지 않은 텅 빈 Static Resource(Html, JSS, CSS 등)을 받는 꼴이니.. 데이터를 알 턱이 없다.
 
 필자는 과거 '웹 악성코드 수집 모듈'을 개발한 적이 있다. 이 모듈은 말 그대로 웹 데이터를 수집하는 크롤링 모듈을 만든 것으로, 네이버나 구글과 같은 유사 웹봇을 만드는 일이었다.
@@ -228,6 +231,8 @@ SEO는 구글, 네이버와 같은 (크롤링을 통한 검색 엔진을 구현�
 이 SEO를 해결하려면 근본적으로는 SPA를 서비스하는 웹 서버에서 SSR(Server Side Rendering)을 통해 미리 데이터를 반영한 패킷을 보내주어야지 해결을 할 수 있다.
 
 많은 프론트엔드 개발 프레임워크 개발진에서는 이 SEO를 해결하기 위해서 SSR 기능 개발에 열을 올리고 있다. 자세히는 모르지만 SSR을 가장 잘 해결한 라이브러리로는 ReactJS가 좋다는 말을 들었고, Angular에서는 Angular Universal 라는 프로젝트로 SSR 을 지원하는 모듈을 개발하고 있다고 한다.
+
+요지를 정리하면 SEO는 Rendring(Model 반영)을 Client / Server 어느 시점에서 하느냐에서 오는 문제이다.
 
 
 
@@ -320,58 +325,44 @@ url 을 적거나, markup 을 바로 써도 됨.
 js에서는 es6 부터 class란 문법이 생김.
 
 
-## 세미나의 마지막..
-
-어찌되었든 프레임워크가 만능은 아니다, 스프링을 안다고해서 그 사람이 개발을 잘하냐? 그건 NO 아닌가?
-결국 이걸 하려면 프론트 엔드 개발자의 기본 소양을 가져야함.. 이 소양에는 웹 디자인에 사용되는 웹 설계, 웹 디자인, 퍼블리싱 등의 모든 게 필요함.
-
-
 
 
 ## intellij 로 시작하는 angularjs 
 
-1. angularCli 로 프로젝트를 시작한다.
+1. statc -> angularCli 로 프로젝트를 시작한다.
 
-2. 프로젝트가 만들어지면 자동적으로 Git, Npm 이 Structure가 만들어진다.
+2. 프로젝트가 만들어지면 자동적으로 Git 과 Angular Project 가 generated 된다.
 
-3. readme.md 를 읽어보면 지원하는 내용이 많다.
-
-edit run config..
-
-npm을 추가한다.
-
-npm serv dev 명령을 위해서
-
-command : run
-sciprts: ng
-arguments : serve dev 
-
-입력하고 RUn
+3. readme.md 를 읽어보면 angular-cli 에 대한 using manual 이 있다.
 
 
+## Angular 학습하는 데에 따르는 고충.
 
-## where is angluarJs 3 ??
+1. 두서없는 버전 체계 : AngularJs vs Angular
 
-앙귤러 버전의 설명..
+2. 정신 없는 프론트엔드 생태계
 
-## ts(typeScript) ??
+## TypeScript
 
-type script 에 대한 설명..
+MS에서 만듬.
+
+Google에서 자사 사무 언어로 지정.
+
+
 
 ## ECMA 에 대해서..
 
-ESx(ECMA)는 말 그대로, Client Script(JS) 에 대한 Spec 을 정의한 것이다. ECMA는 협회의 이름이고.. 뭐 유럽 표준 컴퓨팅 뭐시기깽이다, 궁금하면 이쪽을 참조하도록 하자.
-현재는 ES7이 나왔고, 곧 있으면 ES8 가 발표 예정이다. 현재 JS는 ES5까지 지원하고 있다. 왜 이러할까? 사실 그럴 수 밖에 없는 것이, 하향평준화란 말이 있잖은가? 브라우저의 벤더는 다양하다.
-크게 봐서 브라우저이지, 내부적으로 보면 다양한 파서와 엔진들이 존재한다. 그들과의 상호작용을 저 표준에 맞추어서 구현하려면 브라우저 쪽에서의 반영이 느릴 수 밖에 없다.
-우리 자바 개발자를 예로 들어보면, JAVA EE나, Servlet 표준에 권고하는 SPEC에 맞는 WAS 개발이 발표 된다고 바로 적용되는 것도 아니다, 그렇게 이해하면 된다. (적어도 나는 이렇게 이해했다)
-사실 Servlet 스펙도, 그 위에 w3c에서 http spec 을 따라 순차적으로 구현하니, 복잡하게 얽힌 트리 구조이다. ECMA를 읽을 떄 문자 그대로 '에크마' 읽는 사람이 있고, '이씨엠에이' 라고 읽는 사람이 있다.
-나는 후자였는 데, 찾아 보니 전자가 맞다고 한다(웁스).
+ES(ECMA Script)는 Client Script(JS) 에 대한 Spec 을 정의한 것이다. 
+(ECMA는 관리 조직의 이름이다.. 뭐 유럽 표준 컴퓨팅 뭐시기라고 함, 궁금하면 구글링을 하도록 하자, 나는 별 관심이 없어서..)
+
+현재는 ES7이 나왔고, 곧 있으면 ES8 가 발표 예정이다. 현재 JS는 ES5까지 지원하고 있다. 왜 이러할까? 사실 그럴 수 밖에 없는 것이 브라우저의 벤더들이 다양하기 때문, 이상과 구현의 차이에 대해서는 개발자라면 잘 알것 이다, 표준이라는 것은 그럼.
+
+우리 자바 개발자들도 보면, JAVA EE나, Servlet 표준에 권고하는 SPEC에 맞는 WAS 개발이 바로 적용되는 것도 아니지 않던가.
+
+* 더 궁금하다면 [이 곳](http://bbs.nicklib.com/?mid=application&category=5082&page=1&document_srl=5084)과 [이곳](http://d2.naver.com/helloworld/2809766) 에 좋은 자료가 있으니 읽어보자.
 
 
-[ECMA에 대해서](http://bbs.nicklib.com/?mid=application&category=5082&page=1&document_srl=5084) 이 링크를 참조하자.
-[여기도있다](http://d2.naver.com/helloworld/2809766)
-
-## AngularJs4
+## Angular (4)
 
 [간단한 셋팅의 동영상](https://www.youtube.com/watch?v=ND0TugBPid8)
 [책 저자의 발표자료](https://www.slideshare.net/jwj0831/angular-seminar)
@@ -382,11 +373,8 @@ ESx(ECMA)는 말 그대로, Client Script(JS) 에 대한 Spec 을 정의한 것�
 
 
 
-* package.json 은, maven으로 치면 pom.xml 이다. 이곳에 dependencies가 있음.
-* mvn install == npm i
-* ng new 
-* ng serv
-* ng generate --help (compile 하는 개념)
+* package.json 은, maven으로 치면 pom.xml 이다. 이곳에 npm 들의 dependencies가 명시 되어 있다.
+* angular-cli 은, 실제 build 에 사용되는 angular-cli 명령들의 모움이다, 사실 이게 더 pom.xml 같다.
 
 
 ## 인텔리J Live EDIT + NPM
@@ -410,25 +398,32 @@ live edit 로 적용되서 save 하면 콘솔에  webpack 이 계속 빌드하�
 
 
 
-## 이클립스로 시작하는 angularjs
+## spring boot + angluraCli 워크 시나리오
 
-start hehe
+angular cli의 커맨드는 [이곳](https://cli.angular.io/)을 참조 하기를 바람.
 
-## spring boot + anglura Cli
+(Maven에서 FrontEnd Build Plugin 으로 하는 방안도 있는 데, 그건 추후에 업데이트 하도록 하겠다.)
 
-1. ng build
 
-2. spring boot 
+1. spring boot project 를 만듬.
 
-3. spring boot 의 static 폴더를 연다
+2. 간단한 RestController 를 만듬.
 
-4. 빌드 된 ng module을 /dist/**   - copy to /static/** 폴더로 복사한다.
+3. src/main/의 위치에 ng 폴더를 만듬 (src/main/ng/* 가 angular working package가 된다.)
 
-5. start spring boot 잘 된다 ^^
+4. terminal(cmd) 를 이용해서 src/main/ng 위치에서 ng new project를 하나 만든다.
 
-요약을 하면..
+5. angular project 가 generated 되면 angular-cli.json 을 오픈.
 
-* ng cli ==> copy to /dist/** >>> /static/**  ==> mvn spring-boot:run 
+6. 많은 config key 중에서 'outDir' 의 value에 build export 대상을 지정하면 되는 데, spring boot의 static에 보낼 것이므로.. "outDir": "../../resources/static" 요로콤 설정.
+
+7. terminal(cmd) 에서 ng build 명령으로 bundling 한다.
+
+8. src/main/resources/static 에 보면 build 된 bundle이 생성 되있는 것을 알 수 있다.
+
+9. spring boot를 run. 끝
+
+
 
 ## Node.Js 그리고 NPM
 
@@ -560,13 +555,17 @@ Angular 는 Client 성격이 강하고, Vaadin 은 기존 자바 개발자들이
 [link](https://thebhwgroup.com/blog/converting-angularjs-website-cordova-app-ios-and-android)
 
 
-## 마무리 하며: Server 개발자 입장에서의 Spa에 대해
 
-[박재성님의 토론](https://www.slipp.net/questions/368)
+## 마지막으로
+
+Angular를 적용한다는 것은, F / B 의 명확한 분리를 한다는 것이다.
+이것이 의미하는 것은 결국 집중을 뜻한다. 즉, Angular 도입은 명확한 서비스의 목적과 규모 그리고 SPA의 이해가 있어야 한다는 말이다. 괜히 어정쩡한 작은 규모에서 트랜드에 휩쓸려서 혹은 template 관점으로 접근하면 배보다 배꼽이 더 커지게 된다. (이 경우는 [Vaadin](#)으로 접근하는 것이 현명하다고 생각한다.)
+
+시간이 난다면 자바지기님으로 유명하신 [박재성 교수님의 토론](https://www.slipp.net/questions/368) 에서 고수들의 대화를 엿보는 것도 도움이 많이 된다.
 
 
 
-## 참고
+## 참고한 도서
 
 * [앵귤러 첫걸음, 조우진](http://book.naver.com/bookdb/book_detail.nhn?bid=12096305)
 * [클라이언트-서버 웹 앱 만들기, 캐지미너 새터노스](http://book.naver.com/bookdb/book_detail.nhn?bid=8302910)
