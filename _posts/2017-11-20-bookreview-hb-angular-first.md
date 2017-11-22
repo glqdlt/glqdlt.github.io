@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Angular 첫걸음을 읽고.."
+title:  "[작성중]Angular 첫걸음을 읽고.."
 author: "glqdlt"
 ---
 
