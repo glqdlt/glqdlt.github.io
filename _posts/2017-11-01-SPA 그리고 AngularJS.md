@@ -398,7 +398,7 @@ Npm serv 를 실행 된 상태에서, 크롬의 Live EDIT plugin 을 실행하�
 ## bowel 하고 webpack 이 같이 있다.
 
 * npm, yarn, bowel : 패키지 관리 도구 
-* grunt, gulp, npm : 컴파일 자동화 도구 (난독화 및 소스 코드 용량 줄이기)
+* grunt, gulp, npm : 컴파일 자동화 도구 (난독화 및 소스 코드 용량 줄이기: Optimizing) 
 * babel, typescript, coffeescript : js port language (전처리 컴파일러, jsp 같은 느낌이라 보면 됨.)
 
 * (내가 카톡에 보낸 사진)
