@@ -1,79 +1,82 @@
 ---
 layout: post
-title:  "SPA(Single Page Application)"
+title:  "[작성중][Angular]#1, What is Single Page Application (Angular) ?"
 author: "glqdlt"
 ---
 
-# Why Single Page Application (Angluar) ?
+# What is Single Page Application (Angular)?
 
-## Intro..
+이 포스트의 이해를 돕는 데모 프로젝트를 하나 만들었다, 자세한 것은 [Github](https://github.com/glqdlt/seminar_demo) 를 참고.
 
-어느 화창한 주말 저녁, 곤히 꿀잠 자면서 뒹굴거리고 있었는 데 갑작스레 팀장님으로 부터 세미나 요청을 받았다. 주제로는 'Angular' 에 대해서 세미나를 준비해달라는 메일이었다.
+## Intro
 
-메일을 읽자 마자 느낀 감정은 일단 나를 지목하신 것은 팀 내에서 트랜드에 가장 관심 가지던 성격 때문에 나를 지명했으리라는 생각이 확고했는 데, 왜 나인지 .. 지명 당한 사실 보다는 "엥? 왜 Angular?" 주제 선정에 대해 느낀 의무점이 가장 컸다. 
+어느 때와 별 일 없는 주말 저녁, 곤히 꿀잠 자면서 뒹굴거리고 있었는 데 갑작스레 팀장님으로 부터 메일을 받았다. 'Angular' 에 대해서 세미나를 준비해달라는 메일이었다.
 
-그도 그럴 것이 필자가 근무하고 있는 곳은 서버 엔지니어 팀으로 많은 데이터의 핸들링과 유저 커넥션을 처리하는 서비스 (팀에서는 딜리버리 라고 표현한다.)를 처리 하는 팀에서 근무하고 있다. 웹 서비스를 구현하거나 운영하는 팀과는 거리가 조금 멀기 때문이다.
+메일을 읽자 마자 느낀 감정은 수 많은 사람 중에 왜 나인지에 대한 지명보다는 "왜 하필 Angular?" 라는 주제 선정에 대해 궁금했다.
 
-하는 일에 대해서 조금 더 자세히 얘기하면 외부의 데이터나 내부의 데이터를 취합하거나 변경하는 biz service를 만들고 Restful Api를 통해 내/외부에 제공하는.. 요즘 흔하게 볼 수 있는 API 서버 개발을 많이 하고 있다. 
+그도 그럴 것이 내가 근무하고 있는 곳은 서버 엔지니어 팀으로, 데이터의 핸들링과 유저 요청을 처리하는 (팀에서는 딜리버리 라고 표현한다.) 서버 팀에서 근무하고 있는 데, Angular를 써야 할 정도의 프로젝트들과는 접점이 없는 일을 하고 있다.
 
-이렇다 보니 우리 팀에 있어 Web Application은 서버 운영에 필요한 간단한 Admin Console Tool 정도로 활용하고 있다. 
-Application은 간단한 CRUD 형태의 게시판이나 Config의 0 과 1 을 제어하는 로직이 대부분이다. 이런 팀 환경에서 갑작스레 Angular를 들고 세미나를 하겠다고 하는 것은.. 마치 분식집에서 일본식 돈코츠 라멘을 주문하는 것과 같다. 비유가 조금 우스꽝 스럽지만 괜찮은 비유라고 생각 한다. 푸라면이나 너구리탕면 이 가득한 분식집에서 돈코츠라멘을 주문하다니.. 이런 비유를 얘기한 까닭은 라면과 돈코츠라멘의 차이 처럼 같아보이지만 완전히 다른 존재이기 때문이다. 팀장님의 Angular 세미나 요청은 위의 일본 라면의 예처럼 굉장히 아이러니(?)한 주문인 셈이다. 
+하는 일에 대해서 조금 더 자세히 얘기하면 외부의 데이터나 내부의 데이터를 취합하거나 변경하는 biz service를 만들고 Restful Api를 통해 내/외부에 제공하는.. 요즘 흔하게 볼 수 있는 API 서버 개발이 대부분의 일이다.
 
-사실 예제라고 비유하기 위해 말한 것이지만 국내에서 나름 알아주는 서버 엔지니어링이 모인 팀을 분식집에 비유한다는 것은 어찌 보면 실례를 겸한 걸 지도 모른다. 어찌 보면 팀 동료들도 Angular 든 ReactJS든 이름은 많이 들어봤을 텐데, 굳이 직접적인 필요성이 없다 보니 선듯 관심을 가지진 못했을 수도 있고 말이다.
-나야 단순히 트랜드에 관심이 많은 성격 탓에 Angular에 관심을 가졌을 뿐이지, 특별나게 필요성을 이유로 둔다면 딱히 관심을 가질 껀덕지는 없었을 것이다. 일본 라멘 예시는 단순히 예시로만 말하는 것이니 큰 의미는 두지 말았으면 한다. 
+이렇다 보니 팀에 있어 Web Application은 서버 운영 Tool 정도로 활용하고 있다. (내가 쓰기 보다는 대부분 고객이나 운영자가 쓰기 위한 Tool 이다.)
+Application은 간단한 CRUD 형태의 게시판이나 운영 데이터의 설정 값을 제어하는 로직이 대부분이다. 이런 팀 환경에서 갑작스레 Angular를 들고 세미나를 하겠다고 하는 것은.. 마치 분식집에서 일본식 돈코츠 라멘을 주문하는 것과 같다. 비유가 조금 우스꽝 스럽지만 괜찮은 비유라고 생각 한다. 푸라면이나 너구리탕면 이 가득한 분식집에서 돈코츠라멘을 주문하다니..      라면과 돈코츠라멘의 차이 처럼 Angular는 완전히 다른 존재이기 때문이다. 팀장님의 Angular 세미나 요청은 위의 일본 라면의 예처럼 굉장히 아이러니(?)한 주문인 셈이다. 
+
+사실 예제라고 비유하기 위해 말한 것이지만 국내에서 나름 알아주는 서버 엔지니어링이 모인 팀을 분식집에 비유한다는 것은 어찌 보면 실례를 겸한 걸 지도 모른다. 어찌 보면 팀 동료들도 Angular 든 ReactJS든 이름은 많이 들어봤을 텐데, 굳이 직접적인 필요성이 없다 보니 선뜻 관심을 가지진 못했을 수도 있고 말이다.
+나야 단순히 트랜드에 관심이 많은 호기심 탓에 Angular에 관심을 가졌을 뿐이지, 특별나게 필요성을 이유로 둔다면 딱히 관심을 가질 껀덕지는 없었을 것이다. 일본 라멘 예시는 단순히 예시로만 말하는 것이니 큰 의미는 두지 말았으면 한다. 
 
 잡설이 많았는 데 다시 본론으로 들어가서 일단 Angular라는 주제는 방금도 얘기 했듯이 분식집의 주방 이모들님들에게 일본식 라멘 제조법을 설명해야 하는 상황 처럼 팀과는 크게 어울리는 주제가 아니다. 그런데  엉뚱한 이야기로 볼수 있지만 생각을 바꾸어서 만약 분식집의 주방 이모가 라멘을 만들 수 있는 재료와 실력이 있다면 만들어서 식탁에 내놓을 수 있다면 ..? 그게 계기가 되어서 갑자기 장사가 대박이 난다면?
 
-설마 하는 생각이지만 팀장님의 이런 요청은 팀내의 분위기 전환을 위한 큰 그림을 그리는 요청일 일지도 모른단 생각도 든다. 만약에 평소처럼 바로 옆자리에서 구언으로 요청하셨더라면 이러하냐고 질문이라도 해봤겠지만 저 먼 벨기에 에서 메일로 요청하신 일이기에 의문을 품는 것보단 그런 거룩한 뜻이 있을 것이란 생각을 갖고 준비를 하기로 했다.
+설마 하는 생각이지만 팀장님의 이런 요청은 팀내의 분위기 전환을 위한 큰 그림을 그리는 요청일 일지도 모른단 생각도 든다. 만약에 평소처럼 바로 옆자리에서 구언으로 요청하셨더라면 이러하냐고 질문이라도 했었겠지만.. 저 먼 외국 에서 메일로 요청하신 일이기에 의문을 품는 것보단 거룩한 뜻이 있을 것이란 생각을 갖고 준비를 했다.
 
-이렇다 보니 여가 시간에 틈틈히 연구 했던 Angular 프레임워크의 Architecture에 대해 자세히 풀어 가는 것 보다는 Angular는 짤막하게 소개만 하고, SPA 아키텍처에 대해서 설명을 하면서, 왜 SPA가 요즘 많이 쓰이는지, 어떤 차이가 있는 지를 설명하는 것이 중요하단 생각이 들었다.
+이런 생각도 있고 준비하면서도 여러가지 잡념이 Mix 되면서, 틈틈히 연구 했던 Angular 프레임워크에 대해 자세히 들어 가는 것 보다는 Angular는 소개만 하고, SPA 아키텍처에 대해서 설명을 하면서, 왜 SPA가 요즘 많이 쓰이는지, 어떤 차이가 있는 지를 설명하는 것이 중요하단 생각이 들었다, 마치 라면과 일본 라면의 차이를 알아야 하는 것처럼..
 
-
-## SPA ..? 지금 욕 했나요.
-
-SPA는 Single Page Application 이란 의미로, Angular 는 이를 구현하기 쉽도록 도와주는 워킹-셋(프레임워크) 이다. 주로 SPA는 대형 엔터프라이즈 웹 서비스를 다루는 회사에서 주로 많이 쓰이고 있다. 국내 이름만 되도 알만한 포털 회사들은 기본적으로 사용하고 있고, 외국의 글로벌 기업들에서도 많이 사용하고 있다. 후에 자세히 알아 보겟지만, 확장성(Multi-Device)도 가능하고, 클라우드에도 특화 되어 있는 점 때문에 요즘은 스타트업에서도 많이 사용하기도 한다. 
-
-SPA 하면 떠오르는 것이 지금은 이직 한 전 직장에서, 부서는 달랐지만 굉장히 친하게 지내던 동료와 일화가 있다(지금도 간간히 술 자리를 갖는 친구다). 당시에 나는 완전 코흘리게 신입 개발자로 현재의 회사도 극복 못 하면서 국내 포털 회사들에 대해 막연한 동경을 품던 시절이 있었는 데, 포털 회사에서 많이 구현하는 MSA(Micro Service Archtecture) 와 SPA(Single Page Application) 을 다룬 회사들의 테크노트(Tech-note)를을 읽고 세상의 모든 것이 여기에 있다는 생각 하고 관심을 가졌던 적이 있다. 그런 나를 보고 친한 동료는 술 자리에서만 서면 '시파(S PA)' 라고 놀리곤 그랬는 데, 오늘에 와서 생각해보면 SPA가 무엇인지, 왜 생겨났는 지, MSA와의 연관성은 어떠한지도 제대로 모르는 채 관심도 없어 하는 동료에게 아는 척, 해본 척 떠벌리고 다녔으니 놀린게 아니라 팩트였지 않나 하는 생각이 든다.
-
-또 얘기가 옆으로 샜는데.. 각설하고 본격적으로 SPA에 대해서 알아보도록 하자.
 
 ## 요즘 Web App : Single Page Application
 
-Single Page Application 을 하나의 문장으로 표현하면 이렇다고 말하고 싶다.  "Document 가 아닌 하나의 Application"
+SPA는 Single Page Application 이란 의미로, Angular 는 이를 구현하기 쉽게한 워크-셋(프레임워크) 이다. 주로 SPA는 대형 웹 서비스를 다루는 회사에서 주로 많이 쓰이고 있는 데, 대부분 국내 이름만 되도 알만한 포털/이커먼스 회사들은 필수적으로 사용하고 있다 보면 된다. 후에 자세히 알아 보겟지만, 확장성(Multi-Device)도 가능하고, 클라우드에도 특화 되어 있는 점 때문에 요즘은 스타트업에서도 많이 사용하기도 한다. 
+
+개인적으로 SPA에 관심을 가지게 된 것은 코흘리게 시절에 대형 포털 회사들에 대해 막연한 동경을 품던 시절이 있었다. 매일 퇴근 길에 포털 회사에서 많이 구현하는 MSA(Micro Service Archtecture) 와 SPA(Single Page Application) 을 다룬 회사들의 테크노트(Tech-note)를을 읽으면서 큰 관심을 가진 것이 시발점이었다.
+
+SPA(Single Page Application) 을 하나의 문장으로 표현하면 이렇다고 말하고 싶다.  "Document 가 아닌 하나의 Application"
 
 "Web Page 가 아닌 Application..?"
 
-사람에 따라서는 이 말이 다소 황당하게 느껴 질 수도 있을 지도 모르겠다, 만약 Web의 초창기에 시간이 머물러 있는 사람이라면 Web은 문서를 공유하기 위한 플랫폼이라며 괴성을 지를 지도 모르니 말이다.
+사람에 따라서는 이 말이 다소 황당하게 느껴 질 수도 있을 지도 모르겠다, 만약 Web의 초창기에 시간이 머물러 있는 사람이라면 "Web은 문서를 공유하기 위한 것인데 빼애액!!" 이라며 괴성을 지를 지도.. 
 
-SPA(Single Page Application)라는 문장 그대로를 풀이해보면 '화면 전환이 없는 단 하나의 페이지(인스턴스)' 를 뜻 한다. 화면 전환이 없다는 말은 이야기만 봐서는 아무것도 하지 않는 대기 상태를 뜻하는 것 같기도 하다, 뭐 하나 클릭 안 하고 마우스에서 손을 때고 말이다. 그런데 Angular나 ReactJS 로 만들어진 요즘 많이 보이는 웹 서비스 화면에서는 Android App처럼 가만히 대기 상태에서도 보고 있던 화면의 데이터가 갱신이 되거나, 어떤 메시지를 알려주거나 광고를 담은 Modal Popup이 Notification 되기도 한다. 과연 이걸 보고 대기 상태라고 말할 수 있을까?
+SPA(Single Page Application)라는 문장 그대로를 풀이해보면 '화면 전환이 없는 단 하나의 페이지(인스턴스)' 를 뜻 한다. 화면 전환이 없다는 말은 이야기만 봐서는 아무것도 하지 않는 대기 상태(No Action)를 뜻하는 것 같기도 하다, 뭐 하나 클릭 안 하고 마우스에서 손을 때고 말이다. 
 
-이런 역동적인 Event가 구현 가능함에 어떤 사람은 SPA를 User 인터렉션 (사용자 반응)이 강한 다이나믹한 UI(Page)를 구현한 것으로 생각하기도 한다. 틀린 말은 아니다, 기능적인 측면에서 User의 Event를 다이나믹하게 처리할 수 있는 막강한 기능들을 가지고 있기 때문이다. 하지만 이 말은 단순하게 일부분만을 바라본 이야기이다. 기존의 전통적인 Web Page 환경에서도 Javascript 를 통한 여러가지 이벤트 처리 및 애니메이션, 비동기 데이터 갱신 등을 할 수 있었기 떄문이다. 그럼 무엇이 SPA라고 말할 수 있는 것일까?
+이게 무슨 말이냐면 우리가 만드는 Web Servlet을 보면 Web Service는 굉장히 Server에 종속적이다. User는 자기가 보고 싶은 화면(서비스)에 대해 Server에 요청(Action)을 하고 Server에서 요청에 맞는 View를 응답(제공) 해준다. Server 가 다운 되면 다음 Page로 넘어갈 수가 없다. 
 
-SPA가 말하는 화면 전환이 없다는 말의 의미는 독립적인 Application이기 때문에 나오는 말이다. 기본적으로 SPA의 Structure는 우리가 밥먹듯이 찍어냈던 서블릿 MVC 와 흡사하다.(Angular는 예전에 MVC Framework 라고 대놓고 홍보했는 데, 지금은 MVW(Model View Whatever) 라고 홍보하고 있다. 말이 나온김에 Whatever가 무엇이냐면, MVC의 Controler 처럼 Controler가 될 수도 있고, Service 가 될 수도 있는 (뭐라는거야) Web Service를 구성할 수 있는 모든 것들을 뜻 한다고 한다. (나도 이 개념이 아직 낯설어서 자세히 뭐라고 말은 못하겠지만.. 그냥 기본적으로 Controler 라고 생각하고 있다.))
+그런데 Angular나 ReactJS 로 만들어진 트랜디한 웹 서비스를 보면 Android App처럼 가만히 대기 상태에서도 보고 있던 화면의 데이터가 갱신이 되거나, 어떤 메시지를 알려주거나 광고를 담은 팝업이 뙇 하고 나타나기도 한다. 또한 Server의 상태가 맛이 가더라도 동작을 멈추지 않는다. 과연 이걸 보고 No Action 상태라고 말할 수 있을까? 
 
-Client에서 MVC기능을 수행하고 있다 보니, 기존의 Server에서 하던 역활은 많이 퇴색되었다. Server는 이제 Restful API 서버로서의 데이터 제공에 포커싱을 맞춘 서비스를 하면 되고(Model 과 Control) View Layer는 Client에서 처리가 가능하니 직접 처리하게 된다, 화면은 결국 Client가 보기 위한 것이니깐 Client가 가져가는 게 맞다. 그런데 왜 Model 하고 Controler 도 Client도 생겼을 까? View Layer를 Client가 직접 처리한다는 말은, 자기가 어떤 View(Template)를 볼 지 직접 처리한다는 말로, 서블릿 MVC 모델에서 컨트롤러가 하던 기능과 똑같다. 서블릿 MVC에서 Controler가 하던 걸 떠올려보자, Template을 정하고(JSP 나 Typeleaf) Service logic에서 처리된 데이터(model)을 View에 반영한다, Client의 Controler (정확히는 Component)도 유사한 기능을 제공한다. Angular에서는 이를 Route 라는 모듈로 제공하고 있다. 여기까지는 서블릿 개발을 해왔던 사람이라면 납득도 되고 이해가 쉽다. 
+이런 역동적인 Event가 구현 가능함에 어떤 사람은 SPA를 사용자 인터렉션에 특화 된 Dynamic View를 구현한 것으로 생각하기도 한다. 틀린 말은 아니다, 기능적인 측면에서 User의 Event를 원하는 데로 처리할 수 있는 막강한 기능들을 가지고 있기 때문이다. 하지만 이 말은 단순하게 일부 만을 바라본 이야기이다. 기존의 전통적인 Web Page 환경에서도 Javascript 를 통한 여러가지 이벤트 처리 및 애니메이션, 비동기 데이터 갱신 등을 할 수 있었다. 그럼 무엇을 보고 SPA라고 말하는 것일까?
 
-문제는 이제부터 인데, SPA 아키텍처에서 Client는 Server와 거의 유사한 biz service logic도 가지고 있다. 이게 무슨 말이냐면 계산기를 예로 들어보자, 기존의 전통적인 Web Page에서 계산기 기능을 가진 Page가 있다고 하면 User는 계산을 요청할 뿐이고, 서버에서 계산의 수행과 결과(View)를 Return 받는 형태로 기능이 제공 된다. SPA 에서는 자기 자신에서 계산의 수행과 결과(View) 를 직접 보면서 결과를 알게 된다. 서버에는 계산의 결과를 전달할 뿐이다. 그것이 계산을 했다는 로그가 될 지, 결과의 수를 전달 할 지는 설계하기 나름이지만, 어찌 되었든 서버는 어더한 데이터를 받아서 Sync를 맞추기 위해 데이터를 검증하고 반영할 것이다. 이처럼 Client에서도 Service Logic을 수행 할 수 있기 때문에 Application의 특성을 갖는 다고 말하는 것이다. 좀 더 생각해보면 굳이 서버가 있어도 되나? 싶은 느낌도 들지 않나? 이런 느낌으로 봐서는 SPA는 캐쥬얼 게임 Application 같기도 하다. 이런 부분에서 Web Page 가 아닌 Application의 성격을 가진다는 것이다.
+SPA가 말하는 화면 전환이 없다는 말의 의미는 독립적인 Application이기 때문에 나오는 말이다. SPA의 Structure을 살펴 보면 우리가 밥 먹듯이 만들던 서블릿 MVC와 매우 흡사하다.
 
+(Angular는 초창기에는 MVC 라고 홍보를 했는 데, 지금은 MVW(Model View Whatever) 라고 홍보하고 있다. 말이 나온김에 Whatever가 무엇이냐면, 사실 별 거창한 것 없고 Contoler 를 뜻 하는 것이다. Angular는 Client Multi-Device를 구현하기 위한 Framework를 구현하고자 하다 보니 각 Device마다 다른 단어로 불리울 수도 있어서 Whatever 라고 하는 것, 결국 App을 구성할 수 있는 모든 것들을 뜻 하는 거라 보면 된다. )
 
-Service Layer는 Server에도 있고, Client에도 있다고 말했는 데.. 이게 무슨 의미냐면, 쉽게 생각하면 된다. 
+Client에서도 MVC가 가능해지다 보니, 기존의 Server에서 하던 일은 많이 퇴색되었다. Server는 이제 API 서버로서의 Model(데이터) 제공 하는 Core Service에 집중하면 되고, User의 모든 Event는 User가 직접 처리하게 된다, 즉 화면은 결국 Client가 보기 위한 것이니깐 Client가 가져 것 처럼.
 
-SPA 에서 Application이라는 단어가 있듯이, SPA 모델에서는 웹 서비스를 구현한 어플리케이션이 되는 것이 가장 큰 포인트다. Application이 되려면 어떠한 '기능' 이 있어야 하지 않겠는가? CRUD를 한다고 하면 CRUD를 할 수 있는 기능이 되어야할 것이 아닌가? 그리고 Application은 단독으로도 기동이 될 수도 있다. 서버 없이 CRUD를 하려면 어떻게 해야하겠는가? 자체적으로 DB를 가지 던지 데이터를 메모리에 두고 바로 반영하던지 해야할 것이다. 이게 SPA모델에서 Client 에서 Service Layer가 존재하는 이유이다. Server도 존재하는 것은 Sync를 맞추기 위함이다. 그래서 Client에도 Server와 동일한 Model이 있고, 성격은 조금 다르지만 Model의 데이터를 주고 받을 Service Layer가 Client / Server 양쪽에 다 구성하게 된다. Server는 Database를 가지고 있을 수도 있고, 자체적으로 Cache 에서 처리할 수도 있다. 마찬가지로 Client에서는 Browser에서 Cache 개념으로 메모리 상에 데이터를 올려두고 갱신 하는 형태다. 이런 특성 때문에 양방향 데이터 바인딩이라 하여, Server에서 반영하고 Client로 돌아오는 기존의 형태가 아니라 Client 와 Server 가 Sync를 맞추 듯이 양쪽에서 같이 반영하는 형태로 발전하고 있다. 이처럼 SPA가 갖는 화면 전환이 없다는 의미는 Server 와는 결합되지 않은 Application의 의미로 생각하면 된다.
+그런데 왜 Model 하고 Controler 도 Client도 생겼을 까? View Layer를 Client가 직접 처리한다는 말은, 자기가 어떤 View(Template)를 볼 지 직접 처리한다는 말로, 서블릿 MVC 모델에서 컨트롤러가 하던 기능과 똑같다. 
 
+서블릿 MVC에서 Controler가 하던 걸 떠올려보자, Template을 정하고(JSP 나 Typeleaf) Service logic에서 처리된 데이터(model)을 View에 반영한다, Angular의 MVW에서도 말했지만 SPA 의 MVC도 이런 구조이다.
 
+ 어떤 template 을 써야 할지 정해주는 Controler 가 있고, Service에서 제공해주는 데이터를 받아서 화면에 뿌리는 역활까지 한다. (Angular에서는 이것들을 Component 에서 제공하고 있다. 자세한 건 다음 Post에서 다루겠다). 그리고 Url 핸들링은 Angular에서는 Route 라는 모듈로 제공하고 있다. Route는 Url 경로에 따른 맞는 Component(module)을 호출해주는 일만 한다. 따지고 보면 마치 User는 새로운 Page로 간 것 같지만 사실상 보고 있던 화면이 이동이 아닌, 갱신 된 것일 뿐이다. (그래서 Single Page Application의 특징 중에 Unlimited Scrolling 이라는 표현도 있다.)
 
-그렇다면 이토록 특별한 것처럼 이야기 하는 SPA의 결정적인 특징은 무엇일까? 
+잠시 언급헀던 Service는 위의 Component와는 별도의 개별적인 레이어에 존재한다. 또한 모든 라이프 사이클을 Angular에서 직접 관리한다. 개발자는 Logic을 작성만 하고 Component에 호출하게끔만 하면 된다, 직접 new 키워드로 생성하질 않는다. 이걸 보면 Spring의 DI와 비슷한 것 같은데.. Angular에서도 DI라도 표현 하고 있다. 수행하는 역활도 똑같고, User 서비스를 수행 할 비지니스 로직을 가지고 있다.
+
+이처럼 이런 서버와 많이 흡사한 점이 결국 Application의 구실을 할 수 있게 된 것이다. 굳이 서버가 있을 필요가 있나 싶기도 하다. (하여 많은 클라우드 벤더들은 [Serverless](https://www.slideshare.net/awskorea/serverless-architecture-lambda-api-gateway) 서비스를 제공하고 있다.) 이런 느낌으로 봐서는 SPA는 캐쥬얼 게임 Application 같기도 하다. 이런 부분에서 Web Page 가 아닌 Application 이라고 말을 헀던 것이다.
 
 
 ## 요즘 JavaScript
  
 요즘 자바스크립트가 갖는 의미는 (그것이 웹 서비스이든 아니든..) 상당하다. 자바스크립트 프레임웍이나 라이브러리 갯수만 놓고 보아도 (Angular, ReactJS, VueJS.. 등) 한 페이지를 채울 정도로 많이 생겨났는 데, 양이 많다고 해서 질이 좋다고는 못하지만.. 적어도 많은 관심과 사랑을 받고 있다고는 확실하게 볼 수 있다.
 
-자바스크립트가 사랑을 받기 시작한 것은 생각보다 오래 되었다. 이슈가 될 만한 계기는 많았지만 크게 2005년 Google 의 Google Map 발표 현장이었다고 한다. 당시의 다른 웹 기반의 Map 서비스는 확대/축소 기능을 위해서는 Map을 다운로드 받아서 실행시켜야 했었다고 한다, 문제는 Google은 자바스크립트를 통한 비동기 데이터 갱신(지금은 Ajax라고 많이 부르는 그것)을 통해서 실시간으로 Map 의 확대/축소 기능의 구현을 보여줘서 세상을 놀라게 했다.
+자바스크립트가 사랑을 받기 시작한 것은 생각보다 오래 되었다. 이슈가 될 만한 계기는 많았지만 개인적으로 2005년 Google 의 Google Map 발표 현장이었다고 생각 한다. 당시의 다른 웹 기반의 Map 서비스는 확대/축소 기능을 위해서는 Map을 다운로드 받아서 실행시켜야 했었다고 한다, 문제는 Google은 자바스크립트를 통한 비동기 데이터 갱신(지금은 Ajax라고 많이 부르는 그것)을 통해서 실시간으로 Map 의 확대/축소 기능의 구현을 보여주면서 세상을 놀라게 했다.
 
-또 다른 이슈가 될 만한 사건으로는 약 4~5년 전에 [Mean Stack](http://mean.io/)(MongoDB - Express- Angular - NodeJS ) 이란 이름으로 자바스크립트로 웹 서비스 전체를 구현(Full Stack)하는 것이 당시에 큰 화제가 됬던 적이 있다. 당시 초년생이었던 나는 뭔지도 모를 Mean Stack이라는 어감에 훅해서 (뭔가 멋져 보였다) 자바 보다 자바스크립트에 많은 관심을 가졌던 때가 있다. 지금은 자바 개발자로 먹고 살고 있지만 만약 누군가가 조금이라도 등을 밀어줬더라면 지금은 자바가 아닌 자바스크립트로 밥을 먹고 살고 있을 지도 모를 그런 기억이 있다.
+또 다른 이야기로는 약 4~5년 전에 [Mean Stack](http://mean.io/)(MongoDB - Express- Angular - NodeJS ) 이란 이름으로 자바스크립트로 웹 서비스 전체를 구현(Full Stack)하는 것이 큰 화제가 됬던 적이 있다. 당시 초년생이었던 나는 뭔지도 모를 Mean Stack이라는 어감에 훅해서 (뭔가 멋져 보였다) 자바 보다 자바스크립트에 많은 관심을 가졌던 때가 있었다. 지금은 자바 개발자로 먹고 살고 있지만 만약 누군가가 조금이라도 등을 밀어줬더라면 지금은 자바가 아닌 자바스크립트로 밥을 먹고 살고 있을 지도..
 
-오늘 날에 있어 자바스크립트는 단순히 브라우저의 스크립트 이상의 의미를 가지고 있다. Mean Stack 이라는 말에서도 알 수 있지만, 이제 웹서버의 구실도 하는 데다가, Native Javascript Application 이라는 Browser 밖에서 동작하는 Application으로 등장하고 있는 세상이다. (최근이지만 필자는 NodeJs --global 명령으로 윈도우 cmd 환경에서 Javascript App(Node Module) 을 동작 시켰을 떄의 쇼킹함은 아직도 잊지 못하고 있다.)
+오늘 날에 있어 자바스크립트는 단순히 브라우저의 스크립트 이상의 의미를 가지고 있다. Mean Stack 이라는 말에서도 알 수 있지만, 이제 웹서버의 구실도 하는 데다가, 웹 브라우저에 종속적이던 스크립트가 웹 브라우저 밖에서 동작하는 Application으로 등장하고 있는 세상이다. (NodeJs --global 명령으로 윈도우 cmd 환경에서 Javascript App(Node Module) 을 동작 시켰을 떄의 쇼킹함은 아직도 잊지 못하고 있다.)
 
 또한 컨버팅 도구만 있다면 Web App을 Device에 사용할 수 있는 Hybrid App으로 빌드가 가능해진다고도 한다. (물론 Native App 보다는 성능 하락이 있다고 한다. ) 
 
@@ -97,7 +100,7 @@ SPA 에서 Application이라는 단어가 있듯이, SPA 모델에서는 웹 서
 
 SPA 아키텍처 모델에서 프론트 와 벡엔드가 명확해지는 것은 마치 안드로이드 게임 개발 과 서버 개발의 포지셔닝과 같다. VIEW 개발이 무슨 안드로이드 게임과 견주냐고?
 
-요지는 이러하다 SPA 아키텍처 모델에서 VIEW는 우리 벡엔드 개발자가 기존에 생각하던 template관점의 VIEW와는 근간이 다르다. 후에 Angular 에서 더욱 자세히 이야기 하겠지만, SPA 에서 Web Application 은 기존 서블릿 MVC 디자인과 유사한 MVW(Model - View - Whatever) 디자인을 가진다. MVW는 MVC에서 조금 더 진화한 형태로, Model 과 View는 거의 흡사하고 W는 Web App 개발에 있어 필요한 모든 것을 뜻한다. 굉장히 추상적인 말이지만 C 외에도 더 필요한 요소가 있음을 뜻한다.
+요지는 이러하다 SPA 아키텍처 모델에서 VIEW는 우리 벡엔드 개발자가 기존에 생각하던 template관점의 VIEW와는 근간이 다르다. 후에 Angular 를 다루어보면 더욱 자세히 이해가 되겠지만, SPA 에서 Web Application 은 기존 서블릿 MVC 디자인과 유사한 MVW(Model - View - Whatever) 디자인을 가진다. MVW는 MVC에서 조금 더 진화한 형태로, Model 과 View는 거의 흡사하고 W는 Web App 개발에 있어 필요한 모든 것을 뜻한다. 굉장히 추상적인 말이지만 C 외에도 더 필요한 요소가 있음을 뜻한다.
 
 
 # 기초로 돌아가봅시다, 서버에서 브라우저로
@@ -219,6 +222,7 @@ SPA의 장점을 [Angular Tech Blog](https://blog.angular-university.io/why-a-si
 
 ## SEO 에 대해서
 
+
 SEO는 구글, 네이버와 같은 (크롤링을 통한 검색 엔진을 구현한) 검색 엔진을 제공하는 서비스에서 웹봇들이 데이터에 접근하지 (얻지) 못하는 것을 뜻한다. 이것은 SPA의 기본적인 CSR(Client Side Rendring) 의 특징 떄문인데, SPA 어플리케이션은 View 에 표현할 데이터를 Browser의 Rendring 과정에서 (정확히는 최초 Web Application 이 Load 되는 순간) 반영한다. 그렇다 보니 순수한 Http Request / Response 로 동작하는 웹 봇 입장에서는 데이터가 반영 되지 않은 텅 빈 Static Resource(Html, JSS, CSS 등)을 받는 꼴이니.. 데이터를 알 턱이 없다.
 
 필자는 과거 '웹 악성코드 수집 모듈'을 개발한 적이 있다. 이 모듈은 말 그대로 웹 데이터를 수집하는 크롤링 모듈을 만든 것으로, 네이버나 구글과 같은 유사 웹봇을 만드는 일이었다.
@@ -228,6 +232,8 @@ SEO는 구글, 네이버와 같은 (크롤링을 통한 검색 엔진을 구현�
 이 SEO를 해결하려면 근본적으로는 SPA를 서비스하는 웹 서버에서 SSR(Server Side Rendering)을 통해 미리 데이터를 반영한 패킷을 보내주어야지 해결을 할 수 있다.
 
 많은 프론트엔드 개발 프레임워크 개발진에서는 이 SEO를 해결하기 위해서 SSR 기능 개발에 열을 올리고 있다. 자세히는 모르지만 SSR을 가장 잘 해결한 라이브러리로는 ReactJS가 좋다는 말을 들었고, Angular에서는 Angular Universal 라는 프로젝트로 SSR 을 지원하는 모듈을 개발하고 있다고 한다.
+
+요지를 정리하면 SEO는 Rendring(Model 반영)을 Client / Server 어느 시점에서 하느냐에서 오는 문제이다.
 
 
 
@@ -320,58 +326,44 @@ url 을 적거나, markup 을 바로 써도 됨.
 js에서는 es6 부터 class란 문법이 생김.
 
 
-## 세미나의 마지막..
-
-어찌되었든 프레임워크가 만능은 아니다, 스프링을 안다고해서 그 사람이 개발을 잘하냐? 그건 NO 아닌가?
-결국 이걸 하려면 프론트 엔드 개발자의 기본 소양을 가져야함.. 이 소양에는 웹 디자인에 사용되는 웹 설계, 웹 디자인, 퍼블리싱 등의 모든 게 필요함.
-
-
 
 
 ## intellij 로 시작하는 angularjs 
 
-1. angularCli 로 프로젝트를 시작한다.
+1. statc -> angularCli 로 프로젝트를 시작한다.
 
-2. 프로젝트가 만들어지면 자동적으로 Git, Npm 이 Structure가 만들어진다.
+2. 프로젝트가 만들어지면 자동적으로 Git 과 Angular Project 가 generated 된다.
 
-3. readme.md 를 읽어보면 지원하는 내용이 많다.
-
-edit run config..
-
-npm을 추가한다.
-
-npm serv dev 명령을 위해서
-
-command : run
-sciprts: ng
-arguments : serve dev 
-
-입력하고 RUn
+3. readme.md 를 읽어보면 angular-cli 에 대한 using manual 이 있다.
 
 
+## Angular 학습하는 데에 따르는 고충.
 
-## where is angluarJs 3 ??
+1. 두서없는 버전 체계 : AngularJs vs Angular
 
-앙귤러 버전의 설명..
+2. 정신 없는 프론트엔드 생태계
 
-## ts(typeScript) ??
+## TypeScript
 
-type script 에 대한 설명..
+MS에서 만듬.
+
+Google에서 자사 사무 언어로 지정.
+
+
 
 ## ECMA 에 대해서..
 
-ESx(ECMA)는 말 그대로, Client Script(JS) 에 대한 Spec 을 정의한 것이다. ECMA는 협회의 이름이고.. 뭐 유럽 표준 컴퓨팅 뭐시기깽이다, 궁금하면 이쪽을 참조하도록 하자.
-현재는 ES7이 나왔고, 곧 있으면 ES8 가 발표 예정이다. 현재 JS는 ES5까지 지원하고 있다. 왜 이러할까? 사실 그럴 수 밖에 없는 것이, 하향평준화란 말이 있잖은가? 브라우저의 벤더는 다양하다.
-크게 봐서 브라우저이지, 내부적으로 보면 다양한 파서와 엔진들이 존재한다. 그들과의 상호작용을 저 표준에 맞추어서 구현하려면 브라우저 쪽에서의 반영이 느릴 수 밖에 없다.
-우리 자바 개발자를 예로 들어보면, JAVA EE나, Servlet 표준에 권고하는 SPEC에 맞는 WAS 개발이 발표 된다고 바로 적용되는 것도 아니다, 그렇게 이해하면 된다. (적어도 나는 이렇게 이해했다)
-사실 Servlet 스펙도, 그 위에 w3c에서 http spec 을 따라 순차적으로 구현하니, 복잡하게 얽힌 트리 구조이다. ECMA를 읽을 떄 문자 그대로 '에크마' 읽는 사람이 있고, '이씨엠에이' 라고 읽는 사람이 있다.
-나는 후자였는 데, 찾아 보니 전자가 맞다고 한다(웁스).
+ES(ECMA Script)는 Client Script(JS) 에 대한 Spec 을 정의한 것이다. 
+(ECMA는 관리 조직의 이름이다.. 뭐 유럽 표준 컴퓨팅 뭐시기라고 함, 궁금하면 구글링을 하도록 하자, 나는 별 관심이 없어서..)
+
+현재는 ES7이 나왔고, 곧 있으면 ES8 가 발표 예정이다. 현재 JS는 ES5까지 지원하고 있다. 왜 이러할까? 사실 그럴 수 밖에 없는 것이 브라우저의 벤더들이 다양하기 때문, 이상과 구현의 차이에 대해서는 개발자라면 잘 알것 이다, 표준이라는 것은 그럼.
+
+우리 자바 개발자들도 보면, JAVA EE나, Servlet 표준에 권고하는 SPEC에 맞는 WAS 개발이 바로 적용되는 것도 아니지 않던가.
+
+* 더 궁금하다면 [이 곳](http://bbs.nicklib.com/?mid=application&category=5082&page=1&document_srl=5084)과 [이곳](http://d2.naver.com/helloworld/2809766) 에 좋은 자료가 있으니 읽어보자.
 
 
-[ECMA에 대해서](http://bbs.nicklib.com/?mid=application&category=5082&page=1&document_srl=5084) 이 링크를 참조하자.
-[여기도있다](http://d2.naver.com/helloworld/2809766)
-
-## AngularJs4
+## Angular (4)
 
 [간단한 셋팅의 동영상](https://www.youtube.com/watch?v=ND0TugBPid8)
 [책 저자의 발표자료](https://www.slideshare.net/jwj0831/angular-seminar)
@@ -382,11 +374,8 @@ ESx(ECMA)는 말 그대로, Client Script(JS) 에 대한 Spec 을 정의한 것�
 
 
 
-* package.json 은, maven으로 치면 pom.xml 이다. 이곳에 dependencies가 있음.
-* mvn install == npm i
-* ng new 
-* ng serv
-* ng generate --help (compile 하는 개념)
+* package.json 은, maven으로 치면 pom.xml 이다. 이곳에 npm 들의 dependencies가 명시 되어 있다.
+* angular-cli 은, 실제 build 에 사용되는 angular-cli 명령들의 모움이다, 사실 이게 더 pom.xml 같다.
 
 
 ## 인텔리J Live EDIT + NPM
@@ -410,25 +399,32 @@ live edit 로 적용되서 save 하면 콘솔에  webpack 이 계속 빌드하�
 
 
 
-## 이클립스로 시작하는 angularjs
+## spring boot + angluraCli 워크 시나리오
 
-start hehe
+angular cli의 커맨드는 [이곳](https://cli.angular.io/)을 참조 하기를 바람.
 
-## spring boot + anglura Cli
+(Maven에서 FrontEnd Build Plugin 으로 하는 방안도 있는 데, 그건 추후에 업데이트 하도록 하겠다.)
 
-1. ng build
 
-2. spring boot 
+1. spring boot project 를 만듬.
 
-3. spring boot 의 static 폴더를 연다
+2. 간단한 RestController 를 만듬.
 
-4. 빌드 된 ng module을 /dist/**   - copy to /static/** 폴더로 복사한다.
+3. src/main/의 위치에 ng 폴더를 만듬 (src/main/ng/* 가 angular working package가 된다.)
 
-5. start spring boot 잘 된다 ^^
+4. terminal(cmd) 를 이용해서 src/main/ng 위치에서 ng new project를 하나 만든다.
 
-요약을 하면..
+5. angular project 가 generated 되면 angular-cli.json 을 오픈.
 
-* ng cli ==> copy to /dist/** >>> /static/**  ==> mvn spring-boot:run 
+6. 많은 config key 중에서 'outDir' 의 value에 build export 대상을 지정하면 되는 데, spring boot의 static에 보낼 것이므로.. "outDir": "../../resources/static" 요로콤 설정.
+
+7. terminal(cmd) 에서 ng build 명령으로 bundling 한다.
+
+8. src/main/resources/static 에 보면 build 된 bundle이 생성 되있는 것을 알 수 있다.
+
+9. spring boot를 run. 끝
+
+
 
 ## Node.Js 그리고 NPM
 
@@ -560,13 +556,17 @@ Angular 는 Client 성격이 강하고, Vaadin 은 기존 자바 개발자들이
 [link](https://thebhwgroup.com/blog/converting-angularjs-website-cordova-app-ios-and-android)
 
 
-## 마무리 하며: Server 개발자 입장에서의 Spa에 대해
 
-[박재성님의 토론](https://www.slipp.net/questions/368)
+## 마지막으로
+
+Angular를 적용한다는 것은, F / B 의 명확한 분리를 한다는 것이다.
+이것이 의미하는 것은 결국 집중을 뜻한다. 즉, Angular 도입은 명확한 서비스의 목적과 규모 그리고 SPA의 이해가 있어야 한다는 말이다. 괜히 어정쩡한 작은 규모에서 트랜드에 휩쓸려서 혹은 template 관점으로 접근하면 배보다 배꼽이 더 커지게 된다. (이 경우는 [Vaadin](#)으로 접근하는 것이 현명하다고 생각한다.)
+
+시간이 난다면 자바지기님으로 유명하신 [박재성 교수님의 토론](https://www.slipp.net/questions/368) 에서 고수들의 대화를 엿보는 것도 도움이 많이 된다.
 
 
 
-## 참고
+## 참고한 도서
 
 * [앵귤러 첫걸음, 조우진](http://book.naver.com/bookdb/book_detail.nhn?bid=12096305)
 * [클라이언트-서버 웹 앱 만들기, 캐지미너 새터노스](http://book.naver.com/bookdb/book_detail.nhn?bid=8302910)
