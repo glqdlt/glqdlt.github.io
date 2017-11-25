@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "About"
+title: "About Me"
 author: "glqdlt"
-permalink: /about/
+permalink: about
 ---
 
 ## Glqdlt
