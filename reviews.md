@@ -2,7 +2,7 @@
 layout: post
 title: "About"
 author: "glqdlt"
-permalink: /about/
+permalink: /reivews/
 ---
 
 ## 지금까지 읽은거리들
