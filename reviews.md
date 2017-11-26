@@ -1,8 +1,8 @@
 ---
 layout: post
-title: "About"
+title: "Reviews"
 author: "glqdlt"
-permalink: reivews
+permalink: reviews
 ---
 
 ## 지금까지 읽은거리들
