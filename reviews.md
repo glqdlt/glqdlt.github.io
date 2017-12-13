@@ -34,4 +34,13 @@ permalink: reviews
 + [D3인 액션](http://book.naver.com/bookdb/book_detail.nhn?bid=10750077)
     * 코멘트 : 말이필요없음.
 
++ [자바스크립트 언락](http://book.naver.com/bookdb/book_detail.nhn?bid=12327714)
+    * 브라우저 플랫폼에 대해 좀 알아갈 수 있는 책 같다, 목차의 키워드를 잘 알아두는 것이 중요.
+* [자바 람다 배우기](http://book.naver.com/bookdb/book_detail.nhn?bid=12344257)
+    * 한빛 리얼타임 E북의 람다 책을 다 보고도 이해가 안될 때, 구매를 고려 해보는 걸로.
 
+* [NOdeJS를 활용한 마이크로서비스](http://book.naver.com/bookdb/book_detail.nhn?bid=12452996)
+    * 꼭 사야 한다. 지금 껏 맛 본 자바스크립트와 마이크로서비스 지식을 하나로 엮어볼 수 있는 경험을 할 수 있을 듯.
+* [Restful Web API 모범 전략 가이드](http://book.naver.com/bookdb/book_detail.nhn?bid=9520318)
+    * 한빛 E북의 API 설계 책이 워낙에 좋아서(값도 싸다), 그것을 우선 읽어보는 것으로.. 목차 만 봐서는 소장 해야 할 바이블 도서 같다.
+    * 
