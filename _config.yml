@@ -6,7 +6,7 @@ imgpath: glqdlt.github.io/_img
 
 # Setup
 title:          Glqdlt's Blog
-paginate:       5
+paginate:       10
 baseurl:        ""
 url:            https://glqdlt.github.io/
 
