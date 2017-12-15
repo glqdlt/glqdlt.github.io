@@ -68,3 +68,6 @@ permalink: reviews
     * 기존에 있던 빨간 책이 많이 어렵다고 느꼈었는 데, 이 책으로 다시 복습 후 기존 책을 읽는 것이 도움이 될까?
 + [스프링 부트](http://book.naver.com/product/go.nhn?bid=12095873&cpName=ridi&url=https%3A%2F%2Fridibooks.com%2Fbooks%2F443000495%3Freferer%3Dnaver_book%26referer%3Dnaver_book)
     + 스프링 부트를 이용해서 도커 빌드 부터 여러가지 MSA 를 위한 기법들을 정리되어 있다, 리디북스에도 책이 있네.
+
++ [객체지향의 오해](http://book.naver.com/bookdb/book_detail.nhn?bid=9145968)
+    + 평이 아주 좋아 보인다. 가지고 있는 객체지향 책을 읽어보고 이해 안되면 구매하는 것으로
