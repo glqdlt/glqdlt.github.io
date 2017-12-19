@@ -71,3 +71,10 @@ permalink: reviews
 
 + [객체지향의 오해](http://book.naver.com/bookdb/book_detail.nhn?bid=9145968)
     + 평이 아주 좋아 보인다. 가지고 있는 객체지향 책을 읽어보고 이해 안되면 구매하는 것으로
+
++ [지능형 웹 알고리즘](http://book.naver.com/bookdb/book_detail.nhn?bid=12724573)
+    + 꼭 사서 읽어 보자, 교양의 느낌으로.
++ [프로가 되기 위한 웹 기술 입문](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=6876538)
+    + 오래 된 책이므로 사서 보지는 말고, 목차를 키워드 검색에 활용하기로 한다. 검색 후 지식을 포스트하는 것을 잊지 말자.
++ [자바 퍼즐러](http://www.hanbit.co.kr/store/books/look.php?p_code=B3886341469)
+    + 오래 된 책(jdk5) 이지만, 구성과 완성도가 높다고 한다. 읽을 지 말지는 고민. (이펙티브 자바 부터 읽는 게 좋지 않을까?)
