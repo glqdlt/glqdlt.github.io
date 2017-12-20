@@ -31,3 +31,4 @@ permalink: todo
     + Redis : Token Cache server
     + Postgresql : RDBMS
     
+    + SPEC : XMPP (Notification), Chat (WebSocket)
