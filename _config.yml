@@ -35,9 +35,12 @@ gems:
   - jekyll-paginate
 
 
+#disqus
+disqus:       disqus_gSPuQXPFbO
+
 #disqus option
 ---
-#layout: default
-#comments: true
+layout: default
+comments: true
 # other options
 ---
