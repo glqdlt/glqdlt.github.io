@@ -83,3 +83,9 @@ permalink: reviews
 
 + [클린코드](http://book.naver.com/bookdb/book_detail.nhn?bid=7390287)
     + 클린코더를 읽었는 데 이걸 안읽을수가.. 일단 이펙티브 자바 부터 읽어보자.
+
++ [실전 스프링 부트 워크북](http://book.naver.com/bookdb/book_detail.nhn?bid=12095873)
+    + 구성이 좋아보이지만, 목차만 참조해서 구글링을 통해 러퍼런스 확인하는 것이 좋을 것 같다는 생각이다. (e북이 있네?)
+    + 
++ [스프링 마이크로서비스](http://book.naver.com/bookdb/book_detail.nhn?bid=12270182)
+    + 위의 NodeJS 책하고 비교해서 둘다 좋아보인다. Nodejs로 할거라면 위의 Nodejs 마이크로서비스를.. 스프링으로 할 것이라면 이책을 사는 것이 좋을거같다. 구성이 참 좋다
