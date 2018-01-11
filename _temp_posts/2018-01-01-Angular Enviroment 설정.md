@@ -4,7 +4,7 @@ title:  "[작성중]Angular Enviroment 설정"
 author: "glqdlt"
 ---
 
-1. enviroments 폴더에 enviroment.local.ts 를 만들어준다.
+1. enviroments 폴더에 enviroment.local.ts 를 만든다.
 
 <pre><code>
 export const environment = {
@@ -13,10 +13,7 @@ export const environment = {
 };
 </code></pre>
 
-
-2. 이 apiUrl을 참조할 service를 만들어준다. (참고 : import는 꼭 아래와 같이  enviroments.ts 를 바라봐야한다.)
-
-
+2. 이 apiUrl을 참조할 service를 만든다. (참고 : import는 꼭 아래와 같이  enviroments.ts 를 바라봐야한다.)
 
 <pre><code>
 import {environment} from "../../environments/environment";
@@ -26,8 +23,8 @@ import {environment} from "../../environments/environment";
 this.URL = environment.apiUrl;
 </code></pre>
 
-
-3. package.json 에 script를 등록한다.
+3. package.json 에 script를 작성해서 등록.
+ 
 <pre><code>
   "ng": "ng",
   "start": "ng serve --port 5555",
@@ -47,7 +44,5 @@ this.URL = environment.apiUrl;
         "local":"environments/environment.local.ts"
   }
 </code></pre>
-
-
 
 [Refrernce](https://github.com/angular/angular-cli/wiki/stories-application-environments)
