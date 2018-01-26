@@ -49,7 +49,7 @@ permalink: reviews
     * 구매 고려 중, 일단 지금것들을 읽어보고 이해가 안되면 구입 하는 걸로
 
 + [더 나은 프로그래밍을 위한 코드골프](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=8721703)
-    * 자바스크립트로 알고리즘을 맛보는 책, 구매 예정
+    * 자바스크립트로 알고리즘을 맛보는 책, 구매 완료
 
 + [D3인 액션](http://book.naver.com/bookdb/book_detail.nhn?bid=10750077)
     * 말이필요없음.
@@ -91,3 +91,8 @@ permalink: reviews
     + 위의 NodeJS 책하고 비교해서 둘다 좋아보인다. Nodejs로 할거라면 위의 Nodejs 마이크로서비스를.. 스프링으로 할 것이라면 이책을 사는 것이 좋을거같다. 구성이 참 좋다
 + [알고리즘 라이프](http://book.naver.com/bookdb/book_detail.nhn?bid=12836325)
     + 알고리즘을 일상생활에 빗대어 설명하는 것이 재밌어 보임.
++ [TDD로 알아 보는 객체지향의 실천](http://book.naver.com/bookdb/book_detail.nhn?bid=7231228)
+    + 구성이 TDD와 객체지향을 섞은 듯한 내용이다. 좋아보이는데.
+
++ [ ???](http://book.naver.com/bookdb/book_detail.nhn?bid=6680572)
+    + 좋아보임.
