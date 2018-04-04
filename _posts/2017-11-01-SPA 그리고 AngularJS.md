@@ -33,15 +33,12 @@ Application은 간단한 CRUD 형태의 게시판이나 운영 데이터의 설�
 
 ## 요즘 Web App : Single Page Application
 
-<<<<<<< HEAD:_posts/2017-11-01-SPA 그리고 AngularJS.md
+
 ## 요즘 JavaScript
  
 요즘 웹 트랜드에서 자바스크립트 Stack에 대해 이야기를 하면 무수히 많은 이야기가 나온다. Angular, ReactJS, VueJS.. 내가 많이 몰라서 그렇지 종류를 나열만 해도 한 페이지를 채울 수도 있을 것 같다. 
 
 이제는 많은 웹 개발자들이 자바스크립트에 대한 이야기와 트랜드에 화두에 올리고 있다. 약 4~5 년 전에는 Full Stack == MEAN Stack 이란 말이 유행 했던 적도 있을 정도로 자바스크립트는 이제 무시하지 못 할 만큼 자리를 잡았다. 
-=======
-SPA는 Single Page Application 이란 의미로, Angular 는 이를 구현하기 쉽게한 워크-셋(프레임워크) 이다. 주로 SPA는 대형 웹 서비스를 다루는 회사에서 주로 많이 쓰이고 있는 데, 대부분 국내 이름만 되도 알만한 포털/이커먼스 회사들은 필수적으로 사용하고 있다 보면 된다. 후에 자세히 알아 보겟지만, 확장성(Multi-Device)도 가능하고, 클라우드에도 특화 되어 있는 점 때문에 요즘은 스타트업에서도 많이 사용하기도 한다. 
->>>>>>> ee60841ba49bbb20b340c54bbb2b9535d9c6ce60:_temp_posts/2017-11-01-SPA 그리고 AngularJS.md
 
 개인적으로 SPA에 관심을 가지게 된 것은 코흘리게 시절에 대형 포털 회사들에 대해 막연한 동경을 품던 시절이 있었다. 매일 퇴근 길에 포털 회사에서 많이 구현하는 MSA(Micro Service Archtecture) 와 SPA(Single Page Application) 을 다룬 회사들의 테크노트(Tech-note)를을 읽으면서 큰 관심을 가진 것이 시발점이었다.
 
