@@ -68,6 +68,7 @@ permalink: reviews
 
 * [함수형 반응형 프로그래밍](http://book.naver.com/bookdb/book_detail.nhn?bid=12285041)
     * 기존에 있던 빨간 책이 많이 어렵다고 느꼈었는 데, 이 책으로 다시 복습 후 기존 책을 읽는 것이 도움이 될까?
+    * 리디북스에도 책이 있네 이책으로 보자
 + [스프링 부트](http://book.naver.com/product/go.nhn?bid=12095873&cpName=ridi&url=https%3A%2F%2Fridibooks.com%2Fbooks%2F443000495%3Freferer%3Dnaver_book%26referer%3Dnaver_book)
     + 스프링 부트를 이용해서 도커 빌드 부터 여러가지 MSA 를 위한 기법들을 정리되어 있다, 리디북스에도 책이 있네.
 
@@ -96,3 +97,17 @@ permalink: reviews
 
 + [ ???](http://book.naver.com/bookdb/book_detail.nhn?bid=6680572)
     + 좋아보임.
+
++ [DDD Start!](http://book.naver.com/bookdb/book_detail.nhn?bid=10615650)
+    + JPA 책이 DDD와 JPA의 이해를 기반으로한다면 이 책은 그것을 바탕으로 우리가 해온 프로그래밍이 과연 DDD에 어떻게 부합되고 우리가 망각하고 있던가를 다시 리마인드해주는 책이라고함. 읽어봐야할듯
+
++ [도메인 주도 설계](http://book.naver.com/bookdb/book_detail.nhn?bid=6680572)
+    + DDD의 창시자 에릭 에반스의 책. 읽어봐야함.
+
++ [Node.js 마이크로서비스](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=13270981)
+    + Nodejs 고관련해서
++ [스프링5.0 마이크로서비스](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=13270981)
+    + Spring 기반의 레거시 프로젝트를 마이크로 서비스로 전환할 때
++ [린 애자일 기법을 활용한 테스트 주도 개발](http://book.naver.com/bookdb/book_detail.nhn?bid=7624003)
+    + 린 애자일의 실무관점의 이야기
+    + 

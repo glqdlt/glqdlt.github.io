@@ -26,6 +26,20 @@ comments : true
 AngularJs와 Angular의 큰 차이점이라면 Angular는 클래스 중심의 모듈 구조의 개발을 더욱 직관적이고 쉽게 할 수 있게 되었다는 것이 다른 점이다.
 
 
+## Angular 를 선택한 이유
+
+Angular를 선택한 이유는 아래와 같다.
+
+잘 만들어지고 구조적인 틀 : 프론트엔드 기반 경험이 적으므로 좋은 레퍼런스로 활용할 수 있는 Angular의 잘 짜여지고 강제화 된 뼈대는 기반 체계를 잡는 데 용이할 것으로 생각.
+
+객체 지향 프로그래밍 : Typescript 와 Angualr Framework로 개발한다면 기존의 SpringMVC와 비슷한 개발흐름을 갖는 것을 느꼈다. 상속을 지원하고 서비스를 분리함으로써 얻을 수 있는 형태에서 많은 유사함을 느꼈다. 기존의 자바스크립트도 프로토타입을 통한 Class와 상속을 할 수 있다지만, Typescript 문법은 Java 개발하고 거의 유사하여 적응하는 데 용이했다.
+
+Google 지원 : Google 에서 Angular 를 확실하게 밀어주고 있다는 인상.
+
+템플릿 의 분리 : React를 고려하지 않은 이유 중 하나인데, template 과 코드가 합쳐지는 형태인 JSX는 원만한 협업 분리가 불가능할 것으로 보여서 고려하지 않았었다. 이와는 반대로 angular와 vue는 템플릿이 분리되는 형태임으로(물론 디렉티브는 template에서 적용 되지만..) 관심을 가졌었다.
+
+[Reference](https://medium.com/unicorn-supplies/angular-vs-react-vs-vue-a-2017-comparison-c5c52d620176)
+
 
 
 ## ECMA Script
