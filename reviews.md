@@ -37,6 +37,10 @@ permalink: reviews
 + [HANBIT_Beginning_Akka](#)
 + [HANBIT_Java8_Lambda](#)
 + [자바8 인 액션](#)
++ [자바 ORM 표준 JPA 프로그래밍](#)
++ [토비의 스프링 3.1](#)
++ [자바 성능 튜닝이야기](#)
++ [JAVA 프로그래밍 면접 이렇게 준비한다](#)
 
 
 #### 자바스크립트
@@ -45,6 +49,9 @@ permalink: reviews
 + [Vue.js 2 프로그래밍](#)
 + [러닝 자바스크립트](#)
 + [D3인 액션](#)
++ [Angular With Typescript](#)
++ [자바스크립트+제이쿼리 입문](#)
++ [HTML5 Css 디자인 패턴](#)
 
 ### etc
 + [My First My SQL & PHP Programming](#)
