@@ -39,7 +39,8 @@ permalink: reviews
 + [D3인 액션](#)
 + [실전 스프링 부트 워크북](#)
 + [테스트주도 개발로 배우는 개체 지향의 설계와 실천](#)
-
++ [자바8 인 액션](#)
++ [스프링 5.0 마이크로서비스](#)
 
 ### DEVOPS & 기타
 
@@ -51,7 +52,6 @@ permalink: reviews
 + [성당과 시장](#)
 + [아마존 웹 서비스 인 액션](#)
 + [A/B 테스트를 통한 웹사이트 전환율 최적화](#)
-
 
 
 ## 예정 도서
@@ -98,11 +98,6 @@ permalink: reviews
 + [클린코드](http://book.naver.com/bookdb/book_detail.nhn?bid=7390287)
     + 클린코더를 읽었는 데 이걸 안읽을수가.. 일단 이펙티브 자바 부터 읽어보자.
 
-+ [실전 스프링 부트 워크북](http://book.naver.com/bookdb/book_detail.nhn?bid=12095873)
-    + 구성이 좋아보이지만, 목차만 참조해서 구글링을 통해 러퍼런스 확인하는 것이 좋을 것 같다는 생각이다. (e북이 있네?)
-    + 
-+ [스프링 마이크로서비스](http://book.naver.com/bookdb/book_detail.nhn?bid=12270182)
-    + 위의 NodeJS 책하고 비교해서 둘다 좋아보인다. Nodejs로 할거라면 위의 Nodejs 마이크로서비스를.. 스프링으로 할 것이라면 이책을 사는 것이 좋을거같다. 구성이 참 좋다
 + [알고리즘 라이프](http://book.naver.com/bookdb/book_detail.nhn?bid=12836325)
     + 알고리즘을 일상생활에 빗대어 설명하는 것이 재밌어 보임.
 
@@ -111,8 +106,7 @@ permalink: reviews
 
 + [Node.js 마이크로서비스](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=13270981)
     + Nodejs 고관련해서
-+ [스프링5.0 마이크로서비스](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=13270981)
-    + Spring 기반의 레거시 프로젝트를 마이크로 서비스로 전환할 때
+
 + [린 애자일 기법을 활용한 테스트 주도 개발](http://book.naver.com/bookdb/book_detail.nhn?bid=7624003)
     + 린 애자일의 실무관점의 이야기
 + [리모트](http://book.naver.com/bookdb/book_detail.nhn?bid=8552172)
