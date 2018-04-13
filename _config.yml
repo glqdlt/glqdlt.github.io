@@ -20,8 +20,8 @@ markdown:       kramdown
 
 # About
 author:
-  name:         Il woong, Jhun
-  url:          http://chester.how
+  name:         Jhun il-woong
+  url:          https://glqdlt.github.io/
   email:        dlfdnd0725@gmail.com
 
 # Custom vars
@@ -34,9 +34,6 @@ github:
 gems:
   - jekyll-paginate
 
-
-#disqus
-disqus:       disqus_gSPuQXPFbO
 
 #disqus option
 ---
