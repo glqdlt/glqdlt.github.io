@@ -1,12 +1,9 @@
 # Permalinks
 permalink:      /:year-:month-:day/:title
 
-# img_path
-imgpath: glqdlt.github.io/_img
-
 # Setup
-title:          Glqdlt's Blog
-paginate:       10
+title:          glqdlt's Blog
+paginate:       15
 baseurl:        ""
 url:            https://glqdlt.github.io/
 
