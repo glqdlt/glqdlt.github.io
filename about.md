@@ -8,15 +8,15 @@ permalink: about
 # Jhun Il-woong
 
 ## About
-+ 1988, South Korea.
++ South Korea.
 + Web Developer(since 2014).
 + Java, Javascript, Scala
 + Like write posting, programing, drink
 
-## Career
+<!-- ## Career
 
 + 2014.10 ~ 2017.07, [Igloo Security (Korea)](http://www.igloosec.co.kr/en/index.do){:target="_blank"}, Web Developer
-+ 2017.07 ~ now(), [Alticast (Korea)](http://www.alticast.com/main.html){:target="_blank"}, Web Devloper
++ 2017.07 ~  [Alticast (Korea)](http://www.alticast.com/main.html){:target="_blank"}, Web Devloper -->
 
 ## Links
 
