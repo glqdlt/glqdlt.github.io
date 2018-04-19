@@ -5,7 +5,7 @@ author: "glqdlt"
 permalink: about
 ---
 
-# Jhun Il-woong
+# Iw Jhun
 
 ## About
 + South Korea.
