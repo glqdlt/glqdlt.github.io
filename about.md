@@ -20,9 +20,9 @@ permalink: about
 
 ## Links
 
-+ [Github](https://github.com/glqdlt)
-+ [GitPage](https://glqdlt.github.io/)
-+ [SlideShare](https://www.slideshare.net/Jhunww/)
-+ [Blog](http://glqdlt.tistory.com/)
++ [Github](https://github.com/glqdlt){:target="_blank"}
++ [GitPage](https://glqdlt.github.io/){:target="_blank"}
++ [SlideShare](https://www.slideshare.net/Jhunww/){:target="_blank"}
++ [Blog](http://glqdlt.tistory.com/){:target="_blank"}
 
 Thanks.
