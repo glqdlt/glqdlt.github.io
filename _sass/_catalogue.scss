@@ -5,6 +5,11 @@
     display: inline-block;}
     &:a{
         text-decoration: none;
+        color: $default-color;
+    }
+    &:a:hover{
+      color: gray;
+      cursor:pointer; 
     }
 
     
@@ -36,4 +41,4 @@
     display: block;
     width: 2rem;
   }
-}
+
