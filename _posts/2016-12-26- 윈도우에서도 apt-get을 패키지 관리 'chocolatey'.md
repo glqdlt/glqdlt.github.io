@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "윈도우에서도 apt-get을 패키지 관리 'chocolatey'"
+title:  "윈도우 패키지 관리, 'chocolatey'"
 author: "glqdlt"
 comments : true
 ---
