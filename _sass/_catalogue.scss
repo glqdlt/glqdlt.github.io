@@ -2,11 +2,11 @@
   &-item {
     border-bottom: 1px solid $grey-2;
     color: $default-color;
-    display: inline-block;
-
-    text-decoration: none;
-
+    display: inline-block;}
+    &:a{
+        text-decoration: none;
     }
+
     
     &:last-child {
       border:0;
