@@ -2,22 +2,14 @@
   &-item {
     border-bottom: 1px solid $grey-2;
     color: $default-color;
-    display: inline-block;}
-    a{
-        text-decoration: none;
-        color: $default-color;
+    display: inline-block;
     }
-    a:hover{
-      color: gray;
-      cursor:pointer; 
-    }
-
     
-    &:last-child {
-      border:0;
-      border-bottom: 10px;
-    }
+  &:last-child {
+    border:0;
+    border-bottom: 10px;
   }
+  
 
   &-time {
     color: $default-tint;
@@ -41,4 +33,4 @@
     display: block;
     width: 2rem;
   }
-
+}
