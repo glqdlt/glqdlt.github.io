@@ -8,7 +8,7 @@ title: Home
   <div>
     <time datetime="{{ post.date }}" class="catalogue-time">{{ post.date | date: "%B %d, %Y" }}</time>
     <h2>
-      <a href="{{ post.url | prepend: site.url }}" class="catalogue-item">{{ post.title }}</a>
+      <a href="{{ post.url | prepend: site.url }}">{{ post.title }}</a>
     </h2>
   </div>
   {% endfor %}
