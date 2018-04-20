@@ -8,7 +8,7 @@ author: "glqdlt"
 Maven의 Multiple Modules Project에 관한 것은 [이곳](https://maven.apache.org/guides/mini/guide-multiple-modules.html)에서 공식 가이드를 참조해 주시기를 바랍니다.
 
 전체적인 Project Structure 는 아래와 같습니다.
-클라이언트는 
+클라이언트는 Angular5를 사용하고, 
 
 
 
