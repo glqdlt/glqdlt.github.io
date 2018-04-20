@@ -14,21 +14,24 @@
     border-bottom: 30px;
   }
   
+  &-wrapper{
+    margin-bottom: 1rem;margin-top: 10px;
+  }
+
+  &-link{
+    text-decoration: none; color:rgb(155, 155, 155);
+  }
 
   &-time {
-    color: rgb(150, 150, 150);
+    padding-left: 3px; 
+    color: rgb(70, 70, 70);
     font-family: $palatino;
     letter-spacing: .5px;
     font-size: .9rem;
   }
 
   &-title {
-    color: $default-shade;
-    display: block;
-    font-family: $sans-font;
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin: .5rem 0;
+    padding:0; margin: 0;
   }
 
   &-line {
