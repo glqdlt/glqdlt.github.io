@@ -5,13 +5,12 @@ title: Home
 
 <div class="catalogue">
   {% for post in paginator.posts %}
-  <h2>
-    <a href="{{ post.url | prepend: site.url }}" class="catalogue-item">
-  
-        <time datetime="{{ post.date }}" class="catalogue-time">{{ post.date | date: "%B %d, %Y" }}</time>
-       {{ post.title }}
-    </a>
-  </h2>
+  <div>
+    <time datetime="{{ post.date }}" class="catalogue-time">{{ post.date | date: "%B %d, %Y" }}</time>
+    <h2>
+      <a href="{{ post.url | prepend: site.url }}" class="catalogue-item">{{ post.title }}</a>
+    </h2>
+  </div>
   {% endfor %}
 </div>
 
