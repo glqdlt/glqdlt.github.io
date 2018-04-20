@@ -5,10 +5,9 @@ title: Home
 
 <div class="catalogue">
   {% for post in paginator.posts %}
-  <div>
+  <div style="margin-bottom: 1rem">
     <time datetime="{{ post.date }}" class="catalogue-time">{{ post.date | date: "%B %d, %Y" }}</time>
-    <h2 class="catalogue">
-
+    <h2 style="padding:0; margin: 0">
       <a style="text-decoration: none; color:rgb(45, 45, 45)" href="{{ post.url | prepend: site.url }}">{{ post.title }}</a>
     </h2>
   </div>
