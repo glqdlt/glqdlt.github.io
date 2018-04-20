@@ -19,12 +19,13 @@
   }
 
   &-link{
-    text-decoration: none; color:rgb(155, 155, 155);
+    text-decoration: none; 
+    color:rgb(45, 45, 45);
   }
 
   &-time {
     padding-left: 3px; 
-    color: rgb(70, 70, 70);
+    color: rgb(120, 120, 120);
     font-family: $palatino;
     letter-spacing: .5px;
     font-size: .9rem;
