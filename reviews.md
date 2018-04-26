@@ -3,6 +3,7 @@ layout: post
 title: "Reviews"
 author: "glqdlt"
 permalink: reviews
+comments : false
 ---
 
 # 엔지니어링

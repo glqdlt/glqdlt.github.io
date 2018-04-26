@@ -3,6 +3,7 @@ layout: post
 title: "Reviews"
 author: "glqdlt"
 permalink: reviews
+comments : false
 ---
 
 # 회고록

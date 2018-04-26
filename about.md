@@ -3,6 +3,7 @@ layout: post
 <!-- title: "About Me" -->
 author: "glqdlt"
 permalink: about
+comments : false
 ---
 
 # Iw Jhun

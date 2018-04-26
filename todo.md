@@ -3,6 +3,7 @@ layout: post
 title:  "Title"
 author: "glqdlt"
 permalink: todo
+comments : false
 ---
 
 # TODO
