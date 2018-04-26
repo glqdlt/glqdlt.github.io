@@ -68,32 +68,51 @@ permalink: reviews
 
 ## 예정 도서
 
-+ [속 깊은 Javascript](http://book.naver.com/bookdb/book_detail.nhn?bid=11282182)
-     * 책을 사는 것 보다는 목차를 보고 구글링으로 확인하는 것이 유용해 보임.
+### 1 st
 
-+ [자바스크립트 디자인 패턴](http://book.naver.com/bookdb/book_detail.nhn?bid=10824738)
-    * 이것은 사서 볼 예정.
-
-+ [자바스크립트 디자인패턴과 테스트](https://ridibooks.com/v2/Detail?id=754020259)
-    * 리디북스 전자책으로 나와있으므로 부담 없음.
-
-+ [객체지향 자바스크립트](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=12595865)
-    * 구매 고려 중.. 지금 구매한 도서들을 읽어보고도 이해가 안되면 구입 하는 걸로.
-
-+ [자바스크립트 언락](http://book.naver.com/bookdb/book_detail.nhn?bid=12327714)
-    * 브라우저 플랫폼에 대해 좀 알아갈 수 있는 책 같음, 목차의 키워드를 잘 알아두는 것이 중요.
-
-* [NOdeJS를 활용한 마이크로서비스](http://book.naver.com/bookdb/book_detail.nhn?bid=12452996)
-    * 자바스크립트와 마이크로서비스 지식을 하나로 엮어볼 수 있는 경험을 할 수 있을 듯.
-    
+* 
 * [Restful Web API 모범 전략 가이드](http://book.naver.com/bookdb/book_detail.nhn?bid=9520318)
     * 목차 만 봐서는 소장 해야 할 바이블 도서 같음.
 
 * [함수형 반응형 프로그래밍](http://book.naver.com/bookdb/book_detail.nhn?bid=12285041)
     * 기존에 있던 빨간 책이 많이 어렵다고 느꼈었는 데, 구매해 보는 것으로? 리디북스에도 e북이 있는 것으로 확인됨.
 
++ [리모트](http://book.naver.com/bookdb/book_detail.nhn?bid=8552172)
+    + 한때 노마드 인생을 동경했던 것을 위로해줄 책
+
++ [타입스크립트](http://book.naver.com/bookdb/book_detail.nhn?bid=13440207)
+    + 타입스크립트 책이 나왔음.
+### 2 st
+
++ [자바스크립트 디자인패턴과 테스트](https://ridibooks.com/v2/Detail?id=754020259)
+    * 리디북스 전자책으로 나와있으므로 부담 없음.
+    * 
++ [클로져 시작하기](http://book.naver.com/bookdb/book_detail.nhn?bid=10439897)
+    + 스칼라를 또 팔 지 클로저를 새로 해볼 지 고민..
+
+
++ [자바스크립트 디자인 패턴](http://book.naver.com/bookdb/book_detail.nhn?bid=10824738)
+    * 이것은 사서 볼 예정.
+
 + [지능형 웹 알고리즘](http://book.naver.com/bookdb/book_detail.nhn?bid=12724573)
     + 꼭 사서 읽어 보자, 교양의 느낌으로.
+    + 
+* [NOdeJS를 활용한 마이크로서비스](http://book.naver.com/bookdb/book_detail.nhn?bid=12452996)
+    * 자바스크립트와 마이크로서비스 지식을 하나로 엮어볼 수 있는 경험을 할 수 있을 듯.
+
++ [도메인주도설계](http://book.naver.com/bookdb/book_detail.nhn?bid=6680572)
+    + DDD의 창시자 에릭 에반스의 책이다, DDD관련해서 공부가 될듯
+### 3 st
++ [클로저 프로그래밍의 즐거움](http://book.naver.com/bookdb/book_detail.nhn?bid=10280918)
+    + 클로저를 우선 배우고 나서..
++ [객체지향 자바스크립트](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=12595865)
+    * 구매 고려 중.. 지금 구매한 도서들을 읽어보고도 이해가 안되면 구입 하는 걸로.
+
++ [속 깊은 Javascript](http://book.naver.com/bookdb/book_detail.nhn?bid=11282182)
+     * 책을 사는 것 보다는 목차를 보고 구글링으로 확인하는 것이 유용해 보임.
+
++ [자바스크립트 언락](http://book.naver.com/bookdb/book_detail.nhn?bid=12327714)
+    * 브라우저 플랫폼에 대해 좀 알아갈 수 있는 책 같음, 목차의 키워드를 잘 알아두는 것이 중요.
 
 + [프로가 되기 위한 웹 기술 입문](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=6876538)
     + 오래 된 책이므로 사서 보지는 말고, 목차를 키워드 검색에 활용하기로.
@@ -101,12 +120,9 @@ permalink: reviews
 + [자바 퍼즐러](http://www.hanbit.co.kr/store/books/look.php?p_code=B3886341469)
     + 오래 된 책(jdk5) 이지만, 구성과 완성도가 높아 보임 읽을 지 말지는 고민.
 
-
 + [알고리즘 라이프](http://book.naver.com/bookdb/book_detail.nhn?bid=12836325)
     + 알고리즘을 일상생활에 빗대어 설명하는 것이 재밌어 보임.
 
-+ [도메인주도설계](http://book.naver.com/bookdb/book_detail.nhn?bid=6680572)
-    + DDD의 창시자 에릭 에반스의 책이다, DDD관련해서 공부가 될듯
 
 + [Node.js 마이크로서비스](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=13270981)
     + Nodejs 고관련해서
@@ -114,14 +130,9 @@ permalink: reviews
 + [린 애자일 기법을 활용한 테스트 주도 개발](http://book.naver.com/bookdb/book_detail.nhn?bid=7624003)
     + 린 애자일의 실무관점의 이야기
 
-+ [리모트](http://book.naver.com/bookdb/book_detail.nhn?bid=8552172)
-    + 한때 노마드 인생을 동경했던 것을 위로해줄 책
-
-+ [타입스크립트](http://book.naver.com/bookdb/book_detail.nhn?bid=13440207)
-    + 타입스크립트 책이 나왔음.
-
-+ [클로져 시작하기](http://book.naver.com/bookdb/book_detail.nhn?bid=10439897)
-    + 스칼라를 또 팔 지 클로저를 새로 해볼 지 고민..
-
-+ [클로저 프로그래밍의 즐거움](http://book.naver.com/bookdb/book_detail.nhn?bid=10280918)
-    + 클로저 시작하기와 마찬가지의 이유.
++ [객체지향 소프트웨어 공학](http://book.naver.com/bookdb/book_detail.nhn?bid=6822069)
+    + 기본서로 관심을 가지고있음.
++ [객체지향 소프트웨어 공학 2](http://book.naver.com/bookdb/book_detail.nhn?bid=11945173)
+    + 음 국내 교수님이 쓰신 건데 위의 책하고 어떤걸 사야하나 고민
++ [앤터프라이즈 에플리케이션 아키텍처 패턴](http://book.naver.com/bookdb/book_detail.nhn?bid=9699564)
+    + 마틴 파울러의 책.
