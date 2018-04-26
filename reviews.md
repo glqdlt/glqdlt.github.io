@@ -70,7 +70,10 @@ permalink: reviews
 
 ### 1 st
 
-* 
+
+* [Ruby](http://book.naver.com/bookdb/book_detail.nhn?bid=9766333)
+    * 루비 언어에 대한 바이블인듯
+
 * [Restful Web API 모범 전략 가이드](http://book.naver.com/bookdb/book_detail.nhn?bid=9520318)
     * 목차 만 봐서는 소장 해야 할 바이블 도서 같음.
 
@@ -82,6 +85,8 @@ permalink: reviews
 
 + [타입스크립트](http://book.naver.com/bookdb/book_detail.nhn?bid=13440207)
     + 타입스크립트 책이 나왔음.
+
+
 ### 2 st
 
 + [자바스크립트 디자인패턴과 테스트](https://ridibooks.com/v2/Detail?id=754020259)
@@ -102,7 +107,11 @@ permalink: reviews
 
 + [도메인주도설계](http://book.naver.com/bookdb/book_detail.nhn?bid=6680572)
     + DDD의 창시자 에릭 에반스의 책이다, DDD관련해서 공부가 될듯
+
+
 ### 3 st
+
+
 + [클로저 프로그래밍의 즐거움](http://book.naver.com/bookdb/book_detail.nhn?bid=10280918)
     + 클로저를 우선 배우고 나서..
 + [객체지향 자바스크립트](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=12595865)
