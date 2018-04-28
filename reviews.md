@@ -5,6 +5,13 @@ author: "glqdlt"
 permalink: reviews
 ---
 
+# 비 IT
+
++ Great 디자이너 10
++ 두근두근 자동차 talk
++ 술 이야기
+
+
 # 엔지니어링
 
 ## 읽은 도서
