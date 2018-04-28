@@ -13,6 +13,9 @@ comments : false
 + Web Developer(since 2014).
 + Like write posting, programing, drink
 
++ Modern Java, Modern Javascript(With Typescript), Scala, Python(little), Ruby(little)
+
+
 
 ## Links
 
