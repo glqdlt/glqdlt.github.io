@@ -11,9 +11,9 @@ comments : false
 ## About
 + South Korea.
 + Web Developer(since 2014).
++ Java, Javascript(With Typescript), Scala, Python, Ruby
++ Spring, Akka, Angular(not AngularJS), Vue, Java ORM(JPA)
 + Like write posting, programing, drink
-
-+ Modern Java, Modern Javascript(With Typescript), Scala, Python(little), Ruby(little)
 
 
 
