@@ -2,7 +2,7 @@
 permalink:      /:year-:month-:day/:title
 
 # Setup
-title:          glqdlt's Blog
+title:          Hello World
 paginate:       15
 baseurl:        ""
 url:            https://glqdlt.github.io/
@@ -17,7 +17,7 @@ markdown:       kramdown
 
 # About
 author:
-  name:         Jhun il-woong
+  name:         Iw Jhun
   url:          https://glqdlt.github.io/
   email:        dlfdnd0725@gmail.com
 
