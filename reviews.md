@@ -22,7 +22,6 @@ comments : false
 + 마이크로 서비스 아키텍처 구축
 + DDD Start
 + 클린 코더
-+ 실용 주의 프로그래머
 
 ### 알고리즘
 + 그림으로 배우는 알고리즘
@@ -72,12 +71,26 @@ comments : false
 + 객체 지향의 오해와 사실
 + 모두의 알고리즘 파이썬
 + 아마존 웹 서비스 인 액션
++ 이펙티브 자바
 
 
 ## 예정 도서
 
 ### 1 st
 
++ [블록체인 구조와 이론](http://book.naver.com/bookdb/book_detail.nhn?bid=12152995)
+
++ [Science 팩트체크](http://book.naver.com/bookdb/book_detail.nhn?bid=13497252)
+
++ [나만의 Python Game 만들기](http://book.naver.com/bookdb/book_detail.nhn?bid=7821203)
+
++ [데이터 중심 애플리케이션 설계](http://book.naver.com/bookdb/book_detail.nhn?bid=13483879)
+
++ [미드보다 과학에 빠지다](http://book.naver.com/bookdb/book_detail.nhn?bid=13458150)
+
++ [실용주의 프로그래머](http://book.naver.com/bookdb/book_detail.nhn?bid=7467119)
+
++ [해커와 화가](http://book.naver.com/bookdb/book_detail.nhn?bid=7399482)
 
 * [Ruby](http://book.naver.com/bookdb/book_detail.nhn?bid=9766333)
     * 루비 언어에 대한 바이블인듯
@@ -96,6 +109,8 @@ comments : false
 
 
 ### 2 st
+
++ [아키텍트 이야기](http://book.naver.com/bookdb/book_detail.nhn?bid=2885000)
 
 + [자바스크립트 디자인패턴과 테스트](https://ridibooks.com/v2/Detail?id=754020259)
     * 리디북스 전자책으로 나와있으므로 부담 없음.
