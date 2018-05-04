@@ -71,9 +71,9 @@ comments : false
 
 ### 1 st
 
+* [초보자를 위한 Node.Js](http://book.naver.com/bookdb/book_detail.nhn?bid=13445068)
 
-* [Ruby](http://book.naver.com/bookdb/book_detail.nhn?bid=9766333)
-    * 루비 언어에 대한 바이블인듯
+* [Node.js 6.x 블루프린터](http://book.naver.com/bookdb/book_detail.nhn?bid=12181871)
 
 * [Restful Web API 모범 전략 가이드](http://book.naver.com/bookdb/book_detail.nhn?bid=9520318)
     * 목차 만 봐서는 소장 해야 할 바이블 도서 같음.
@@ -92,10 +92,9 @@ comments : false
 
 + [자바스크립트 디자인패턴과 테스트](https://ridibooks.com/v2/Detail?id=754020259)
     * 리디북스 전자책으로 나와있으므로 부담 없음.
-    * 
+* 
 + [클로져 시작하기](http://book.naver.com/bookdb/book_detail.nhn?bid=10439897)
     + 스칼라를 또 팔 지 클로저를 새로 해볼 지 고민..
-
 
 + [자바스크립트 디자인 패턴](http://book.naver.com/bookdb/book_detail.nhn?bid=10824738)
     * 이것은 사서 볼 예정.
@@ -146,3 +145,4 @@ comments : false
     + 음 국내 교수님이 쓰신 건데 위의 책하고 어떤걸 사야하나 고민
 + [앤터프라이즈 에플리케이션 아키텍처 패턴](http://book.naver.com/bookdb/book_detail.nhn?bid=9699564)
     + 마틴 파울러의 책.
++ [NodeJs를 통한 봇 만들기](http://book.naver.com/bookdb/book_detail.nhn?bid=13363831)
