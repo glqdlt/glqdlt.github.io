@@ -108,9 +108,6 @@ comments : false
 + [도메인주도설계](http://book.naver.com/bookdb/book_detail.nhn?bid=6680572)
     + DDD의 창시자 에릭 에반스의 책이다, DDD관련해서 공부가 될듯
 
-
-
-
 ### 3 st
 
 
