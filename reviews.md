@@ -6,22 +6,32 @@ permalink: reviews
 comments : false
 ---
 
+# 비 IT
+
++ Great 디자이너 10
++ 두근두근 자동차 talk
++ 술 이야기
++ 천사와 악마
++ 다빈치 코드
++ 에브리데이
++ 미래를 바꾼 아홉 가지 알고리즘
+
+
 # 엔지니어링
 
 ## 읽은 도서
 
 ### 철학
++ 클린 코더
+
+### 아키텍처
 + 클라이언트 서버 웹 앱 만들기 (캐지미어 새터노스)
 + 마이크로 서비스 아키텍처 구축
 + DDD Start
-+ 클린 코더
-+ 실용 주의 프로그래머
 
 ### 알고리즘
 + 그림으로 배우는 알고리즘
 + 더 나은 프로그래밍을 위한 코드골프
-
-
 
 ### 프로그래밍
 
@@ -30,16 +40,17 @@ comments : false
 + HEAD FIRST SERVLETS & JSP
 + 난 정말 JAVA를 공부한 적이 없다구요
 + 스프링 프레임워크 3.0 (예제로 쉽게 배우는)
++ 스프링 입문을 위한 자바 객체 지향의 원리와 이해
 + 코드로 배우는 스프링 웹 프로젝트
 + 실전 스프링 부트 워크북
 + 가장 빨리 만나는 스프링 부트
 + HANBIT_Beginning_Akka
 + HANBIT_Java8_Lambda
 + 자바 ORM 표준 JPA 프로그래밍
-+ 토비의 스프링 3.1
++ 토비의 스프링 3.1 Vol_1
 + 자바 성능 튜닝이야기
 + JAVA 프로그래밍 면접 이렇게 준비한다
-
++ 코드로 배우는 스프링 웹 프로젝트
 
 #### 자바스크립트
 + 앵귤러 첫걸음
@@ -48,7 +59,10 @@ comments : false
 + 러닝 자바스크립트
 + D3인 액션
 + 자바스크립트+제이쿼리 입문
+
+#### 웹 디자인
 + HTML5 Css 디자인 패턴
++ 모던 웹사이트 디자인의 정석
 
 ### etc
 + My First My SQL & PHP Programming
@@ -57,7 +71,6 @@ comments : false
 + 성당과 시장
 + A/B 테스트를 통한 웹사이트 전환율 최적화
 
-
 ## 진행 도서
 
 + 스프링 5.0 마이크로서비스
@@ -65,15 +78,37 @@ comments : false
 + 객체 지향의 오해와 사실
 + 모두의 알고리즘 파이썬
 + 아마존 웹 서비스 인 액션
++ 이펙티브 자바
++ 자바8 러닝 인 액션
++ NO SQL
+
 
 
 ## 예정 도서
 
 ### 1 st
 
++ [블록체인 구조와 이론](http://book.naver.com/bookdb/book_detail.nhn?bid=12152995)
+
++ [Science 팩트체크](http://book.naver.com/bookdb/book_detail.nhn?bid=13497252)
+
++ [나만의 Python Game 만들기](http://book.naver.com/bookdb/book_detail.nhn?bid=7821203)
+
++ [데이터 중심 애플리케이션 설계](http://book.naver.com/bookdb/book_detail.nhn?bid=13483879)
+
++ [미드보다 과학에 빠지다](http://book.naver.com/bookdb/book_detail.nhn?bid=13458150)
+
++ [실용주의 프로그래머](http://book.naver.com/bookdb/book_detail.nhn?bid=7467119)
+
++ [해커와 화가](http://book.naver.com/bookdb/book_detail.nhn?bid=7399482)
+
 * [초보자를 위한 Node.Js](http://book.naver.com/bookdb/book_detail.nhn?bid=13445068)
 
 * [Node.js 6.x 블루프린터](http://book.naver.com/bookdb/book_detail.nhn?bid=12181871)
+
+
+* [Ruby](http://book.naver.com/bookdb/book_detail.nhn?bid=9766333)
+    * 루비 언어에 대한 바이블인듯
 
 * [Restful Web API 모범 전략 가이드](http://book.naver.com/bookdb/book_detail.nhn?bid=9520318)
     * 목차 만 봐서는 소장 해야 할 바이블 도서 같음.
@@ -92,9 +127,10 @@ comments : false
 
 + [자바스크립트 디자인패턴과 테스트](https://ridibooks.com/v2/Detail?id=754020259)
     * 리디북스 전자책으로 나와있으므로 부담 없음.
-* 
+    * 
 + [클로져 시작하기](http://book.naver.com/bookdb/book_detail.nhn?bid=10439897)
     + 스칼라를 또 팔 지 클로저를 새로 해볼 지 고민..
+
 
 + [자바스크립트 디자인 패턴](http://book.naver.com/bookdb/book_detail.nhn?bid=10824738)
     * 이것은 사서 볼 예정.
@@ -107,6 +143,7 @@ comments : false
 
 + [도메인주도설계](http://book.naver.com/bookdb/book_detail.nhn?bid=6680572)
     + DDD의 창시자 에릭 에반스의 책이다, DDD관련해서 공부가 될듯
+
 
 ### 3 st
 
@@ -144,4 +181,3 @@ comments : false
     + 음 국내 교수님이 쓰신 건데 위의 책하고 어떤걸 사야하나 고민
 + [앤터프라이즈 에플리케이션 아키텍처 패턴](http://book.naver.com/bookdb/book_detail.nhn?bid=9699564)
     + 마틴 파울러의 책.
-+ [NodeJs를 통한 봇 만들기](http://book.naver.com/bookdb/book_detail.nhn?bid=13363831)
