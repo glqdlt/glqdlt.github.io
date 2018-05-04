@@ -109,6 +109,8 @@ comments : false
     + DDD의 창시자 에릭 에반스의 책이다, DDD관련해서 공부가 될듯
 
 
+
+
 ### 3 st
 
 
