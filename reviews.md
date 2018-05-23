@@ -147,3 +147,5 @@ comments : false
     + 음 국내 교수님이 쓰신 건데 위의 책하고 어떤걸 사야하나 고민
 + [앤터프라이즈 에플리케이션 아키텍처 패턴](http://book.naver.com/bookdb/book_detail.nhn?bid=9699564)
     + 마틴 파울러의 책.
++ [한 권으로 그리는 컴퓨터 과학 로드맵](http://book.naver.com/bookdb/book_detail.nhn?bid=13496659)
+    + 목차를 보고, 이 목차에 기반해서 내가 집필(블로깅)을 해보면서 개념 정리를 하자.
