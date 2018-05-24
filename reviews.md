@@ -99,10 +99,10 @@ comments : false
 
 * [Restful Web API 모범 전략 가이드](http://book.naver.com/bookdb/book_detail.nhn?bid=9520318)
     * 목차 만 봐서는 소장 해야 할 바이블 도서 같음.
+* 
 * [함수형 반응형 프로그래밍](http://book.naver.com/bookdb/book_detail.nhn?bid=12285041)
     * 기존에 있던 빨간 책이 많이 어렵다고 느꼈었는 데, 구매해 보는 것으로? 리디북스에도 e북이 있는 것으로 확인됨.
-+ [리모트](http://book.naver.com/bookdb/book_detail.nhn?bid=8552172)
-    + 한때 노마드 인생을 동경했던 것을 위로해줄 책
+
 + [타입스크립트](http://book.naver.com/bookdb/book_detail.nhn?bid=13440207)
     + 타입스크립트 책이 나왔음.
 
@@ -111,8 +111,7 @@ comments : false
 
 + [자바스크립트 디자인패턴과 테스트](https://ridibooks.com/v2/Detail?id=754020259)
     * 리디북스 전자책으로 나와있으므로 부담 없음.
-+ [클로져 시작하기](http://book.naver.com/bookdb/book_detail.nhn?bid=10439897)
-    + 스칼라를 또 팔 지 클로저를 새로 해볼 지 고민..
+
 + [자바스크립트 디자인 패턴](http://book.naver.com/bookdb/book_detail.nhn?bid=10824738)
     * 이것은 사서 볼 예정.
 + [지능형 웹 알고리즘](http://book.naver.com/bookdb/book_detail.nhn?bid=12724573)
