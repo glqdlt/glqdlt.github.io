@@ -122,6 +122,10 @@ Docker image로 빠르게 구축할 수 있습니다. [Official Guide](https://h
 
 안에서도 선언 할 수 있습니다. 이 경우 당연히 해당 profile context에 종속이 됩니다. 
 
+    <?xml version="1.0" encoding="UTF-8"?>
+    <project ....>
+        ...
+
         <distributionManagement>
             <snapshotRepository>
             <id>snap</id>
@@ -133,3 +137,11 @@ Docker image로 빠르게 구축할 수 있습니다. [Official Guide](https://h
             </repository>
         </distributionManagement>
 
+          <repositories>
+            <repository>
+                <id>public</id>
+                <url>http://127.0.0.1:18081/repository/maven-public/</url>
+            </repository>
+        </repositories>
+        ...
+    </project>
