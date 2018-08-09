@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "ReadOnly트러블슈팅"
+title:  "read only file system"
 author: "glqdlt"
 ---
 
