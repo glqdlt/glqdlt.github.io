@@ -62,7 +62,7 @@ OpenJDK는 뭐랄까 사용하기가 여간 까다로운 놈이다. [official](h
 
 # Zulu
 
-zulu는 azul에서 만든 jdk 이다. 기본 base를 openjdk 를 하고 있고(날먹), 다양한 플랫폼(window,mac,linux) 등에 쉽게 사용 될 openjdk builder를 제작하고 QA까지 마쳐서 배포해주는 형태라고 한다. 기본적으로 zulu는 opensource 로 운영되고, free 이지만, 상업적 용도의 지원이나 서버용 엔터프라이즈 tool들이 포함된 zing 이 있다.
+zulu는 azul에서 만든 jdk 이다. 기본 base를 openjdk 를 사용 하고 있고(날먹), 다양한 플랫폼(window,mac,linux) 등에 사용 할 빌드 된 openjdk 바이너리를 제작하고 QA까지 마쳐서 배포해주는 형태라고 한다. 기본적으로 zulu는 opensource 로 운영되고, free 이지만, 상업적 용도의 지원이나 서버용 엔터프라이즈 tool들이 포함된 zing 이 있다.
 
 zulu 같은 경우엔 그냥 openjdk를 어디서나 쉽게 쓰게 해주는 wrapping 느낌으로 받아들이면 될 것 같다. 참고로 zulu 입장에서는 openjdk 가 완벽한 자바 스펙을 구현한 [TCK](http://openjdk.java.net/groups/conformance/JckAccess/jck-access.html).[TCK WIki](https://en.wikipedia.org/wiki/Technology_Compatibility_Kit) 이다 보니, 해당 워런티를 오라클에 지불 해야한다고 한다... 흠좀무
 
