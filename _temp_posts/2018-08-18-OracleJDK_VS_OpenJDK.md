@@ -166,6 +166,16 @@ OpenJDk의 설명이나, Zulu 의 소개글을 보면 HotSPOT이 많이 나온�
 
 
 
+# scala ?
+
+스칼라는 jre만 있으면 된다.
+
+다만 스칼라에서 원하는 스펙의 jre 를 보면 이런 구문이 있다.
+
+SUN의 HotspotVM 을 원한다는 건데, 이는 openjdk를 쓰라는 말과 거의 같다. 
+
+[레퍼런스](https://stackoverflow.com/questions/27854815/scala-programs-need-jdk-open-jdk-as-a-pre-requisite-or-jre-would-be-enough)
+
 
 
 
