@@ -30,6 +30,8 @@ spring.datasource.removeAbandonedTimeout=60
 
 DBCP 에 무조건 살려 놓을 최소한의 커넥션이 3개이고, 커넥션 폴의 최대 사이즈는 3개이다. 또한 커넥션의 라이프사이클을 관리하기 위해서 커넥션이 부족할 떄 강제로 커넥션의 타이암웃을 60초 동안만 살리겠다는 내용이다.
 
+spring.datasource.removeAbandoned 이 설정이 조금 생소할 수 있는 데, 로직 상에서 DB Connection 을 획득하고 비지니스 처리 후에 Connection 을 꼭 DBCP 에 반환해야 한다. 그러나 개발자의 코드 실수나 모종의 이유로 반환이 되지 않을 경우가 있다. 이를 위해서 나온 설정이 'spring.datasource.removeAbandoned' 이다. 이 놈이 하는 역활은 커넥션을 spring.datasource.removeAbandonedTimeout 설정 시간에 회수하겠다(무조건은 아니라는 썰이 있다. 아마 DBCP 에 부하가 올 떄 회수하는 듯 하다. 나중에 참고해야할듯.) 이다. 
+
 즉, 여러 관리자가 이용하는 CMS에 사용 되는 DB 커넥션은 3개 밖에 안되었고, 특정 관리자가 지연 시간이 큰 (1만개 이상의) 엑셀을 업로드 시에는 한 커넥션이 오랫동안 세션을 가지게 됨으로, DBCP 에서 여유 커넥션이 없어서 이 세션을 60초에 강제로 closing 해버리면서 발생한 문제였다.
 
 기본적으로 이 설정을 하지 않으면 [공식레퍼런스](https://commons.apache.org/proper/commons-dbcp/configuration.html)의 default 설정으로 활성화 되는 데, default 보다 낮은 수치의 설정 때문에 문제가 되었던 것이다.
