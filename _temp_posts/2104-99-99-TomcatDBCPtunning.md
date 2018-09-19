@@ -36,7 +36,7 @@ spring.datasource.removeAbandoned 이 설정이 조금 생소할 수 있는 데,
 
 기본적으로 이 설정을 하지 않으면 [공식레퍼런스](https://commons.apache.org/proper/commons-dbcp/configuration.html)의 default 설정으로 활성화 되는 데, default 보다 낮은 수치의 설정 때문에 문제가 되었던 것이다.
 
-개인적인 뇌피셜이지만, 이러한 설정은 예전 퇴사자가 발코딩으로 인해서 운영 서버에 장애가 일어나 욕을 한무더기로 먹고는 DBCP 문제라 생각하고 이리 설정한 것으로 생각하고 있다.
+개인적인 뇌피셜이지만, 이러한 설정은 예전 퇴사자가 본인의 작업에 의해서 운영 서버에 장애가 일어나 이를 DBCP 문제라 생각하고 이리 설정한 것으로 생각하고 있다.
 
 
 
