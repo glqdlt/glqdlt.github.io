@@ -133,3 +133,7 @@ Stored Procedure 는 select 외에도 Query 내에서 트랜잭션이 걸릴 만
 
 # 레퍼런스
 
+
+[http://egloos.zum.com/kwon37xi/v/5364167](http://egloos.zum.com/kwon37xi/v/5364167)
+
+https://stackoverflow.com/questions/1614139/spring-transactional-read-only-propagation
