@@ -117,6 +117,7 @@ public User findBySeq(Long seq) {
 |noRollbackFor|특정 Exception 에 롤백을 수행하지 않음| 위의 rollbackFor 의 반대의 경우에 사용하는 옵션이다. 특정 Exception 에서는 롤백을 하고 싶지 않은 경우가 생기는 데, 이럴 때 사용하는 옵션.||
 |timeout|선언 된 시간을 Over 하면 롤백을 수행|키워드 그대로 설정한 시간만큼 완료되지 않을 경우에 롤백을 수행하는 옵션이다.||
 
+[taetaetae](https://taetaetae.github.io/2016/10/08/20161008/)
 
 [outsider](https://blog.outsider.ne.kr/870)
 
