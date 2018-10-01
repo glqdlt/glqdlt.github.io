@@ -151,7 +151,7 @@ Stored Procedure 라 불리우는 프로시저는 Database 에서 직접적으�
 ## Error Trace
 
 
-<img src="/images/zulu/99.PNG" alt ="문제의 에러"/>
+<img src="/images/mybatis/mybatis.png" alt ="문제의 에러"/>
 
 이 에러의 구문은 설정 문제도 아니고, 명확하게 'Read-Only Connection 에서는 프로시저를 절대 호출할 수 없다'는 내용이다.
 
