@@ -103,20 +103,22 @@ public User findBySeq(Long seq) {
 
 ```@Transactional``` 은 클래스/ 메소드에 선언이 가능하다. 클래스 선언은 괜찮으나 메소드 선언 구문에서 조금 주의 할 점이 있는 데, 메소드를 ```public``` 로 선언하지 않으면 트랜잭션이 동작하지를 않는다. 
 
-트랜잭션은 내부적으로 Proxy 로 동작하기 때문에 외부에서 접근 할 수 있게 하지 않으면, 동작하지를 않아 버그를 야기할 수 있다.
+트랜잭션은 내부적으로 Proxy 로 동작하기 때문에 외부에서 접근 할 수 있게 하지 않으면, 동작하지 않아 의도치 않은 결과를 초래할 수 있다. 또한 ```@Transactional``` 은 클래스 외에 인터페이스에도 선언할 수 있는 데, 스프링에서는 구현체인 클래스에 선언하기를 권장하고 있다.
 
 ```@Transactional``` 은 readOnly, isolation, propagation 과 같은 여러가지 트랜잭션 관련 옵션들을 제공한다.
 
 |옵션|역활|설명|level|
 |---|---|---|---|
+|name|사용 할 트랜잭션 매니저의 이름|해당 트랜잭션의 대상이 될 트랜잭션 매니저 Bean 의 이름을 선언한다.| default = 'transactionManager'|
 |isolation|Transaction의 격리 수준|이 옵션이 활성화 되면 isolation 옵션이 활성화 된 트랜잭션의 작업이 끝나기 전까지 lock 을 건다던지의 작업을 진행할수 있게 한다.| 
 |propagation|Transaction의 전파 레벨| 트랜잭션의 전파 방법을 정의 한다. 이것이 의미하는 것은 로직을 구현하다 보면 해당 트랜잭션을 포함하는 상위의 트랜잭션을 선언하게 되어 마치 '부모/자식' 관계의 구성이 되는 경우가 있다. 이럴 떄 부모의 트랜잭션의 설정을 따를 지, 자신의 트랜잭션의 설정을 우선시 할 지의 전파방법을 설정하는 키워드이다. ||
 |readOnly|ReadOnly Trasaction 의 사용 유무| 이 옵션은 Connection.setReadOnly(true/false) 를 호출하는 역할을 한다. 옵션이 선언 되면 해당 트랜잭션은 ReadOnly 커넥션을 활성화해 DB에 접근하게 하여 DB에서 접근 비용을 감소시킨다.| |
 |rollbackFor|특정 Exception 에 롤백을 수행| 기본적으로 @Transactional 은 Runtime Exception 이 발생하면 무조건 롤백을 시전한다. 여기서 Runtime Exception 이 아니거나, 특정한 Exception 에서도 롤백을 하도록 하고 싶은 경우엔 이 옵션을 활성화하면 된다.||
 |noRollbackFor|특정 Exception 에 롤백을 수행하지 않음| 위의 rollbackFor 의 반대의 경우에 사용하는 옵션이다. 특정 Exception 에서는 롤백을 하고 싶지 않은 경우가 생기는 데, 이럴 때 사용하는 옵션.||
-|
+|timeout|선언 된 시간을 Over 하면 롤백을 수행|키워드 그대로 설정한 시간만큼 완료되지 않을 경우에 롤백을 수행하는 옵션이다.||
 
 
+[outsider](https://blog.outsider.ne.kr/870)
 
 
 # 문제는 프로시저, Read Only에서의 프로시저 호출의 문제점.
