@@ -125,6 +125,16 @@ public User findBySeq(Long seq) {
 
 [공식 레퍼런스](https://docs.spring.io/spring/docs/4.2.x/spring-framework-reference/html/transaction.html)
 
+# @Transactional 은 어디서 선언하는 것이 좋을까?
+
+리팩토링을 진행하면서 아래의 문제를 마주하게 되었다.
+
+1. 서비스단의 메소드에 select만을 뽑을 수 있는 메소드를 따로 만들어서 선언 하는 것이 좋을까?
+
+2. Repository(DAO) 에서 find** 로 끝나는 메소드에 선언하는 것이 좋을까?
+
+작업 공수는 2번이 가장 편했다. 그럴 것이, Persistence Tier 에서 각 메소드 별로 트랜잭션을 선언해주거나 포인트컷으로 find** 로 select** 시작하는 것에 해당 트랜잭션을 걸수있게만 해주면 되기 때문이다. 하지만 이 방법의 문제점은 모든 select 구문은 slave로 향한다는 포괄적인 개념이다 보니, 실시간 관점의 데이터 조작에도 적용 되어서 찜찜한 상황이 발생한다. 그렇다고 실시간 관점의 데이터 조작만 예외로 적용하자니 소스의 일관성이 깨지게 된다. 더 큰 문제는 Persistence Tier 를 다른 어플리케이션에서도 사용하게 되는 경우인데, 특정 어플리케이션에서는 전체 조작이 실시간적이서 select 조차 Master 로 바라볼 수도 있기 때문에 서비스단에서 메소드 단위를 잘게 쪼개에서 readonly 메소드들을 만들기로 했다.
+
 
 # 문제는 프로시저, Read Only에서의 프로시저 호출의 문제점.
 
