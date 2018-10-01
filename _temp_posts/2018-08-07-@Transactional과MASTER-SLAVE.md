@@ -120,6 +120,10 @@ public User findBySeq(Long seq) {
 
 [outsider](https://blog.outsider.ne.kr/870)
 
+[wiki books](http://wikibook.co.kr/article/transaction-management-using-spring/)
+
+[공식 레퍼런스](https://docs.spring.io/spring/docs/4.2.x/spring-framework-reference/html/transaction.html)
+
 
 # 문제는 프로시저, Read Only에서의 프로시저 호출의 문제점.
 
