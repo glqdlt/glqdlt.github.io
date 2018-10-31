@@ -48,7 +48,7 @@ Pom.xml
 
 컨트롤러에서는 검사를 할 파라미터 객체에 @Valid 를 선언해주고, 메소드에 BindingResult 가 들어올 수 있도록 선언해준다.
 
-@Valid 선언이 빠졌다면 Validate 대상으로 인식하지 못하게 된다. 또한 BindingResult 가 넘어오지 않는다면, 에러 유무를 로직 상에서 처리할 수가 없다.
+@Valid 선언이 빠졌다면 Validate 대상으로 인식하지 못하게 된다. 또한 BindingResult 가 넘어오지 않는다면, 에러 유무에 따른 핸들링을 로직 상에서 처리할 수가 없다.
 
 기본적으로 Validate 정의는 파라미터 객체 안에서 작성이 되고, BindingResult 를 통해 검증 결과를 얻어올 수 있다. 이 BindingResult 를 통해 에러를 thorwing 해서 ControllerAdvisor 나 직접 에러 결과를 클라이언트에 전달 시켜줄 수 있다.
 
