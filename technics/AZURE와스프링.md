@@ -24,3 +24,13 @@ author: "glqdlt"
 
 우선 AZURE 에서 [체험 계정](https://azure.microsoft.com/ko-kr/free/)을 발급 받아서 진행해야 한다.
 
+
+
+
+1. AD 만들기
+
+자신의 AZURE 포털에서 리소스 만들기 > Identity > Azure AD 만들기로 접근
+
+조직 이름과 도메인 이름을 기입하고 만들기 한다.
+
+대략 4분 걸리는 듯, 오래걸린다.
