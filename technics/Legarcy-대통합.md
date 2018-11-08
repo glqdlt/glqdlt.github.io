@@ -73,5 +73,7 @@ author: "glqdlt"
 
 [구글검색](https://www.google.co.kr/search?newwindow=1&source=hp&ei=_PLjW6b-OILe8wWO-KbQAg&q=%EB%84%B7%ED%94%8C%EB%A6%AD%EC%8A%A4+zuul&oq=%EB%84%B7%ED%94%8C%EB%A6%AD%EC%8A%A4+zu&gs_l=psy-ab.3.0.0l2.182.2452.0.3348.21.11.0.2.2.0.254.1205.0j5j2.7.0....0...1c.1j4.64.psy-ab..15.6.727.0..35i39k1j0i131k1.0.dPTWEPtpSAg)
 
+[잘 정리된 블로그](http://kerberosj.tistory.com/228)
+
 [우아한 형제들 기술 블로그](http://woowabros.github.io/r&d/2017/06/13/apigateway.html)
 
