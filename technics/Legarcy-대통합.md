@@ -65,3 +65,10 @@ author: "glqdlt"
 - 폴리그랏한 환경에서 팀원 간의 Skill Point 가 다른 것에 대해 어떻게 고려할 것인가?
 
     - --> A 언어를 다룰 수 있는 개발자가 1명인 경우에, A 언어로 작은 단위의 APP을 만들 수 있게 할 것인가?
+
+
+## 레퍼런스
+
+### 넷플릭스 Zuul
+
+[우아한 형제들 기술 블로그](http://woowabros.github.io/r&d/2017/06/13/apigateway.html)
