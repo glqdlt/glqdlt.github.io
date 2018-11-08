@@ -14,7 +14,7 @@ author: "glqdlt"
 
 - 컨텐츠 서버와 CMS 간의 같은 Context Point 가 있음에도 불구하고 DRY 를 위배 
 
-    - -->  쿠폰 서버와 CMS 간의 Persistence Layer 의 공유가 가능할 텐데 등
+    - -->  프로모션 서버와 CMS 간의 Persistence Layer 의 공유가 가능할 텐데 등
 
 - 각 도메인 서비스 마다 각기 다른 Dependency 와 Coding Style, 그렇다고 폴리그랏 한 것도 아님 
 
