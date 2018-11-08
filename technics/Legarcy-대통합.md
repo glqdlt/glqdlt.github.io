@@ -75,5 +75,7 @@ author: "glqdlt"
 
 [잘 정리된 블로그](http://kerberosj.tistory.com/228)
 
+[잘 정리된 블로그2](https://blurblah.net/1577)
+
 [우아한 형제들 기술 블로그](http://woowabros.github.io/r&d/2017/06/13/apigateway.html)
 
