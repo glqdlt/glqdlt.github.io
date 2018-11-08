@@ -51,6 +51,8 @@ author: "glqdlt"
 
 ## 구성도
 
+<img src="/images/tech/arc.png">
+
 
 ## 기술적 고려 사항
 
