@@ -19,3 +19,5 @@ netflex 에서 제공하는 모듈을 바로 활용하기에는 러닝 커브가
 
 이 때문에 스프링 클라우드에서 하위프로젝트 [spring cloud neflex](https://cloud.spring.io/spring-cloud-netflix/multi/multi__router_and_filter_zuul.html)
 가 만들어졌다.
+
+[Baeldung 가이드](https://www.baeldung.com/zuul-load-balancing)
