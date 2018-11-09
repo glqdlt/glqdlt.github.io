@@ -61,6 +61,11 @@ server.port=8080
 
 > http://localhost:8080/nmp/...
 
+선언을 @EnableZuulProxy로 했는 데, 이 외에도 @EnableZuulServer 가 있다.
+2개의 차이는 크게 없으나 @EnableZuulProxy 가 @EnableZuulServer 를 포함한다고 한다.
+
+https://cloud.spring.io/spring-cloud-netflix/multi/multi__router_and_filter_zuul.html 
+
 ```java
 
 @EnableZuulProxy
