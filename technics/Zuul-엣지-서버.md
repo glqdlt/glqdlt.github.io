@@ -33,11 +33,30 @@ https://spring.io/projects/spring-cloud-netflix
 https://spring.io/guides/gs/routing-and-filtering/
 
 
+### zul 과 spring security
+
+https://github.com/shuaicj/zuul-auth-example
+
+### sample
+
+모든 소스는 [github repository](https://github.com/glqdlt/zuul-edge-service.git) 에 올려 두었다.
+
 ```xml
-zuul.routes.game1.url=http://localhost:8080
+zuul.routes.game1.url=http://localhost:9090
+zuul.routes.game1.path=/nmp/**
 zuul.add-proxy-headers=true
-server.port=9090
+server.port=8080
 ```
+
+.url 과 .path 의 차이는 아래와 같다.
+
+- .url 만 선언할 경우에 route_name 인 game1이 자동적으로 url path가 된다
+
+> http://localhost:8080/game1/....
+
+- 위 설정처럼 .url 과 .path 를 설정할 경우 url 엔드포인트는 아래와 같다.
+
+> http://localhost:8080/nmp/...
 
 ```java
 
@@ -56,19 +75,49 @@ public class ZuulEdgeApplication {
 }
 
 ```
-내가 원하는 것은  reverse proxy 인데, 
-라우팅까지는 성공했는데 단순히 redirect 해주는 인상이었다.
-이게 무슨 말이냐면..
 
-> 요청 : http://localhost:9090/game1
+아래는 필터이다.
+필터는 4가지의 type이 있다.
 
-> 기대 응답 : http://localhost:9090/game1 의 컨텐츠
+- pre
 
-> 실제 응답 : http://localhost:8080/game1 의 컨텐츠
+- post
 
-크롬 디버거를 보니 302로 단순 리다이렉트 된 것으로 보인다..
 
-zuul 은 라우팅과 프록시에 대한 처리를 하는 데 왜안될까
+```java
+
+@Slf4j
+public class SimpleZullFilter extends ZuulFilter {
+    @Override
+    public String filterType() {
+        return "pre";
+    }
+
+    @Override
+    public int filterOrder() {
+        return 1;
+    }
+
+    @Override
+    public boolean shouldFilter() {
+        return true;
+    }
+
+    @Override
+    public Object run() throws ZuulException {
+
+        RequestContext requestContext = RequestContext.getCurrentContext();
+        HttpServletRequest request = requestContext.getRequest();
+
+        log.info("request to ==> {}",request.getRequestURL());
+
+        return null;
+    }
+}
+
+
+```
+내가 원하는 것은  reverse proxy 인데, zuul을 활용하면 이를 쉽게 처리할 수 있어 보인다. 야호
 
 
 ## Ribbon
