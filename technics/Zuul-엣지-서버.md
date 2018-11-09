@@ -21,3 +21,5 @@ netflex 에서 제공하는 모듈을 바로 활용하기에는 러닝 커브가
 가 만들어졌다.
 
 [Baeldung 가이드](https://www.baeldung.com/zuul-load-balancing)
+
+[Baeldung ](https://www.baeldung.com/spring-rest-with-zuul-proxy)
