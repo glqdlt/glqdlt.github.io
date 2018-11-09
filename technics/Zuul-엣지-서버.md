@@ -25,3 +25,23 @@ netflex 에서 제공하는 모듈을 바로 활용하기에는 러닝 커브가
 [Baeldung ](https://www.baeldung.com/spring-rest-with-zuul-proxy)
 
 https://spring.io/guides/gs/routing-and-filtering/
+
+
+라우팅까지는 성공했는데 단순히 redirect 해주는 인상이었다.
+이게 무슨 말이냐면..
+
+> 요청 : http://localhost:9090/game1
+
+> 기대 응답 : http://localhost:9090/game1 의 컨텐츠
+
+> 실제 응답 : http://localhost:8080/game1 의 컨텐츠
+
+크롬 디버거를 보니 302로 단순 리다이렉트 된 것으로 보인다..
+
+음.
+
+그래서 찾아보니
+
+이런 거는 Ribbon 이라는게 있어야 한다고 한다.
+
+https://supawer0728.github.io/2018/03/11/Spring-Cloud-Ribbon%EA%B3%BC-Eureka/
