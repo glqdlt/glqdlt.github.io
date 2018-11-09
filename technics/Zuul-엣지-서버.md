@@ -42,14 +42,87 @@ https://spring.io/guides/gs/routing-and-filtering/
 
 크롬 디버거를 보니 302로 단순 리다이렉트 된 것으로 보인다..
 
-zuul 은 단순 라우팅과 프록시에 대한 처리만 할 뿐, 내가 기대한 로드발란서 역활은 안되는 것으로 보인다.
+zuul 은 라우팅과 프록시에 대한 처리를 하는 데 왜안될까
 
 음.
 
-그래서 찾아보니
+찾아보다 Ribbon 이란 게 그런걸 하는 거 같아서 살펴보았다.
 
-이런 거는 Ribbon 이라는게 있어야 한다고 한다.
+Ribbon 은 로드밸랜서의 역활을 하는 녀석이다.
 
-Ribbon 이 로드발란서 역활을 해주는 거 같다.
+
+
+https://spring.io/guides/gs/client-side-load-balancing/
+
+예제를 살펴보면 흥미로운게 나온다.
+
+아래 설정과
+```yml
+say-hello:
+  ribbon:
+    eureka:
+      enabled: false
+    listOfServers: localhost:8090,localhost:9092,localhost:9999
+    ServerListRefreshInterval: 15000
+```
+
+```java
+@SpringBootApplication
+@RestController
+@RibbonClient(name = "say-hello", configuration = SayHelloConfiguration.class)
+public class UserApplication {
+
+  @LoadBalanced
+  @Bean
+  RestTemplate restTemplate(){
+    return new RestTemplate();
+  }
+
+  @Autowired
+  RestTemplate restTemplate;
+
+  @RequestMapping("/hi")
+  public String hi(@RequestParam(value="name", defaultValue="Artaban") String name) {
+    String greeting = this.restTemplate.getForObject("http://say-hello/greeting", String.class);
+    return String.format("%s, %s!", greeting, name);
+  }
+
+  public static void main(String[] args) {
+    SpringApplication.run(UserApplication.class, args);
+  }
+}
+```
+
+```java
+public class SayHelloConfiguration {
+
+  @Autowired
+  IClientConfig ribbonClientConfig;
+
+  @Bean
+  public IPing ribbonPing(IClientConfig config) {
+    return new PingUrl();
+  }
+
+  @Bean
+  public IRule ribbonRule(IClientConfig config) {
+    return new AvailabilityFilteringRule();
+  }
+
+}
+```
+
+이 코드를 보면, RestClient Service 에 Ribbon 을 통해서 로드밸런스를 적용할 URL 을 service ID 로 등록하고, n개 이상의 resource server 에 ping pong 을 통해 부하가 덜 한 쪽으로 돌려주는 역활을 하는 것 같다.
+
+와우 스바라시.
+
+어쨋든 내가 기대한 것은 Ribbon 이 아님.
+
+남은 것은 Eureka 인데, 이 녀석은 뭘 하는 지 궁금해졌다.
+
+
+
+
+https://dzone.com/articles/spring-cloud-netflix-load-balancer-with-ribbonfeig
 
 https://supawer0728.github.io/2018/03/11/Spring-Cloud-Ribbon%EA%B3%BC-Eureka/
