@@ -17,6 +17,8 @@ author: "glqdlt"
 
 netflex 에서 제공하는 모듈을 바로 활용하기에는 러닝 커브가 높다. 또한 자바 기반의 환경이 아닌 그루비 기반으로 필터를 작성해야하는 부분이 있어 조금 부담스러운 면이 있다.
 
+## Zuul 과 Spring Cloud Netflex
+
 이 때문에 스프링 클라우드에서 하위프로젝트 [spring cloud neflex](https://cloud.spring.io/spring-cloud-netflix/multi/multi__router_and_filter_zuul.html)
 가 만들어졌다.
 
@@ -31,6 +33,30 @@ https://spring.io/projects/spring-cloud-netflix
 https://spring.io/guides/gs/routing-and-filtering/
 
 
+```xml
+zuul.routes.game1.url=http://localhost:8080
+zuul.add-proxy-headers=true
+server.port=9090
+```
+
+```java
+
+@EnableZuulProxy
+@SpringBootApplication
+public class ZuulEdgeApplication {
+
+    @Bean
+    public SimpleZullFilter simpleZullFilter(){
+        return new SimpleZullFilter();
+    }
+
+    public static void main(String[] args) {
+        SpringApplication.run(ZuulEdgeApplication.class, args);
+    }
+}
+
+```
+
 라우팅까지는 성공했는데 단순히 redirect 해주는 인상이었다.
 이게 무슨 말이냐면..
 
@@ -43,6 +69,9 @@ https://spring.io/guides/gs/routing-and-filtering/
 크롬 디버거를 보니 302로 단순 리다이렉트 된 것으로 보인다..
 
 zuul 은 라우팅과 프록시에 대한 처리를 하는 데 왜안될까
+
+
+## Ribbon
 
 음.
 
