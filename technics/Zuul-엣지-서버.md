@@ -56,7 +56,7 @@ public class ZuulEdgeApplication {
 }
 
 ```
-
+내가 원하는 것은  reverse proxy 인데, 
 라우팅까지는 성공했는데 단순히 redirect 해주는 인상이었다.
 이게 무슨 말이냐면..
 
