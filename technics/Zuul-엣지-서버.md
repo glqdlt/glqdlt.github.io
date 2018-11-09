@@ -37,6 +37,9 @@ https://spring.io/guides/gs/routing-and-filtering/
 
 https://github.com/shuaicj/zuul-auth-example
 
+https://www.baeldung.com/spring-cloud-securing-services
+
+
 ### sample
 
 모든 소스는 [github repository](https://github.com/glqdlt/zuul-edge-service.git) 에 올려 두었다.
