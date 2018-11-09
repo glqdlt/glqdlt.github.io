@@ -150,8 +150,13 @@ public class SayHelloConfiguration {
 남은 것은 Eureka 인데, 이 녀석은 뭘 하는 지 궁금해졌다.
 
 
-
-
 https://dzone.com/articles/spring-cloud-netflix-load-balancer-with-ribbonfeig
 
 https://supawer0728.github.io/2018/03/11/Spring-Cloud-Ribbon%EA%B3%BC-Eureka/
+
+## Eureka
+
+
+유레카는 아래 블로그에 잘 정리되어 있다. 나중에 읽어봐야겠다
+
+http://kerberosj.tistory.com/226
