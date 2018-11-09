@@ -22,6 +22,7 @@ netflex 에서 제공하는 모듈을 바로 활용하기에는 러닝 커브가
 
 https://github.com/Netflix/zuul
 
+https://spring.io/projects/spring-cloud-netflix
 
 [Baeldung 가이드](https://www.baeldung.com/zuul-load-balancing)
 
@@ -41,10 +42,14 @@ https://spring.io/guides/gs/routing-and-filtering/
 
 크롬 디버거를 보니 302로 단순 리다이렉트 된 것으로 보인다..
 
+zuul 은 단순 라우팅과 프록시에 대한 처리만 할 뿐, 내가 기대한 로드발란서 역활은 안되는 것으로 보인다.
+
 음.
 
 그래서 찾아보니
 
 이런 거는 Ribbon 이라는게 있어야 한다고 한다.
+
+Ribbon 이 로드발란서 역활을 해주는 거 같다.
 
 https://supawer0728.github.io/2018/03/11/Spring-Cloud-Ribbon%EA%B3%BC-Eureka/
