@@ -19,9 +19,9 @@ Micro ORM ? 그게 뭘까. 처음 듣는 단어이기에 마케팅 단어 수준
 
 우선 Micro ORM 을 논하기 전에, ORM 의 정의부터 명확하게 짚고 가야한다고 생각한다.
 
-ORM 은 추상화 개념이다. domain object 를 쉽게 persistence layer 에서 처리하고자 하는 갈망으로 만들어진 개념이다. 단순하게 데이터베이스에 query 를 수행할 때, domain object 를 데이터베이스 스키마에 맞는 object 로 치환해서 수행하는 경우가 많다. 
+ORM 은 추상화 개념이다. domain object 를 쉽게 persistence layer 에서 처리하고자 하는 갈망으로 만들어진 개념이다. mybatis나 jdbc 를 직접 사용하는 경우를 예로 들어보자, 단순하던 복잡하던 데이터베이스에 query 를 수행해야는 로직을 보면, 이미 잘 구조화 된 domain object 를 만들어놓고, 사용하다가 정작 영속성 계층(DB)에 저장하려고 보면, 스키마 구조에 맞는 object 로 치환하는 로직을 짜게 되는 모습을 흔히 볼 수 있다.
 
-orm 의 시작은 domain object 를 다른 object로 부가적인 작업을 통해 치환하지 않고, 데이터베이스(영속성 레이어)에 바로 사용할 수 있도록 하는 것을 목표로 시작 되었다. 최근에는 기존 RDBMS 기반에서 개념을 좀 더 확장해서 어떠한 영속성 계층(nosql, infra, file 등)에 대응하겠다는 개념(repository)으로 발전했다. 
+orm 의 시작은 domain object 를 다른 object로 부가적인 작업을 통해 치환하지 않고, 데이터베이스(영속성 레이어)에 바로 사용할 수 있도록 하는 것을 목표로 시작 되었다. 최근에는 기존 RDBMS 기반에서 개념을 좀 더 확장해서 어떠한 영속성 계층(nosql, infra, file 등)에 대응하겠다는 개념(repository)으로 발전했다. 이에 대한 이야기는 아래 repository의 확장 인터페이스에 대한 이야기에서 다루겠다.
 
 여담이지만 많은 자바 개발자들이 sql mapper 의 DAO(Data Accese Object) 라는 개념에 많이 익숙해서인지, JPA 에서 마주치는 repository 라는 개념이 ORM에서 쓰이는 DAO 의 대체 개념으로 인식하는 경우가 있다. repository 는 DAO 를 포함하는 더 상위 계층이다. DAO VS Repository 라는 말 자체가 모순이라는 의미로, DAO < Repository 로 접근해야한다.
 
