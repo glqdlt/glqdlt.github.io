@@ -126,13 +126,13 @@ Micro ORM 에 대해서는 개인적으로 아래의 이유로 경량(Micro) ORM
 
     ```
 
-    ORM 에서는 domain object 의 필드에 선언 된 다른 object 에 대한 관계 까지도 persistence 에 맵핑 해준다. 이 말은 Item 만을 조회하더라도 Item과 연결 된 GoodList Object도 자연스레 데이터가 포함되어서 조회가 쉽게 가능해진다. 더군다나 GoodsRewardList는 GoodList 와 관계를 맺고 있기에, 이에 대한 조회도 쉽게 처리할 수 있다. 이 부분이 단일 테이블에만 맵핑을 지원하는 Micro ORM과 궁극적으로 차이가 나는 부분 중 하나이다. 
+    ORM 에서는 domain object 의 필드에 선언 된 다른 object 에 대한 관계 까지도 persistence 에 맵핑 해준다.(또한 상속 관계도 처리해준다.) 이 말은 Item 만을 조회하더라도 Item과 연결 된 GoodList Object도 자연스레 데이터가 연결되어 쉽게 처리가 가능해진다. 더군다나 GoodsRewardList는 GoodList 와 관계를 맺고 있기에, 이에 대한 조회도 쉽게 처리할 수 있다. 이 부분이 단일 테이블 위주의 맵핑을 지원하는 Micro ORM과 궁극적으로 차이가 나는 부분 중 하나이다. 
     
-    객체 간의 관계를 선언하는 작업이 오히려 불편하다고 말하는 의견이 간혹 있다.  이런 의견에 대한 대답으로 개인적으로는 애초에 Domain object 에서 관계 설정을 이미 해놓은 것을 DB에 넣기 위해 치환하는 부수 작업 자체가 더 모순적이다. 
+    객체 간의 관계를 미리 선언하는 작업이 오히려 불편하다고 말하는 의견이 간혹 있다.  이런 의견에 대한 대답으로 개인적으로는 애초에 Domain object 에서 관계 설정을 이미 해놓은 것을 DB에 넣기 위해 치환하는 부수 작업 자체가 더 모순적이다. 
     
     DB는 영속성을 담당하는 것일 뿐, domain 과 관련 된 비지니스 로직은 어플리케이션에서 자연스레 담당한다. 이런 역활과 책임이 이미 잡혀있는 상황에서 OOP 스럽게 object 간의 구조를 잘 짜놓고는 DB에 넣기 위해서나 프레젠테이션 계층에 표현하기 위한 value object 를 만든다던지 하는 부가적인 작업을 하는 것은 객체지향 사항에 이미 위배하는 행위이다.
 
-    그렇다고 SQL Mapper 나 Micro ORM 이 위와 같은 객체 관계의 자연스러움을 표현이 불가능하냐고 물어보면 그것은 아니다. 다만, 자연스럽고 물흐르듯한 코드를 작성하기 어렵다. [mybatis의 one to many](http://lyb1495.tistory.com/110),[mybatis의 상속](http://develop.sunshiny.co.kr/12), [dapper의 공식 one to many](https://dotnetfiddle.net/DPiy2b) ORM은 이 기능을 내부에서 처리해주기 때문에 개발자에겐 굉장히 편하게 코드를 작성할 수 있다.
+    그렇다고 SQL Mapper 나 Micro ORM 이 위와 같은 객체 관계의 자연스러운 구조 표현이 불가능하냐고 물어보면 그것은 아니다. 다만, 자연스럽고 물흐르듯한 코드를 작성하기 어렵다. [mybatis의 one to many](http://lyb1495.tistory.com/110),[mybatis의 상속](http://develop.sunshiny.co.kr/12), [dapper의 공식 one to many](https://dotnetfiddle.net/DPiy2b) ORM은 이 기능을 내부에서 처리해주기 때문에 개발자에겐 굉장히 편하게 코드를 작성할 수 있다.
 
 - 캐싱과 같은 고급 기능 역시 지원하지 않는다.
 
