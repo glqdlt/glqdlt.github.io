@@ -4,7 +4,7 @@ title:  "ORM 과 MicroORM"
 author: "glqdlt"
 ---
 
-# ORM VS MICROORM
+# ORM 과 MicroORM
 
 재직 중인 사내에서 게임 컨텐츠 서비스 개발에 사용 되는 언어로 C# 그리고 Java, 2가지의 언어가 개발에 사용되고 있습니다. 어느 날 C# 엔지니어링을 하는 팀 동료분께서 이런 질문을 하셨습니다.
 
