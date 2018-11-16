@@ -6,6 +6,14 @@ author: "glqdlt"
 
 # ORM VS MICROORM
 
+재직 중인 사내에서 게임 컨텐츠 서비스 개발에 사용 되는 언어로 C# 그리고 Java, 2가지의 언어가 개발에 사용되고 있습니다. 어느 날 C# 엔지니어링을 하는 팀 동료분께서 이런 질문을 하셨습니다.
+
+ '혹시 Micro ORM 이라고 들어봤어요?' 
+
+Micro ORM ? 그게 뭘까. 처음 듣는 단어이기에 마케팅 단어 수준으로 생각을 했다. C# 에는 가장 유명한 persistence lib 으로 dapper 라는 king of micro ORM 이라는 녀석이 있다고 한다. 여기서 micro orm 이라는 단어가 나오다 보니, 이러한 질문을 하신 거였다.
+
+대충 dapper 라는 녀석의 기능을 보아하니 mybatis 와 같은 sql mapper 로 보여졌다. mybatis 는 명확하게 orm 이 아니라 sql mapper 라고 자신을 소개하고 있다.[mybatis official introduction](http://www.mybatis.org/mybatis-3/)에는 'MyBatis is a first class persistence framework with support for custom SQL, stored procedures and advanced mappings.', 또한 [mybatis wiki](https://en.wikipedia.org/wiki/MyBatis) 를 보면 'Unlike ORM frameworks, MyBatis does not map Java objects to database tables but Java methods to SQL statements.' 라고 소개 되어진다. dapper 도 이와 다를 바 없어보이는 데 자신을 (micro) orm 이라고 소개하고 있다. 심지어 [dapper tutorial](https://dapper-tutorial.net/)을 보면, dapper는 Orm 입니까? 라고 물은 질문에 Yes And No 라고 본인들이 써놨다. 뭘까.. 이게 장난하는 것도 아니고 -_-;
+
 
 ## ORM
 
@@ -51,7 +59,7 @@ https://dapper-tutorial.net/
 
 Micro ORM 은 가볍다.
 
-King of Micro ORM 이라 불리우는 Dapper 를 보면, Orm 입니까? 라고 물은 질문에 Yes And No 라고 [대답](https://dapper-tutorial.net/)했다. 그 만큼 Micro Orm은 개념이 아리송한 존재.
+
 
 이 아래 블로그가 아주 도움이 되었다.
 
