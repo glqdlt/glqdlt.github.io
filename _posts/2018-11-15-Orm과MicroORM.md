@@ -57,10 +57,86 @@ https://dapper-tutorial.net/
 
 20년 전통의 hibernate 는 orm 을 이렇게 [정의](http://hibernate.org/orm/what-is-an-orm/) 하고 있다.
 
-## MICROORM
+## MicromORM (Sql Mapper)
 
-Micro ORM 은 가볍다.
+Micro ORM 은 가벼운 ORM 이라는 의미를 가진다. dapper 를 써보지 못했기에 말을 아낄 필요는 있지만, 어디까지나 알아보았을 때 SQL Mapper 와 큰 차이가 없다는 인상이기에 mybatis 를 기준으로 설명하겠다.
 
+Micro ORM 에 대해서는 개인적으로 아래의 이유로 경량(Micro) ORM이라고 칭한 것으로 생각한다.
+
+- 단일 테이블에 대한 매핑만 지원.
+
+    Hibernate 를 예로 들면, object 간의 모든 관계 구조를 db에 mapping 시켜주는 반면, micro orm 은 이러한 기능까지 지원하지 않고, 단일 테이블에 매핑되는 단일 개체에만 동작하게 되어있다.
+
+    위에 대한 얘기는 아래 Orm의 코드로 설명하겠다.
+
+    Item 클래스
+    ```java
+    
+    @Entity
+    @Data
+    public class Item {
+
+        @Id
+        @Column(name = "Seq")
+        @GeneratedValue(strategy = GenerationType.IDENTITY)
+        private BigInteger seq;
+
+        @Column(name = "Uid")
+        private BigInteger uid;
+
+        ....
+
+        // GoodList 와의 관계 설정
+        @ManyToOne
+        @JoinColumn(name = "ItemCode")
+        public GoodsList product;
+
+        ...
+
+    }
+
+    ```
+
+    GoodList 클래스
+    ```java
+    
+    @Entity
+    @Data
+    public class GoodsList {
+
+        @Id
+        @Column(name = "ItemCode")
+        private int itemCode;
+
+        @Column(name = "PriceType")
+        private int priceType;
+
+        @Column(name = "Price")
+        private int price;
+
+        ...
+
+        // GoodsList 는 다른 GoodsRewardList 라는 객체와도 관계가 설정되어 있다.
+        @OneToMany(mappedBy = "good", fetch = FetchType.EAGER)
+        private List<GoodsRewardList> rewards;
+
+        ...
+
+    }
+
+    ```
+
+    ORM 에서는 domain object 의 필드에 선언 된 다른 object 에 대한 관계 까지도 persistence 에 맵핑 해준다. 이 말은 Item 만을 조회하더라도 Item과 연결 된 GoodList Object도 자연스레 데이터가 포함되어서 조회가 쉽게 가능해진다. 더군다나 GoodsRewardList는 GoodList 와 관계를 맺고 있기에, 이에 대한 조회도 쉽게 처리할 수 있다. 이 부분이 단일 테이블에만 맵핑을 지원하는 Micro ORM과 궁극적으로 차이가 나는 부분 중 하나이다. 
+    
+    객체 간의 관계를 선언하는 작업이 오히려 불편하다고 말하는 의견이 간혹 있다.  이런 의견에 대한 대답으로 개인적으로는 애초에 Domain object 에서 관계 설정을 이미 해놓은 것을 DB에 넣기 위해 치환하는 부수 작업 자체가 더 모순적이다. 
+    
+    DB는 영속성을 담당하는 것일 뿐, domain 과 관련 된 비지니스 로직은 어플리케이션에서 자연스레 담당한다. 이런 역활과 책임이 이미 잡혀있는 상황에서 OOP 스럽게 object 간의 구조를 잘 짜놓고는 DB에 넣기 위해서나 프레젠테이션 계층에 표현하기 위한 value object 를 만든다던지 하는 부가적인 작업을 하는 것은 객체지향 사항에 이미 위배하는 행위이다.
+
+- 캐싱과 같은 고급 기능 역시 지원하지 않는다.
+
+- 테스트를 위한 목킹(Mock) 처리를 하는 것이 수월하지 않다.
+
+    
 
 
 이 아래 블로그가 아주 도움이 되었다.
