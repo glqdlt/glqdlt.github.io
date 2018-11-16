@@ -17,6 +17,8 @@ Micro ORM ? 그게 뭘까. 처음 듣는 단어이기에 마케팅 단어 수준
 
 ## ORM
 
+우선 Micro ORM 을 논하기 전에, ORM 의 정의부터 명확하게 짚고 가야한다고 생각한다.
+
 ORM 은 추상화 개념이다. domain object 를 쉽게 persistence layer 에서 처리하고자 하는 갈망으로 만들어진 개념이다. 단순하게 데이터베이스에 query 를 수행할 때, domain object 를 데이터베이스 스키마에 맞는 object 로 치환해서 수행하는 경우가 많다. 
 
 orm 의 시작은 domain object 를 다른 object로 부가적인 작업을 통해 치환하지 않고, 데이터베이스(영속성 레이어)에 바로 사용할 수 있도록 하는 것을 목표로 시작 되었다. 최근에는 기존 RDBMS 기반에서 개념을 좀 더 확장해서 어떠한 영속성 계층(nosql, infra, file 등)에 대응하겠다는 개념(repository)으로 발전했다. 
