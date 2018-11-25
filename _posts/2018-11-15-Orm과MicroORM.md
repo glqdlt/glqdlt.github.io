@@ -4,15 +4,30 @@ title:  "ORM 과 MicroORM"
 author: "glqdlt"
 ---
 
-# ORM 과 MicroORM
+# 들어가며
 
-재직 중인 사내에서 게임 컨텐츠 서비스 개발에 사용 되는 언어로 C# 그리고 Java, 2가지의 언어가 개발에 사용되고 있습니다. 어느 날 C# 엔지니어링을 하는 팀 동료분께서 이런 질문을 하셨습니다.
+재직 중인 사내에서 게임 컨텐츠 서비스 개발에 사용 되는 언어로 C# 그리고 Java, 2가지의 언어가 개발에 사용되고 있습니다. 어느 날 C# 엔지니어링을 하는 팀 동료분께서 'Micro Orm' 에 대해 아시냐고 물어보셨습니다
 
- '혹시 Micro ORM 이라고 들어봤어요?' 
+# Micro Orm 그리고 Orm
 
-Micro ORM ? 그게 뭘까. 처음 듣는 단어이기에 마케팅 단어 수준으로 생각을 했습니다. C# 에는 가장 유명한 persistence module 로 dapper 라는 king of micro ORM 라고 칭해지는 -_-; 나름 유명한 녀석이 있다고 합니다. 여기서 dapper 가 자신을 micro orm 라고 소개하는 바람에 이러한 이러한 질문을 하신 거였습니다.
+SQL Mapper, Micro ORM, ORM 의 차이점에 대해 한번 정리를 해보았다.
 
-대충 [dapper](https://dapper-tutorial.net/) 라는 녀석을 좀 찾아보았습니다. official에서 지원하는 기능의 소개를 잠시 살펴보니 개인적으로는 mybatis 와 같은 sql mapper 로 보여졌습니다.  mybatis 는 자신을 소개할 떄 명확하게 orm 이 아닌 sql mapper 라고 자신을 소개하고 있는 데에 반면, dapper 는 자신을 micro orm 이라고 소개를 하고 있는 게 차이가 있습니다. 도대체 micro orm 이란 무엇인가 -_-;;
+||SQL Mapper|Micro ORM|ORM|
+|---|---|---|---|
+|Native Query 작성|지원|지원|지원|
+|프로시저 지원|지원|지원|최근 지원|
+|return 객체 매핑 지원|지원|지원|지원|
+|객체 관계 지원|미지원|일부 지원|전체 지원|
+|DB (방언) 마이그레이션|미지원|미지원|지원|
+
+
+## Micro ORM
+
+Micro ORM ? 그게 뭘까. 처음 듣는 단어이기에 마케팅 단어 수준으로 생각을 했습니다. C# 에는 가장 유명한 영속성 프레임워크로 [dapper ORM](https://dapper-tutorial.net/dapper) 이라는 친구가 있습니다. 재밌게도 자신 스스로도 king of micro ORM 라고 부를 정도로 -_-; 굉장히 유명한 녀석입니다, 여기서 나오는 단어인 micro orm 이 orm 과 무엇이 차이가 나는지 궁금하셔서 질문을 하셨던 것으로 생각합니다.
+
+C#은 물론이거니와 dapper 자체에도 저에게 있어서 생소하기에 짧은 시간 동안 dapper 와 micro orm 에 대해 찾아보니 mybatis 와 같은 sql mapper 로 보여졌습니다. 다만 공식 소개에서는 object mapper 라고 표현하는 부분이 있어 좀 더 알아봐야 하겠다는 생각이 들더군요. 여기서 힌트를 얻어보면 micro orm은 orm 의 object releation mapper 에서 releation 이 빠졌다는 부분을 조금 말장난으로 인용해보면, 객체의 관계 설정이 빠진 orm을 말하는 건가 싶기도 합니다.
+
+ mybatis 는 자신을 소개할 떄 명확하게 orm 이 아닌 sql mapper 라고 자신을 소개하고 있는 데에 반면, dapper 는 자신을 micro orm 이라고 소개를 하고 있는 게 차이가 있습니다. 도대체 micro orm 이란 무엇인가 -_-;;
 
 먼저 SQL mapper 인 mybatis 에 대해서 정리를 해보면, [mybatis official introduction](http://www.mybatis.org/mybatis-3/)에는 'MyBatis is a first class persistence framework with support for custom SQL, stored procedures and advanced mappings.', [mybatis wiki](https://en.wikipedia.org/wiki/MyBatis) 에서는 'Unlike ORM frameworks, MyBatis does not map Java objects to database tables but Java methods to SQL statements.' 라고 소개 되어집니다. 
 
