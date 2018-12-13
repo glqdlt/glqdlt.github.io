@@ -97,7 +97,10 @@ comments : false
 
 # 예정 도서
 
-### 1 st
+
++ [클라우드 네이티브 스트럭처](http://www.yes24.com/24/Goods/64467321)
+
++ [알고리즘](http://www.yes24.com/24/goods/67454658?CategoryNumber=001001003031005&Pcode=012)
 
 + [블록체인 구조와 이론](http://book.naver.com/bookdb/book_detail.nhn?bid=12152995)
 + [Science 팩트체크](http://book.naver.com/bookdb/book_detail.nhn?bid=13497252)
@@ -119,7 +122,7 @@ comments : false
     + 타입스크립트 책이 나왔음.
 
 
-### 2 st
+
 
 + [자바스크립트 디자인패턴과 테스트](https://ridibooks.com/v2/Detail?id=754020259)
     * 리디북스 전자책으로 나와있으므로 부담 없음.
@@ -134,7 +137,7 @@ comments : false
     + DDD의 창시자 에릭 에반스의 책이다, DDD관련해서 공부가 될듯
 
 
-### 3 st
+
 
 + [객체지향 자바스크립트](http://m.book.naver.com/bookdb/book_detail.nhn?biblio.bid=12595865)
     * 구매 고려 중.. 지금 구매한 도서들을 읽어보고도 이해가 안되면 구입 하는 걸로.
