@@ -33,29 +33,14 @@ static 은 innerClass 의 생성을 위해서는 알겠는 데, 경험 부족으
 
 ```java
 
-public class SomeOuter {
+public class SomeOut {
 
-    public String getOuterName() {
-        return outerName;
-    }
+    ...
 
-    public void setOuterName(String outerName) {
-        this.outerName = outerName;
-    }
+    public static final class Inner{
 
-    private String outerName;
+            ...
 
-    public static final class SomeInner{
-
-        public String getName() {
-            return name;
-        }
-
-        public void setName(String name) {
-            this.name = name;
-        }
-
-        private String name;
     }
 }
 
