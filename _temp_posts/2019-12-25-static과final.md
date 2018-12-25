@@ -63,6 +63,6 @@ public class SomeOuter {
 
 특정 class에서 final 정의 된 class를 상속하게 하려 해보면 아래의 메세지를 확인할 수 있다.
 
-<img src="/images/static_final_class.PNG"/>
+<img src="/images/static.PNG"/>
 
 final 로 정의 된 class 는 상속을 할 수가 없다. 
