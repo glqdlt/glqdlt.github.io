@@ -485,9 +485,9 @@ public class GrpcServer {
 
 ### Client module source
 
-gRPC 의 Client 에서 중요한 개념은 stub 이라는 개념이 중요합니다. TEST 를 하다 보면 마주치는 stub 이라는 용어와도 비슷합니다. TEST 에서의 stub 은 canned answer 의 의미를 갖는 객체인데, canned answer는 정해진 대답이란 사전적인 의미를 갖습니다. 쉽게 풀어 해석하면 교수님이 시험 예상 문제를 나눠주고, 그 안에서 풀이를 내는 것과 비슷합니다.([Test Stub 이란 무엇인가](https://medium.com/@SlackBeck/%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%85%81-test-stub-%EC%9D%B4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80-ff9c8840c1b0))
+gRPC 의 Client 에서 중요한 개념은 stub 이라는 개념이 중요합니다. TDD를 하다 보면 마주치는 stub 이라는 용어와도 개념적으로는 비슷합니다. TDD 에서의 stub 은 canned answer 의 의미를 갖습니다, canned answer는 정해진 대답이란 사전적인 의미를 갖는 데, 쉽게 풀어 해석하면 교수님이 시험 예상 문제를 나눠주는 것과 같습니다.([Test Stub 이란 무엇인가](https://medium.com/@SlackBeck/%ED%85%8C%EC%8A%A4%ED%8A%B8-%EC%8A%A4%ED%85%81-test-stub-%EC%9D%B4%EB%9E%80-%EB%AC%B4%EC%97%87%EC%9D%B8%EA%B0%80-ff9c8840c1b0))
 
-gRPC에서 Stub은 개념적인 의미로는 위와 같으며, 기대하는 응답에 대한 반응을 작성하는 걸 의미합니다. 그래서 실제 코드 블록을 보면 client 와 server간의 커뮤니케이션이 성공했을 때와 실패했을 때를 정의하는 것을 알 수 있습니다.([Stub Wiki](https://en.wikipedia.org/wiki/Stub_(distributed_computing))[Stub vs Mock](https://blog.pragmatists.com/test-doubles-fakes-mocks-and-stubs-1a7491dfa3da))
+gRPC에서 Stub은 개념적인 의미로는 위와 같으며, 기대하는 응답에 대한 반응을 작성하는 걸 의미합니다.([Stub Wiki](https://en.wikipedia.org/wiki/Stub_(distributed_computing))[Stub vs Mock](https://blog.pragmatists.com/test-doubles-fakes-mocks-and-stubs-1a7491dfa3da))
 
 
 
@@ -574,7 +574,6 @@ public class ClientApplication implements CommandLineRunner {
 }
 
 
-gRPC 의 stub 은 총 3가지를 제공합니다. 기본적으로 동기/비동기 가 구분되어 있으며, 일반적인 비동기 메소드인 ```newSyub()``` 메소드와, 응답에 대한 핸들링을 제어 할 수 있는 Futre 가 제공되는 ```newFutureStub()```메소드로 구분이 됩니다.
 
 ```
 
