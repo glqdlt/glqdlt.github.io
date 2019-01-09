@@ -6,9 +6,10 @@ permalink: about
 comments : false
 ---
 
-# Jhun, Il woong
+# Jhun Ilwoong
 
 ## About
+
 + South Korea
 + Web Developer(since 2014)
 + Like write posting, programing, drink
