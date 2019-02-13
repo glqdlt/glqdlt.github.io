@@ -374,3 +374,8 @@ https://github.com/saturnism/grpc-java-by-example/tree/master/metadata-context-e
 
 
 [https://developers.google.com/web/fundamentals/performance/http2/?hl=ko#_8](https://developers.google.com/web/fundamentals/performance/http2/?hl=ko#_8)
+
+
+- [Loadbalacing](https://grpc.io/blog/loadbalancing)
+
+- [gRPC Web Frontend](https://github.com/improbable-eng/grpc-web)
