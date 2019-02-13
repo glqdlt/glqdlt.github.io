@@ -193,3 +193,184 @@ https://okky.kr/article/380704
 
 하지만 [gRpc-pubsub-broker](https://github.com/IAmMorrow/grpc-pubsub-broker) 와 같은 여러가지 노력을 보면 gRPC 의 스트리밍을 통해 pub/sub 을 구현하는 것이 불가능한 것은 아닙니다.
 
+
+
+## http2 와 서버 푸시(server push promise) 에 대한 단상
+
+서버 푸시가 pub / sub 랑 동일한 개념이라고 생각을 했다. 이게 무슨 말이냐면, pub / sub 개념에서는 push 를 받고자 하는 client 가 server 에 구독 (subscribe)을 하며 push 가 올 것을 생각하고 있게 되고, server 에서는 푸시 조건이 트리거 되면 메세지를 구독자들에게 push 해주는 개념이다. 즉 요청이 없이 일방적으로도 push 를 할 수 있다.
+
+나는 http2 의 서버푸시도 이와 같은 것이 아닌가 생각했다. 구글링을 해보면 많은 이들이 나와 똑같이 'http2 server push vs websocket' 이란 키워드로 검색이 많이 된다. websocket 은 브라우저와 웹 서버 간의 pub / sub 아키텍처 로 된 프로토콜이다. 즉 서버 푸시를 pub / sub 으로 오해하면 당연히 web socket 과 http2 서버 푸시를 비교하게 된다.
+
+얘기가 많이 샜는 데, 말하고 싶은 바는 http2 에서의 서버 푸시는 pub / sub 와 달랐다. 이게 무슨 소리냐면 http 2 에서의 server push 는 pub /sub 처럼 일방적으로 푸시 하는 게 아니라, client의 단일 요청에서 여러가지 응답을 보낼수 있다는 것이다. 그리고 이 요청은 keep alive 에 의해 오래 유지될 뿐이고, 영원히 유지되지는 않는다. 아직 학습이 덜 되어서 개인적으로는 개선된 keep alive 로 생각하고 있다.
+
+이걸 기존 http 1.1 과 비교를 해보면 쉽게 이해할 수 있다. 기존 http 1.1 에서는 server에서 특정 리소스와 데이터를 여러번 보내려면  req <-> server 요청과 응답이 4번 있어야 했다. 예를 들어서 아래와 같은 4개의 웹 리소스가 있다고 가정하자.
+
+```
+index.html
+app.js
+app.png
+style.css
+```
+
+이 경우 http 1.1 은 아래와 같이 된다.
+
+1. index.html 요청, 서버에서  index.html 응답
+
+2. app.js 요청, 서버에서 app.js 응답
+
+...
+
+4. style.css 요청, 서버에서 style.css 응답
+
+즉, 총 4번의 요청과 4번의 응답이 있다. 단순하게 서버에서 여러번 보내주면 되잖아? 로 생각할 수 있는 데.. 서버에서는 응답할 수 있는 건 1종류의 데이터타입으로 1건의 응답할 수 있다. 무조건이다, can 이 아니라 must -_-; 그래서 불가능했다.
+
+반면 http 2 에서는
+
+1. index.html 요청, 서버에서 index.html 응답
+
+2. 서버에서 추가적으로 app.js , app.png , style.css 를 응답
+
+최초의 요청에서 index.html 에 관련 된 모든 리소스들을 서버에서 한 요청(커넥션)에서 모두 다 보내줄 수 있다. 
+
+1번의 요청에 4번의 응답 (정확히는 1번의 응답과 3번의 추가 push 이다.)
+
+이게 바로 서버 푸시개념이다.
+
+이 푸시 개념이 유익한 것은 '하나의 커넥션에서 병렬로 데이터를 수신' 할 수 있다는 점이 포인트이다, 이것만 기억하면 대부분 다 납득이 된다.
+
+이걸 나는 pub / sub 처럼 생각하다보니, 요청 없이도 원하는 순간에 서버에서 push 해줄 수 있어야 하지 않나? 라는 생각에 사로잡혀서 삽질을 하고 있었다 -_-;
+
+gRPC 를 보면.. onNext(){...}; 가 push 를 해주는 메소드이고(http2 spec 상에서 최대 100번까지 push 가 가능하다고 한다.), 마지막 onCompleted(){..} 에서  최종 응답 헤더(finish call)를 보내게 되면서, 커넥션이 닫히게 된다.
+
+내가 했던 방법은 onNext 후에 onCompleted 를 여러번 호출해서 http1.1 에서 여러번 호출하는 것과 유사하게 처리한 것인데, 짧은 시간안에 여러번 호출하면 악의적인 행동으로 감지하고 자동으로 에러가 나는 것 이다. -_-;
+
+그렇다면 gRPC 에서 pub / sub 모델처럼 client 와 server 사이에 원활하게 불특정 시간에 메세지(데이터)를 밀어넣는 것은 불가능할까? 무조건 client 에서 server 에서 메세지(데이터) 를 달라는 식의 단방향 요청식으로 처리해야할까?
+
+이에 대해 고민을 해봤는 데, 쉽게 생각해봤을 때는 결론적으로 가능하단 생각이 들었다.
+
+client 에서 원하는 시점에서 server 에 메세지를 달라고 요청할 수 있는 것이 RPC 이다. 이걸 이용하면 가능하다. client 와 server 의 역활을 바꾸어서, server 에서 client 에게 메세지를 가져가라고 알리는 notification 을 호출 당할 메소드를 client 에 정의해주면 된다. 이렇게 되면 client 의 메소드는 2개가 정의될 것이고, 서버에서는 1개가 될 것이다. 
+
+클라이언트에서는 ```receiveNotification(notification){..};```  과 ``` receiveMessage(message){...} ``` 2개와, 서버에서는 ``` sendMessage(request)  ``` 1개가 구성된다. 
+
+어떻게 보면 pub / sub 의 아키텍처와 매우 흡사하다.
+
+이 외에도 gRPC 에 있는 양방향 스트리밍이 위와 같은 아키텍처와 유사하게 동작하는 지를 살펴본다면 더욱 더 깔끔한 방법으로 원하는 기능을 만들 수 있겠단 생각이 들었다.
+
+살펴본 결과.. 양방향 스트리밍은 단순히 한 커넥션에서 N 개의 Request 와 N 개의 Response 를 응답하는 형태이다. 즉, pub / sub 형태로 개발은 위에서 고안한 아이디어로 notifiaction 을 알려주는 client method 를 정의해줘야 한다.
+
+왜이렇게 만든 것일까
+
+
+[https://github.com/grpc/grpc-java/blob/master/examples/src/main/java/io/grpc/examples/routeguide/RouteGuideServer.java](https://github.com/grpc/grpc-java/blob/master/examples/src/main/java/io/grpc/examples/routeguide/RouteGuideServer.java)
+
+
+
+
+
+```java
+
+ @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "serverToClientStream",
+      requestType = com.glqdlt.ex.grpcexam.model.Simple.SimpleRequest.class,
+      responseType = com.glqdlt.ex.grpcexam.model.Simple.SimpleResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+  public static io.grpc.MethodDescriptor<com.glqdlt.ex.grpcexam.model.Simple.SimpleRequest,
+      com.glqdlt.ex.grpcexam.model.Simple.SimpleResponse> getServerToClientStreamMethod() {
+    io.grpc.MethodDescriptor<com.glqdlt.ex.grpcexam.model.Simple.SimpleRequest, com.glqdlt.ex.grpcexam.model.Simple.SimpleResponse> getServerToClientStreamMethod;
+    if ((getServerToClientStreamMethod = SImpleServiceGrpc.getServerToClientStreamMethod) == null) {
+      synchronized (SImpleServiceGrpc.class) {
+        if ((getServerToClientStreamMethod = SImpleServiceGrpc.getServerToClientStreamMethod) == null) {
+          SImpleServiceGrpc.getServerToClientStreamMethod = getServerToClientStreamMethod = 
+              io.grpc.MethodDescriptor.<com.glqdlt.ex.grpcexam.model.Simple.SimpleRequest, com.glqdlt.ex.grpcexam.model.Simple.SimpleResponse>newBuilder()
+
+
+              .setType(io.grpc.MethodDescriptor.MethodType.SERVER_STREAMING)
+
+
+
+              .setFullMethodName(generateFullMethodName(
+                  "com.glqdlt.ex.grpcexam.model.SImpleService", "serverToClientStream"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.glqdlt.ex.grpcexam.model.Simple.SimpleRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.glqdlt.ex.grpcexam.model.Simple.SimpleResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new SImpleServiceMethodDescriptorSupplier("serverToClientStream"))
+                  .build();
+          }
+        }
+     }
+     return getServerToClientStreamMethod;
+  }
+
+
+  @io.grpc.stub.annotations.RpcMethod(
+      fullMethodName = SERVICE_NAME + '/' + "serverToClient",
+      requestType = com.glqdlt.ex.grpcexam.model.Simple.SimpleRequest.class,
+      responseType = com.glqdlt.ex.grpcexam.model.Simple.SimpleResponse.class,
+      methodType = io.grpc.MethodDescriptor.MethodType.UNARY)
+  public static io.grpc.MethodDescriptor<com.glqdlt.ex.grpcexam.model.Simple.SimpleRequest,
+      com.glqdlt.ex.grpcexam.model.Simple.SimpleResponse> getServerToClientMethod() {
+    io.grpc.MethodDescriptor<com.glqdlt.ex.grpcexam.model.Simple.SimpleRequest, com.glqdlt.ex.grpcexam.model.Simple.SimpleResponse> getServerToClientMethod;
+    if ((getServerToClientMethod = SImpleServiceGrpc.getServerToClientMethod) == null) {
+      synchronized (SImpleServiceGrpc.class) {
+        if ((getServerToClientMethod = SImpleServiceGrpc.getServerToClientMethod) == null) {
+          SImpleServiceGrpc.getServerToClientMethod = getServerToClientMethod = 
+              io.grpc.MethodDescriptor.<com.glqdlt.ex.grpcexam.model.Simple.SimpleRequest, com.glqdlt.ex.grpcexam.model.Simple.SimpleResponse>newBuilder()
+
+
+
+              .setType(io.grpc.MethodDescriptor.MethodType.UNARY)
+
+
+              .setFullMethodName(generateFullMethodName(
+                  "com.glqdlt.ex.grpcexam.model.SImpleService", "serverToClient"))
+              .setSampledToLocalTracing(true)
+              .setRequestMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.glqdlt.ex.grpcexam.model.Simple.SimpleRequest.getDefaultInstance()))
+              .setResponseMarshaller(io.grpc.protobuf.ProtoUtils.marshaller(
+                  com.glqdlt.ex.grpcexam.model.Simple.SimpleResponse.getDefaultInstance()))
+                  .setSchemaDescriptor(new SImpleServiceMethodDescriptorSupplier("serverToClient"))
+                  .build();
+          }
+        }
+     }
+     return getServerToClientMethod;
+  }
+
+
+```
+
+https://b.luavis.kr/http2/http2-overall-operation
+
+https://developers.google.com/web/fundamentals/performance/http2/?hl=ko
+
+
+
+https://github.com/saturnism/grpc-java-by-example/tree/master/metadata-context-example/src/main/java/com/example/grpc
+
+
+## next
+
+- gRPC 인증 과 보안
+
+
+
+
+
+
+
+## Bidirectional Streaming(양방향 스트리밍)
+
+[https://github.com/nddipiazza/grpc-java-bidirectional-streaming-example/blob/master/src/main/java/GrpcExampleClient.java](https://github.com/nddipiazza/grpc-java-bidirectional-streaming-example/blob/master/src/main/java/GrpcExampleClient.java)
+
+
+
+[https://www.programcreek.com/java-api-examples/?api=io.grpc.stub.StreamObserver](https://www.programcreek.com/java-api-examples/?api=io.grpc.stub.StreamObserver)
+
+[https://github.com/grpc/grpc-java/tree/master/examples](https://github.com/grpc/grpc-java/tree/master/examples)
+
+[https://github.com/grpc/grpc-java/blob/master/examples/src/main/java/io/grpc/examples/routeguide/RouteGuideClient.java](https://github.com/grpc/grpc-java/blob/master/examples/src/main/java/io/grpc/examples/routeguide/RouteGuideClient.java)
+
+
+[https://developers.google.com/web/fundamentals/performance/http2/?hl=ko#_8](https://developers.google.com/web/fundamentals/performance/http2/?hl=ko#_8)
