@@ -38,3 +38,7 @@ layout: default
 comments: true
 # other options
 ---
+
+plugins:
+  - jekyll-sitemap
+  
