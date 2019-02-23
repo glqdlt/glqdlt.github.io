@@ -167,3 +167,9 @@ comments : false
     + 마틴 파울러의 책.
 + [한 권으로 그리는 컴퓨터 과학 로드맵](http://book.naver.com/bookdb/book_detail.nhn?bid=13496659)
     + 목차를 보고, 이 목차에 기반해서 내가 집필(블로깅)을 해보면서 개념 정리를 하자.
+
+
+https://book.naver.com/bookdb/book_detail.nhn?bid=11751048
+
+https://book.naver.com/bookdb/book_detail.nhn?bid=9910109
+
