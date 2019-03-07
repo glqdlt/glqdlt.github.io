@@ -2,7 +2,7 @@
 permalink:      /:year-:month-:day/:title
 
 # Setup
-title:          코딩 넘모조아
+title:          안녕 세상
 paginate:       15
 baseurl:        ""
 url:            https://glqdlt.github.io/
