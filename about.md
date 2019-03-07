@@ -8,7 +8,7 @@ comments : false
 
 # Jhun Ilwoong
 
-<img src="https://avatars2.githubusercontent.com/u/13973041?s=460&v=4"/>
+<img src="https://avatars2.githubusercontent.com/u/13973041?s=460&v=4" style="height:180px;width:180px"/>
 
 ## About
 
