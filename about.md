@@ -14,6 +14,18 @@ comments : false
 + Web Developer(since 2014)
 + Like write posting, programing, drink
 
+## Contributions
+
+- apache/maven-javadoc-plugin : [[MJAVADOC-577] Fixed typos in User Guide (Merged)](https://github.com/apache/maven-javadoc-plugin/pull/20)
+
+- http3-explained : [(ko) fixed typo (Merged)](https://github.com/bagder/http3-explained/pull/86)
+
+- okjsp/okky :  [scope 값의 오탈자 수정 (Merged)](https://github.com/okjsp/okky/pull/173)
+
+- spring-guides/tut-spring-boot-oauth2 :  ['spring-security-oauth2-autoconfigure' version update (Open)](https://github.com/spring-guides/tut-spring-boot-oauth2/pull/100)
+
+- apache/phoenix  :  [PHOENIX-5130 removed 'static' keyword from 'private static enum'(Open)](https://github.com/apache/phoenix/pull/438)
+
 
 ## Links
 
