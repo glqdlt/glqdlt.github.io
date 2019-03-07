@@ -16,15 +16,15 @@ comments : false
 
 ## Contributions
 
-- apache/maven-javadoc-plugin : [[MJAVADOC-577] Modified the Wrong closing tag (Merged)](https://github.com/apache/maven-javadoc-plugin/pull/20)
+- [apache/maven-javadoc-plugin](https://github.com/apache/maven-javadoc-plugin) : [[MJAVADOC-577] Modified the Wrong closing tag (Merged)](https://github.com/apache/maven-javadoc-plugin/pull/20)
 
-- http3-explained : [(ko) fixed typo (Merged)](https://github.com/bagder/http3-explained/pull/86)
+- [http3-explained](https://github.com/bagder/http3-explained) : [(ko) fixed typo (Merged)](https://github.com/bagder/http3-explained/pull/86)
 
-- okjsp/okky :  [fixed typo 'scope' (Merged)](https://github.com/okjsp/okky/pull/173)
+- [okjsp/okky](https://github.com/okjsp/okky) :  [fixed typo 'scope' (Merged)](https://github.com/okjsp/okky/pull/173)
 
-- spring-guides/tut-spring-boot-oauth2 :  ['spring-security-oauth2-autoconfigure' version update (Open)](https://github.com/spring-guides/tut-spring-boot-oauth2/pull/100)
+- [spring-guides/tut-spring-boot-oauth2](https://github.com/spring-guides/tut-spring-boot-oauth2) :  ['spring-security-oauth2-autoconfigure' version update (Open)](https://github.com/spring-guides/tut-spring-boot-oauth2/pull/100)
 
-- apache/phoenix  :  [PHOENIX-5130 removed 'static' keyword from 'private static enum'(Open)](https://github.com/apache/phoenix/pull/438)
+- [apache/phoenix](https://github.com/apache/phoenix)  :  [PHOENIX-5130 removed 'static' keyword from 'private static enum'(Open)](https://github.com/apache/phoenix/pull/438)
 
 
 ## Links
