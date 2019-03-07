@@ -8,6 +8,8 @@ comments : false
 
 # Jhun Ilwoong
 
+<img src="https://avatars2.githubusercontent.com/u/13973041?s=460&v=4"/>
+
 ## About
 
 + South Korea
