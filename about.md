@@ -16,11 +16,11 @@ comments : false
 
 ## Contributions
 
-- apache/maven-javadoc-plugin : [[MJAVADOC-577] Fixed typos in User Guide (Merged)](https://github.com/apache/maven-javadoc-plugin/pull/20)
+- apache/maven-javadoc-plugin : [[MJAVADOC-577] Modified the Wrong closing tag (Merged)](https://github.com/apache/maven-javadoc-plugin/pull/20)
 
 - http3-explained : [(ko) fixed typo (Merged)](https://github.com/bagder/http3-explained/pull/86)
 
-- okjsp/okky :  [scope 값의 오탈자 수정 (Merged)](https://github.com/okjsp/okky/pull/173)
+- okjsp/okky :  [fixed typo 'scope' (Merged)](https://github.com/okjsp/okky/pull/173)
 
 - spring-guides/tut-spring-boot-oauth2 :  ['spring-security-oauth2-autoconfigure' version update (Open)](https://github.com/spring-guides/tut-spring-boot-oauth2/pull/100)
 
