@@ -15,6 +15,7 @@ comments : false
 + South Korea
 + Web Developer(since 2014)
 + Like write posting, programing, drink
++ dlfdnd0725@gmail.com
 
 ## Contributions
 
