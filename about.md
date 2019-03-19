@@ -21,7 +21,7 @@ comments : false
 
 #### [apache/maven-javadoc-plugin](https://github.com/apache/maven-javadoc-plugin) 
 
-- [(Merged)[MJAVADOC-577] Modified the Wrong closing tag](https://github.com/apache/maven-javadoc-plugin/pull/20)
+- [(Merged)[MJAVADOC-577] Modified the Wrong closing tag](https://github.com/apache/maven-javadoc-plugin/pull/20) : [MJAVADOC-577](https://issues.apache.org/jira/browse/MJAVADOC-577)
 
 #### [http3-explained](https://github.com/bagder/http3-explained)
 
