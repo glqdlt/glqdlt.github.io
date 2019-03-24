@@ -6,15 +6,15 @@ permalink: about
 comments : false
 ---
 
-# Jhun Ilwoong
+# Jeon Ilwoong (Jhun Ilwoong)
 
-<img src="https://avatars2.githubusercontent.com/u/13973041?s=460&v=4" style="height:180px;width:180px"/>
+<!-- <img src="https://avatars2.githubusercontent.com/u/13973041?s=460&v=4" style="height:180px;width:180px"/> -->
 
 ## About
 
 + South Korea
 + Web Developer(since 2014)
-+ Like write posting, programing, drink
+<!-- + Like write posting, programing, drink -->
 + dlfdnd0725@gmail.com
 
 ## Contributions
