@@ -25,3 +25,5 @@ BCrypt 는 Bruce Schneier의 Blowfish 암호화 알고리즘을 기반으로 두
 - https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/crypto/bcrypt/BCryptPasswordEncoder.html#BCryptPasswordEncoder-int-
 
 - https://docs.spring.io/spring-security/site/docs/current/api/org/springframework/security/crypto/bcrypt/BCrypt.html
+
+- https://www.usenix.org/legacy/publications/library/proceedings/usenix99/full_papers/provos/provos_html/node5.html
