@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "Sharding Jdbc M/S 모델을 효율적으로"
+title:  "Sharding Jdbc M/S 구성을 효율적으로"
 author: "glqdlt"
 ---
 

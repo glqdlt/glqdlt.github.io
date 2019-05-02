@@ -56,3 +56,5 @@ spring.datasource.removeAbandonedTimeout=300
 
 공식 default 에서의 DBCP 폴 사이즈인 커넥션 최대를 10개로 설정하고, 커넥션 세션의 유휴 타임아웃을 300초로 처리했다.
 이렇게 한 후에는 문제 발생 없이 잘 운영되고 있다.
+
+이리 삽질하고 성능이 좋다는 말에 혹해서 HIKARI CP 로 갈아탔음 -_-;

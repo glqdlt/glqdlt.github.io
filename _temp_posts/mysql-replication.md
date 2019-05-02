@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "도커 기반 mysql replication"
+title:  "mysql replication"
 author: "glqdlt"
 ---
 
