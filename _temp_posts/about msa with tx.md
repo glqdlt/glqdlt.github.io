@@ -73,3 +73,5 @@ xa 2pc
 # 레퍼런스
 
 - http://chanwookpark.github.io/%EB%A7%88%EC%9D%B4%ED%81%AC%EB%A1%9C%EC%84%9C%EB%B9%84%EC%8A%A4/%EB%B2%88%EC%97%AD/%EB%A7%88%ED%8B%B4%ED%8C%8C%EC%9A%B8%EB%9F%AC/2016/01/29/microservice-trade-off/
+
+- https://namu.wiki/w/NoSQL
