@@ -1,0 +1,997 @@
+# 서블릿의 SessionID 에 대한 이해
+
+## SessionID 생성 원리(톰캣 기준)
+
+oracle의 서블릿 2.3 [스펙 문서](https://docs.oracle.com/cd/E17802_01/products/products/servlet/2.3/javadoc/javax/servlet/http/HttpSession.html#getId%28%29)
+를 뒤져보면 ```HttpSession.getId()``` 에 대한 내용이 나온다.
+
+```
+getId
+
+public java.lang.String getId()
+
+	Returns a string containing the unique identifier assigned to this session. 
+	The identifier is assigned by the servlet container and is implementation dependent.
+
+Returns:
+	a string specifying the identifier assigned to this session
+```
+
+여기서 주목할 것은 sessionId 에 해당하는 난수값에 대해서 서블릿 컨테이너에서 구현한 것을 사용만 할 뿐이라는 것을 알 수가 있다.
+
+
+### 톰캣 구현체
+
+톰캣에 대한 내용은 [공식 문서](https://tomcat.apache.org/tomcat-8.0-doc/config/sessionidgenerator.html)에서 찾아볼 수 있는 데,
+
+
+server.xml 의 manager 영역에서 세션 정의자를 중첩해서 지정할 수 있다고 한다.
+ 
+추가적으로 여기서 지정되지 않았을 경우에는 기본 형인 ```StandardSessionIdGenerator.class``` 를 사용한다.
+
+```StandardSessionIdgenerator```는 부모 추상 클래스인 ```SessionIdGeneratorBase``` 를 구현하는 데, 이 녀석은    ```SessionIdGenerator```을 구현한 추상 구현체이다. (```SessionIdGeneratorBase``` 가 추상 메소드로 선언 된 것은 ```LifecycleBase``` 을 상속하기 위함이다.) SessionIdGenerator 는 sessionIdLength 를 참고해서 세션을 생성하도록 정의하고 있는 것을 참고할 수 있다. (물론 구현체에서 이를 생략해버릴 수도 있다.)
+
+재미삼아 말하지만, SessionIdGeneratorBase 는 StandardSessionIdGenerator 외에도 LazySessionIdGenerator 에서 구현을 하고 있다.
+
+[SessionIdGenerator](https://github.com/ningg/tomcat-8.0/blob/3c76b89c7639ef58836b1e9beb57276ee1604b66/apache-tomcat-8.0.21-src/webapps/docs/config/sessionidgenerator.xml)
+```java
+public interface SessionIdGenerator {
+
+    /**
+     * @return the node identifier associated with this node which will be
+     * included in the generated session ID.
+     */
+    public String getJvmRoute();
+
+    /**
+     * Specify the node identifier associated with this node which will be
+     * included in the generated session ID.
+     *
+     * @param jvmRoute  The node identifier
+     */
+    public void setJvmRoute(String jvmRoute);
+
+    /**
+     * @return the number of bytes for a session ID
+     */
+    public int getSessionIdLength();
+
+    /**
+     * Specify the number of bytes for a session ID
+     *
+     * @param sessionIdLength   Number of bytes
+     */
+    public void setSessionIdLength(int sessionIdLength);
+
+    /**
+     * Generate and return a new session identifier.
+     *
+     * @return the newly generated session id
+     */
+    public String generateSessionId();
+
+    /**
+     * Generate and return a new session identifier.
+     *
+     * @param route   node identifier to include in generated id
+     * @return the newly generated session id
+     */
+    public String generateSessionId(String route);
+}
+
+```
+
+[StandardSessionIdgenerator.Java](https://github.com/ningg/tomcat-8.0/blob/master/apache-tomcat-8.0.21-src/java/org/apache/catalina/util/StandardSessionIdGenerator.java)
+
+```java
+package org.apache.catalina.util;
+
+public class StandardSessionIdGenerator extends SessionIdGeneratorBase {
+
+    @Override
+    public String generateSessionId(String route) {
+
+        byte random[] = new byte[16];
+        int sessionIdLength = getSessionIdLength();
+
+        // Render the result as a String of hexadecimal digits
+        // Start with enough space for sessionIdLength and medium route size
+        StringBuilder buffer = new StringBuilder(2 * sessionIdLength + 20);
+
+        int resultLenBytes = 0;
+
+        while (resultLenBytes < sessionIdLength) {
+            getRandomBytes(random);
+            for (int j = 0;
+            j < random.length && resultLenBytes < sessionIdLength;
+            j++) {
+                byte b1 = (byte) ((random[j] & 0xf0) >> 4);
+                byte b2 = (byte) (random[j] & 0x0f);
+                if (b1 < 10)
+                    buffer.append((char) ('0' + b1));
+                else
+                    buffer.append((char) ('A' + (b1 - 10)));
+                if (b2 < 10)
+                    buffer.append((char) ('0' + b2));
+                else
+                    buffer.append((char) ('A' + (b2 - 10)));
+                resultLenBytes++;
+            }
+        }
+
+        if (route != null && route.length() > 0) {
+            buffer.append('.').append(route);
+        } else {
+            String jvmRoute = getJvmRoute();
+            if (jvmRoute != null && jvmRoute.length() > 0) {
+                buffer.append('.').append(jvmRoute);
+            }
+        }
+
+        return buffer.toString();
+    }
+
+}
+
+```
+
+Manager 에 대한 이야기는 [톰캣 문서](http://tomcat.apache.org/tomcat-7.0-doc/security-howto.html#Manager) 에서 살짝 힌트를 얼을 수 있다.
+
+```
+
+Manager
+	The manager component is used to generate session IDs.
+
+	The class used to generate random session IDs may be changed with the randomClass attribute.
+
+	The length of the session ID may be changed with the sessionIdLength attribute.
+```
+
+
+Manager 는 각 세션에 대한 관리를 위한 세부 기능들이 정의되어 있다. 세션 검색부터 생성, 만료까지 모든 것이 정의되어 있는 걸 알 수 있다.
+
+```java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package org.apache.catalina;
+
+import java.beans.PropertyChangeListener;
+import java.io.IOException;
+
+/**
+ * A <b>Manager</b> manages the pool of Sessions that are associated with a
+ * particular Context. Different Manager implementations may support
+ * value-added features such as the persistent storage of session data,
+ * as well as migrating sessions for distributable web applications.
+ * <p>
+ * In order for a <code>Manager</code> implementation to successfully operate
+ * with a <code>Context</code> implementation that implements reloading, it
+ * must obey the following constraints:
+ * <ul>
+ * <li>Must implement <code>Lifecycle</code> so that the Context can indicate
+ *     that a restart is required.
+ * <li>Must allow a call to <code>stop()</code> to be followed by a call to
+ *     <code>start()</code> on the same <code>Manager</code> instance.
+ * </ul>
+ *
+ * @author Craig R. McClanahan
+ */
+public interface Manager {
+
+    // ------------------------------------------------------------- Properties
+
+    /**
+     * Get the Context with which this Manager is associated.
+     *
+     * @return The associated Context
+     */
+    public Context getContext();
+
+
+    /**
+     * Set the Context with which this Manager is associated. The Context must
+     * be set to a non-null value before the Manager is first used. Multiple
+     * calls to this method before first use are permitted. Once the Manager has
+     * been used, this method may not be used to change the Context (including
+     * setting a {@code null} value) that the Manager is associated with.
+     *
+     * @param context The newly associated Context
+     */
+    public void setContext(Context context);
+
+
+    /**
+     * @return the session id generator
+     */
+    public SessionIdGenerator getSessionIdGenerator();
+
+
+    /**
+     * Sets the session id generator
+     *
+     * @param sessionIdGenerator The session id generator
+     */
+    public void setSessionIdGenerator(SessionIdGenerator sessionIdGenerator);
+
+
+    /**
+     * Returns the total number of sessions created by this manager.
+     *
+     * @return Total number of sessions created by this manager.
+     */
+    public long getSessionCounter();
+
+
+    /**
+     * Sets the total number of sessions created by this manager.
+     *
+     * @param sessionCounter Total number of sessions created by this manager.
+     */
+    public void setSessionCounter(long sessionCounter);
+
+
+    /**
+     * Gets the maximum number of sessions that have been active at the same
+     * time.
+     *
+     * @return Maximum number of sessions that have been active at the same
+     * time
+     */
+    public int getMaxActive();
+
+
+    /**
+     * (Re)sets the maximum number of sessions that have been active at the
+     * same time.
+     *
+     * @param maxActive Maximum number of sessions that have been active at
+     * the same time.
+     */
+    public void setMaxActive(int maxActive);
+
+
+    /**
+     * Gets the number of currently active sessions.
+     *
+     * @return Number of currently active sessions
+     */
+    public int getActiveSessions();
+
+
+    /**
+     * Gets the number of sessions that have expired.
+     *
+     * @return Number of sessions that have expired
+     */
+    public long getExpiredSessions();
+
+
+    /**
+     * Sets the number of sessions that have expired.
+     *
+     * @param expiredSessions Number of sessions that have expired
+     */
+    public void setExpiredSessions(long expiredSessions);
+
+
+    /**
+     * Gets the number of sessions that were not created because the maximum
+     * number of active sessions was reached.
+     *
+     * @return Number of rejected sessions
+     */
+    public int getRejectedSessions();
+
+
+    /**
+     * Gets the longest time (in seconds) that an expired session had been
+     * alive.
+     *
+     * @return Longest time (in seconds) that an expired session had been
+     * alive.
+     */
+    public int getSessionMaxAliveTime();
+
+
+    /**
+     * Sets the longest time (in seconds) that an expired session had been
+     * alive.
+     *
+     * @param sessionMaxAliveTime Longest time (in seconds) that an expired
+     * session had been alive.
+     */
+    public void setSessionMaxAliveTime(int sessionMaxAliveTime);
+
+
+    /**
+     * Gets the average time (in seconds) that expired sessions had been
+     * alive. This may be based on sample data.
+     *
+     * @return Average time (in seconds) that expired sessions had been
+     * alive.
+     */
+    public int getSessionAverageAliveTime();
+
+
+    /**
+     * Gets the current rate of session creation (in session per minute). This
+     * may be based on sample data.
+     *
+     * @return  The current rate (in sessions per minute) of session creation
+     */
+    public int getSessionCreateRate();
+
+
+    /**
+     * Gets the current rate of session expiration (in session per minute). This
+     * may be based on sample data
+     *
+     * @return  The current rate (in sessions per minute) of session expiration
+     */
+    public int getSessionExpireRate();
+
+
+    // --------------------------------------------------------- Public Methods
+
+    /**
+     * Add this Session to the set of active Sessions for this Manager.
+     *
+     * @param session Session to be added
+     */
+    public void add(Session session);
+
+
+    /**
+     * Add a property change listener to this component.
+     *
+     * @param listener The listener to add
+     */
+    public void addPropertyChangeListener(PropertyChangeListener listener);
+
+
+    /**
+     * Change the session ID of the current session to a new randomly generated
+     * session ID.
+     *
+     * @param session   The session to change the session ID for
+     */
+    public void changeSessionId(Session session);
+
+
+    /**
+     * Change the session ID of the current session to a specified session ID.
+     *
+     * @param session   The session to change the session ID for
+     * @param newId   new session ID
+     */
+    public void changeSessionId(Session session, String newId);
+
+
+    /**
+     * Get a session from the recycled ones or create a new empty one.
+     * The PersistentManager manager does not need to create session data
+     * because it reads it from the Store.
+     *
+     * @return An empty Session object
+     */
+    public Session createEmptySession();
+
+
+    /**
+     * Construct and return a new session object, based on the default
+     * settings specified by this Manager's properties.  The session
+     * id specified will be used as the session id.
+     * If a new session cannot be created for any reason, return
+     * <code>null</code>.
+     *
+     * @param sessionId The session id which should be used to create the
+     *  new session; if <code>null</code>, the session
+     *  id will be assigned by this method, and available via the getId()
+     *  method of the returned session.
+     * @exception IllegalStateException if a new session cannot be
+     *  instantiated for any reason
+     *
+     * @return An empty Session object with the given ID or a newly created
+     *         session ID if none was specified
+     */
+    public Session createSession(String sessionId);
+
+
+    /**
+     * Return the active Session, associated with this Manager, with the
+     * specified session id (if any); otherwise return <code>null</code>.
+     *
+     * @param id The session id for the session to be returned
+     *
+     * @exception IllegalStateException if a new session cannot be
+     *  instantiated for any reason
+     * @exception IOException if an input/output error occurs while
+     *  processing this request
+     *
+     * @return the request session or {@code null} if a session with the
+     *         requested ID could not be found
+     */
+    public Session findSession(String id) throws IOException;
+
+
+    /**
+     * Return the set of active Sessions associated with this Manager.
+     * If this Manager has no active Sessions, a zero-length array is returned.
+     *
+     * @return All the currently active sessions managed by this manager
+     */
+    public Session[] findSessions();
+
+
+    /**
+     * Load any currently active sessions that were previously unloaded
+     * to the appropriate persistence mechanism, if any.  If persistence is not
+     * supported, this method returns without doing anything.
+     *
+     * @exception ClassNotFoundException if a serialized class cannot be
+     *  found during the reload
+     * @exception IOException if an input/output error occurs
+     */
+    public void load() throws ClassNotFoundException, IOException;
+
+
+    /**
+     * Remove this Session from the active Sessions for this Manager.
+     *
+     * @param session Session to be removed
+     */
+    public void remove(Session session);
+
+
+    /**
+     * Remove this Session from the active Sessions for this Manager.
+     *
+     * @param session   Session to be removed
+     * @param update    Should the expiration statistics be updated
+     */
+    public void remove(Session session, boolean update);
+
+
+    /**
+     * Remove a property change listener from this component.
+     *
+     * @param listener The listener to remove
+     */
+    public void removePropertyChangeListener(PropertyChangeListener listener);
+
+
+    /**
+     * Save any currently active sessions in the appropriate persistence
+     * mechanism, if any.  If persistence is not supported, this method
+     * returns without doing anything.
+     *
+     * @exception IOException if an input/output error occurs
+     */
+    public void unload() throws IOException;
+
+
+    /**
+     * This method will be invoked by the context/container on a periodic
+     * basis and allows the manager to implement
+     * a method that executes periodic tasks, such as expiring sessions etc.
+     */
+    public void backgroundProcess();
+
+
+    /**
+     * Would the Manager distribute the given session attribute? Manager
+     * implementations may provide additional configuration options to control
+     * which attributes are distributable.
+     *
+     * @param name  The attribute name
+     * @param value The attribute value
+     *
+     * @return {@code true} if the Manager would distribute the given attribute
+     *         otherwise {@code false}
+     */
+    public boolean willAttributeDistribute(String name, Object value);
+
+
+    /**
+     * When an attribute that is already present in the session is added again
+     * under the same name and the attribute implements {@link
+     * javax.servlet.http.HttpSessionBindingListener}, should
+     * {@link javax.servlet.http.HttpSessionBindingListener#valueUnbound(javax.servlet.http.HttpSessionBindingEvent)}
+     * be called followed by
+     * {@link javax.servlet.http.HttpSessionBindingListener#valueBound(javax.servlet.http.HttpSessionBindingEvent)}?
+     * <p>
+     * The default value is {@code false}.
+     *
+     * @return {@code true} if the listener will be notified, {@code false} if
+     *         it will not
+     */
+    public default boolean getNotifyBindingListenerOnUnchangedValue() {
+        return false;
+    }
+
+
+    /**
+     * Configure if
+     * {@link javax.servlet.http.HttpSessionBindingListener#valueUnbound(javax.servlet.http.HttpSessionBindingEvent)}
+     * be called followed by
+     * {@link javax.servlet.http.HttpSessionBindingListener#valueBound(javax.servlet.http.HttpSessionBindingEvent)}
+     * when an attribute that is already present in the session is added again
+     * under the same name and the attribute implements {@link
+     * javax.servlet.http.HttpSessionBindingListener}.
+     *
+     * @param notifyBindingListenerOnUnchangedValue {@code true} the listener
+     *                                              will be called, {@code
+     *                                              false} it will not
+     */
+    public void setNotifyBindingListenerOnUnchangedValue(
+            boolean notifyBindingListenerOnUnchangedValue);
+
+
+    /**
+     * When an attribute that is already present in the session is added again
+     * under the same name and a {@link
+     * javax.servlet.http.HttpSessionAttributeListener} is configured for the
+     * session should
+     * {@link javax.servlet.http.HttpSessionAttributeListener#attributeReplaced(javax.servlet.http.HttpSessionBindingEvent)}
+     * be called?
+     * <p>
+     * The default value is {@code true}.
+     *
+     * @return {@code true} if the listener will be notified, {@code false} if
+     *         it will not
+     */
+    public default boolean getNotifyAttributeListenerOnUnchangedValue() {
+        return true;
+    }
+
+
+    /**
+     * Configure if
+     * {@link javax.servlet.http.HttpSessionAttributeListener#attributeReplaced(javax.servlet.http.HttpSessionBindingEvent)}
+     * when an attribute that is already present in the session is added again
+     * under the same name and a {@link
+     * javax.servlet.http.HttpSessionAttributeListener} is configured for the
+     * session.
+     *
+     * @param notifyAttributeListenerOnUnchangedValue {@code true} the listener
+     *                                                will be called, {@code
+     *                                                false} it will not
+     */
+    public void setNotifyAttributeListenerOnUnchangedValue(
+            boolean notifyAttributeListenerOnUnchangedValue);
+}
+
+```
+
+
+우리가 rememberMe 와 같은 기능에 해당하는 것은 
+```java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package javax.servlet;
+
+/**
+ * Configures the session cookies used by the web application associated with
+ * the ServletContext from which this SessionCookieConfig was obtained.
+ *
+ * @since Servlet 3.0
+ */
+public interface SessionCookieConfig {
+
+    /**
+     * Sets the session cookie name.
+     *
+     * @param name The name of the session cookie
+     *
+     * @throws IllegalStateException if the associated ServletContext has
+     *         already been initialised
+     */
+    public void setName(String name);
+
+    public String getName();
+
+    /**
+     * Sets the domain for the session cookie
+     *
+     * @param domain The session cookie domain
+     *
+     * @throws IllegalStateException if the associated ServletContext has
+     *         already been initialised
+     */
+    public void setDomain(String domain);
+
+    public String getDomain();
+
+    /**
+     * Sets the path of the session cookie.
+     *
+     * @param path The session cookie path
+     *
+     * @throws IllegalStateException if the associated ServletContext has
+     *         already been initialised
+     */
+    public void setPath(String path);
+
+    public String getPath();
+
+    /**
+     * Sets the comment for the session cookie
+     *
+     * @param comment The session cookie comment
+     *
+     * @throws IllegalStateException if the associated ServletContext has
+     *         already been initialised
+     */
+    public void setComment(String comment);
+
+    public String getComment();
+
+    /**
+     * Sets the httpOnly flag for the session cookie.
+     *
+     * @param httpOnly The httpOnly setting to use for session cookies
+     *
+     * @throws IllegalStateException if the associated ServletContext has
+     *         already been initialised
+     */
+    public void setHttpOnly(boolean httpOnly);
+
+    public boolean isHttpOnly();
+
+    /**
+     * Sets the secure flag for the session cookie.
+     *
+     * @param secure The secure setting to use for session cookies
+     *
+     * @throws IllegalStateException if the associated ServletContext has
+     *         already been initialised
+     */
+    public void setSecure(boolean secure);
+
+    public boolean isSecure();
+
+    /**
+     * Sets the maximum age.
+     *
+     * @param MaxAge the maximum age to set
+     * @throws IllegalStateException if the associated ServletContext has
+     *         already been initialised
+     */
+    public void setMaxAge(int MaxAge);
+
+    public int getMaxAge();
+
+}
+
+```
+
+Manager의 기본 구현체인 ManagerBase 를 보면 단순히 session 에 대한 정보는 ConcurrentHashMap 으로 관리하는 것을 알수가 있다.
+
+```
+   protected Map<String, Session> sessions = new ConcurrentHashMap<>();
+```
+
+여기서 드는 의문은 사용자가 브라우저를 닫기 전까지 session 이 고유하게 담기는 데 이에 대한 처리를 어떻게 하는지 알고 싶어진다. 이에 대한 이야기는 HttpSession 의 주석에서 살펴 볼 수 있다.
+
+```java
+/*
+ * Licensed to the Apache Software Foundation (ASF) under one or more
+ * contributor license agreements.  See the NOTICE file distributed with
+ * this work for additional information regarding copyright ownership.
+ * The ASF licenses this file to You under the Apache License, Version 2.0
+ * (the "License"); you may not use this file except in compliance with
+ * the License.  You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package javax.servlet.http;
+
+import java.util.Enumeration;
+
+import javax.servlet.ServletContext;
+
+/**
+ * Provides a way to identify a user across more than one page request or visit
+ * to a Web site and to store information about that user.
+ * <p>
+ * The servlet container uses this interface to create a session between an HTTP
+ * client and an HTTP server. The session persists for a specified time period,
+ * across more than one connection or page request from the user. A session
+ * usually corresponds to one user, who may visit a site many times. The server
+ * can maintain a session in many ways such as using cookies or rewriting URLs.
+ * <p>
+ * This interface allows servlets to
+ * <ul>
+ * <li>View and manipulate information about a session, such as the session
+ * identifier, creation time, and last accessed time
+ * <li>Bind objects to sessions, allowing user information to persist across
+ * multiple user connections
+ * </ul>
+ * <p>
+ * When an application stores an object in or removes an object from a session,
+ * the session checks whether the object implements
+ * {@link HttpSessionBindingListener}. If it does, the servlet notifies the
+ * object that it has been bound to or unbound from the session. Notifications
+ * are sent after the binding methods complete. For session that are invalidated
+ * or expire, notifications are sent after the session has been invalidated or
+ * expired.
+ * <p>
+ * When container migrates a session between VMs in a distributed container
+ * setting, all session attributes implementing the
+ * {@link HttpSessionActivationListener} interface are notified.
+ * <p>
+ * A servlet should be able to handle cases in which the client does not choose
+ * to join a session, such as when cookies are intentionally turned off. Until
+ * the client joins the session, <code>isNew</code> returns <code>true</code>.
+ * If the client chooses not to join the session, <code>getSession</code> will
+ * return a different session on each request, and <code>isNew</code> will
+ * always return <code>true</code>.
+ * <p>
+ * Session information is scoped only to the current web application (
+ * <code>ServletContext</code>), so information stored in one context will not
+ * be directly visible in another.
+ *
+ * @see HttpSessionBindingListener
+ */
+public interface HttpSession {
+
+    /**
+     * Returns the time when this session was created, measured in milliseconds
+     * since midnight January 1, 1970 GMT.
+     *
+     * @return a <code>long</code> specifying when this session was created,
+     *         expressed in milliseconds since 1/1/1970 GMT
+     * @exception IllegalStateException
+     *                if this method is called on an invalidated session
+     */
+    public long getCreationTime();
+
+    /**
+     * Returns a string containing the unique identifier assigned to this
+     * session. The identifier is assigned by the servlet container and is
+     * implementation dependent.
+     *
+     * @return a string specifying the identifier assigned to this session
+     * @exception IllegalStateException
+     *                if this method is called on an invalidated session
+     */
+    public String getId();
+
+    /**
+     * Returns the last time the client sent a request associated with this
+     * session, as the number of milliseconds since midnight January 1, 1970
+     * GMT, and marked by the time the container received the request.
+     * <p>
+     * Actions that your application takes, such as getting or setting a value
+     * associated with the session, do not affect the access time.
+     *
+     * @return a <code>long</code> representing the last time the client sent a
+     *         request associated with this session, expressed in milliseconds
+     *         since 1/1/1970 GMT
+     * @exception IllegalStateException
+     *                if this method is called on an invalidated session
+     */
+    public long getLastAccessedTime();
+
+    /**
+     * Returns the ServletContext to which this session belongs.
+     *
+     * @return The ServletContext object for the web application
+     * @since 2.3
+     */
+    public ServletContext getServletContext();
+
+    /**
+     * Specifies the time, in seconds, between client requests before the
+     * servlet container will invalidate this session. A zero or negative time
+     * indicates that the session should never timeout.
+     *
+     * @param interval
+     *            An integer specifying the number of seconds
+     */
+    public void setMaxInactiveInterval(int interval);
+
+    /**
+     * Returns the maximum time interval, in seconds, that the servlet container
+     * will keep this session open between client accesses. After this interval,
+     * the servlet container will invalidate the session. The maximum time
+     * interval can be set with the <code>setMaxInactiveInterval</code> method.
+     * A zero or negative time indicates that the session should never timeout.
+     *
+     * @return an integer specifying the number of seconds this session remains
+     *         open between client requests
+     * @see #setMaxInactiveInterval
+     */
+    public int getMaxInactiveInterval();
+
+    /**
+     * Do not use.
+     * @return A dummy implementation of HttpSessionContext
+     * @deprecated As of Version 2.1, this method is deprecated and has no
+     *             replacement. It will be removed in a future version of the
+     *             Java Servlet API.
+     */
+    @Deprecated
+    public HttpSessionContext getSessionContext();
+
+    /**
+     * Returns the object bound with the specified name in this session, or
+     * <code>null</code> if no object is bound under the name.
+     *
+     * @param name
+     *            a string specifying the name of the object
+     * @return the object with the specified name
+     * @exception IllegalStateException
+     *                if this method is called on an invalidated session
+     */
+    public Object getAttribute(String name);
+
+    /**
+     * @param name
+     *            a string specifying the name of the object
+     * @return the object with the specified name
+     * @exception IllegalStateException
+     *                if this method is called on an invalidated session
+     * @deprecated As of Version 2.2, this method is replaced by
+     *             {@link #getAttribute}.
+     */
+    @Deprecated
+    public Object getValue(String name);
+
+    /**
+     * Returns an <code>Enumeration</code> of <code>String</code> objects
+     * containing the names of all the objects bound to this session.
+     *
+     * @return an <code>Enumeration</code> of <code>String</code> objects
+     *         specifying the names of all the objects bound to this session
+     * @exception IllegalStateException
+     *                if this method is called on an invalidated session
+     */
+    public Enumeration<String> getAttributeNames();
+
+    /**
+     * @return an array of <code>String</code> objects specifying the names of
+     *         all the objects bound to this session
+     * @exception IllegalStateException
+     *                if this method is called on an invalidated session
+     * @deprecated As of Version 2.2, this method is replaced by
+     *             {@link #getAttributeNames}
+     */
+    @Deprecated
+    public String[] getValueNames();
+
+    /**
+     * Binds an object to this session, using the name specified. If an object
+     * of the same name is already bound to the session, the object is replaced.
+     * <p>
+     * After this method executes, and if the new object implements
+     * <code>HttpSessionBindingListener</code>, the container calls
+     * <code>HttpSessionBindingListener.valueBound</code>. The container then
+     * notifies any <code>HttpSessionAttributeListener</code>s in the web
+     * application.
+     * <p>
+     * If an object was already bound to this session of this name that
+     * implements <code>HttpSessionBindingListener</code>, its
+     * <code>HttpSessionBindingListener.valueUnbound</code> method is called.
+     * <p>
+     * If the value passed in is null, this has the same effect as calling
+     * <code>removeAttribute()</code>.
+     *
+     * @param name
+     *            the name to which the object is bound; cannot be null
+     * @param value
+     *            the object to be bound
+     * @exception IllegalStateException
+     *                if this method is called on an invalidated session
+     */
+    public void setAttribute(String name, Object value);
+
+    /**
+     * @param name
+     *            the name to which the object is bound; cannot be null
+     * @param value
+     *            the object to be bound; cannot be null
+     * @exception IllegalStateException
+     *                if this method is called on an invalidated session
+     * @deprecated As of Version 2.2, this method is replaced by
+     *             {@link #setAttribute}
+     */
+    @Deprecated
+    public void putValue(String name, Object value);
+
+    /**
+     * Removes the object bound with the specified name from this session. If
+     * the session does not have an object bound with the specified name, this
+     * method does nothing.
+     * <p>
+     * After this method executes, and if the object implements
+     * <code>HttpSessionBindingListener</code>, the container calls
+     * <code>HttpSessionBindingListener.valueUnbound</code>. The container then
+     * notifies any <code>HttpSessionAttributeListener</code>s in the web
+     * application.
+     *
+     * @param name
+     *            the name of the object to remove from this session
+     * @exception IllegalStateException
+     *                if this method is called on an invalidated session
+     */
+    public void removeAttribute(String name);
+
+    /**
+     * @param name
+     *            the name of the object to remove from this session
+     * @exception IllegalStateException
+     *                if this method is called on an invalidated session
+     * @deprecated As of Version 2.2, this method is replaced by
+     *             {@link #removeAttribute}
+     */
+    @Deprecated
+    public void removeValue(String name);
+
+    /**
+     * Invalidates this session then unbinds any objects bound to it.
+     *
+     * @exception IllegalStateException
+     *                if this method is called on an already invalidated session
+     */
+    public void invalidate();
+
+    /**
+     * Returns <code>true</code> if the client does not yet know about the
+     * session or if the client chooses not to join the session. For example, if
+     * the server used only cookie-based sessions, and the client had disabled
+     * the use of cookies, then a session would be new on each request.
+     *
+     * @return <code>true</code> if the server has created a session, but the
+     *         client has not yet joined
+     * @exception IllegalStateException
+     *                if this method is called on an already invalidated session
+     */
+    public boolean isNew();
+}
+
+```
+
+- 정리를 하면 클라이언트 SessionID 를 만드는 것은 톰캣 기본 구현체 기준으로 단순히 요청의 패킷에 대한 난수 값으로 만들 뿐이다. 최초 request 를 식별할 수 있었던 것은 절대 아니다.
+
+- 이후 만들어진 난수는 cookie 에 실려서 응답되고, 이 cookie 는 해당 브라우저가 닫히기 전까지는 존재하는 임시 쿠키로써의 만료 시간을 가진다. 이 임시 쿠키를 직접 살펴보면 remember me 와 달리 expire date 영역에 session 이라고 잡힌 것을 알수가 있다.
+
+- http rfc 를 보면 cookie 는 특별한 설정없이는 무조건 http request header 에 무조건 삽입되게 되어있다. 그래서 cookie 의 용량 제한이 있는 것이다.
+
+- 즉 최초의 난수를 만든 sessionId는 유저 의 request 패킷에서 특별한 값을 식별할 수 있어서 만드는 것이 아니고, 단순히 난수를 response <-> request 에 계속 달려있기에 구분을 할 뿐인 것이다.
+
+- 실제로 브라우저에서 이 임시 cookie 의 sessionId 값을 null 이나 cookie 를 삭제해버리면, 같은 브라우저의 같은 브라우저 탭이더라도 서버에서 새로 만드는 것을 알수가 있다. 또한 이기종 브라우저 간에도 사용자가 인위적으로 크롬 브라우저의 쿠키를 엣지 브라우저의 쿠키에 덮어씌울 경우, 엣지 브라우저에서 크롬 브라우저의 세션을 사용할 수가 있다.
