@@ -1132,3 +1132,137 @@ SpringSessionRepositoryFilter 라는 빈에의해 참조된다. SpringSessionRep
 	<dispatcher>ERROR</dispatcher>
 </filter-mapping>
 ```
+
+```
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+    <context:annotation-config/>
+    <bean class="org.springframework.session.jdbc.config.annotation.web.http.JdbcHttpSessionConfiguration"/>
+
+
+
+    <bean class="com.glqdlt.ex.configuration.datasource.SomeDataSourceConfig">
+
+    </bean>
+
+<!-- SomeDataSourceConfig 안에 sessionDataSource 가 있다 -->
+    <bean name="sessionTxm" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <constructor-arg ref="sessionDataSource"/>
+    </bean>
+
+
+
+</beans>
+
+Datasource config 인 SomEDataSourceConfig 를 불러오게 했따.
+
+```
+
+
+아무리 was 끼리 세션 클러스터링을 했다고 하더라도, 하나의 도메인으로 묶이지 않으면 cookie 공유(접근)가 안되기 때문에 브라우저 내부에서 JESESSION ID 공유가 안되어서(정확히는 각 WAS 에 전달) SSO 가 동작하질 않는다.
+
+방안으로 1,2 안을 고민했는 데 결국은 1안으로 진ㅇ행했다. 이유는 아래에서 서술
+
+1안 
+
+- http://webapp1.glqdlt.com
+- http://webapp2.glqdlt.com
+
+2안
+
+- http://webapp.glqdlt.com/app1/
+- http://webapp.glqdlt.com/app2/
+
+차이점은 1안의 경우 각 was 에 직접적인 도메인을 매핑 하는 것이다. 2안의 경우 was 앞단에 웹 서버를 두고 리버스 프록시로 /app1 , /app2  path 를 기준으로 라우팅하는 것이다.
+
+우선 리버스 프록시 자체는 간단하다.
+
+nginx.conf 에서 아래처럼 location 셋팅만 해주면 된다.
+
+```
+
+#user  nobody;
+worker_processes  1;
+
+#error_log  logs/error.log;
+#error_log  logs/error.log  notice;
+#error_log  logs/error.log  info;
+
+#pid        logs/nginx.pid;
+
+
+events {
+    worker_connections  1024;
+}
+
+
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    #log_format  main  '$remote_addr - $remote_user [$time_local] "$request" '
+    #                  '$status $body_bytes_sent "$http_referer" '
+    #                  '"$http_user_agent" "$http_x_forwarded_for"';
+
+    #access_log  logs/access.log  main;
+
+    sendfile        on;
+    #tcp_nopush     on;
+
+    #keepalive_timeout  0;
+    keepalive_timeout  65;
+
+    #gzip  on;
+
+    server {
+        listen       80;
+        server_name  localhost;
+
+        #charset koi8-r;
+
+        #access_log  logs/host.access.log  main;
+
+        location /app1/ {
+            proxy_pass http://127.0.0.1:18080/;
+        }
+
+
+        location /app2/ {
+            proxy_pass http://127.0.0.1:28080/;
+        }
+    
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html {
+            root   html;
+        }
+
+    }
+
+}
+
+```
+
+2안으로 하면 문제가 발생하는 데, 
+
+1. 어플리케이션 소스 코드가 대부분 절대경로 이다.
+
+    - ```<a href="/">메인으로</a>```
+
+2. path 의 prefix 로 구분이 되기 때문에 각 웹 어플리케이션의 servlet context 를 / 에서 /app1 이나 /app2 로 수정해주어야 한다.
+
+
+1의 경우에는 어떠한 것이냐면, 화면상에서는 리버스 프록시가 제대로 동작해서 http://~~~~/app1/ 로 화면이 표기되고 대시보드에 화면이 나오지만, css 나 js 와 같은 정적 파일을 비롯해서 모든 링크들이 절대경로이기에 http:/----/app1/main.js 로 요청이 안 되고, http://---/main.js 로 요청이 되어버린다. 요청도 문제지만, app1 이나 app2 모두 http://---/main.js 로 똑같이 요청이 되어버리기 떄문에 이게 app1 의 js 인지 app2 의 js인지를 알 수가 없다.
+
+2의 경우는 웹 어플리케이션 내부의 문제이다. 1의 경우를 상대 경로로 수정을 하더라도, 모든 컨트롤러에서 매핑 되는 context path 는 "/" 기준이다. 예를 들어 유저 조회의 기능이 아래와 같은 api 를 제공한다면
+
+http://```/api/user/test-user/detail
+
+상대 경로에서 요청이 될 떄에는 
+
+http://```/app1/api/user/test-user/detail 로 오기 때문에 각 컨트롤러 매핑을 수정해주거나, /** 로 오는 것을 /app1 로 forward(dispatch) 할 수 있게 서블릿 필터를 준비해주어야 한다.
+
