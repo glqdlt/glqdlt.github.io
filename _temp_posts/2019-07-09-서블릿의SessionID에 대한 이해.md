@@ -995,3 +995,140 @@ public interface HttpSession {
 - 즉 최초의 난수를 만든 sessionId는 유저 의 request 패킷에서 특별한 값을 식별할 수 있어서 만드는 것이 아니고, 단순히 난수를 response <-> request 에 계속 달려있기에 구분을 할 뿐인 것이다.
 
 - 실제로 브라우저에서 이 임시 cookie 의 sessionId 값을 null 이나 cookie 를 삭제해버리면, 같은 브라우저의 같은 브라우저 탭이더라도 서버에서 새로 만드는 것을 알수가 있다. 또한 이기종 브라우저 간에도 사용자가 인위적으로 크롬 브라우저의 쿠키를 엣지 브라우저의 쿠키에 덮어씌울 경우, 엣지 브라우저에서 크롬 브라우저의 세션을 사용할 수가 있다.
+
+
+
+서블릿은 기본적으로 web.xml 이 존재하면 (또는 [WebApplicationInitializer](https://docs.spring.io/spring/docs/current/javadoc-api/org/springframework/web/WebApplicationInitializer.html) 를 구현체가 존재한다면 ) 해당 설정에서 서블릿 구동을 위한 각종 준비 환경을 준비하게 된다. 우리는 스프링 프레임워크를 사용하기 때문에 서블릿이 구동되는 환경에 스프링 빈 관리를 해주는 스프링 코어인 spring context (또는 빈 컨테이너)를 올리게 된다.
+
+재밌는 것은 WebApplicationInitializer 어떻게 톰캣에게 알려지게 되는가 이다. 
+이는 톰캣(서블릿 컨테이너)의 동작 원리를 알면 쉽게 이해가 되는데, 스프링에서 만든 SpringServletContainerInitializer 는 org.springframework.web 패키지를 받으면 자연적으로 존재하게 된다.  이 친구는 ```ServletContainerInitializer``` 서블릿 사양을 구현하는 데, 서블릿 컨테이너가 초기화되는 이벤트 때, JAR Services API (ServiceLoader # load (Class)) 사양에 의해서 ServletContainerInitializer  를 구현한 모든 것이 로드가 되게 된다.
+ServletContainerInitializer 를 구현한 SpringServletContainerInitializer 에는 아래와 같은 onStartup 메소드를 통해 WebApplicationInitializer 를 감지하게 된다. 문제는 기본적으로 web.xml 의 로드가 완료되면 서블릿 컨테이너는 기본 사양으로 다른 서블릿컨테이너이니셜라이저를 로드하지 않는다. [참고](https://stackoverflow.com/questions/10776599/servletcontainerinitializer-vs-servletcontextlistener)
+
+
+```java
+@Override
+	public void onStartup(Set<Class<?>> webAppInitializerClasses, ServletContext servletContext)
+			throws ServletException {
+
+		List<WebApplicationInitializer> initializers = new LinkedList<WebApplicationInitializer>();
+
+		if (webAppInitializerClasses != null) {
+			for (Class<?> waiClass : webAppInitializerClasses) {
+				// Be defensive: Some servlet containers provide us with invalid classes,
+				// no matter what @HandlesTypes says...
+				if (!waiClass.isInterface() && !Modifier.isAbstract(waiClass.getModifiers()) &&
+						WebApplicationInitializer.class.isAssignableFrom(waiClass)) {
+					try {
+						initializers.add((WebApplicationInitializer) waiClass.newInstance());
+					}
+					catch (Throwable ex) {
+						throw new ServletException("Failed to instantiate WebApplicationInitializer class", ex);
+					}
+				}
+			}
+		}
+
+		if (initializers.isEmpty()) {
+			servletContext.log("No Spring WebApplicationInitializer types detected on classpath");
+			return;
+		}
+
+		servletContext.log(initializers.size() + " Spring WebApplicationInitializers detected on classpath");
+		AnnotationAwareOrderComparator.sort(initializers);
+		for (WebApplicationInitializer initializer : initializers) {
+			initializer.onStartup(servletContext);
+		}
+	}
+```
+
+자세한 것은 [참고](https://stackoverflow.com/questions/28131102/how-servlet-container-finds-webapplicationinitializer-implementations)
+
+
+이런 마법은 서블릿 3.0 부터 web.xml 이 optional 로 바뀌었기 때문에 가능해진 것이다. 자세한 것은 서블릿 스펙을 살펴보라.
+
+톰캣7(서블릿3.0 을 구현) 으로 구동되고 web.xml 로 구성된 레거시 코드가 있다면
+
+
+AbstractAnnotationConfigDispatcherServletInitializer 을 상속한 WebApplicationInitializer 을 구현한 클래스를 만들어두고 그 클래스에 디버깅을 걸어보아라. 톰캣이 실행되면서 같이 실행되는 것을 알 수가 있다.
+
+아래는 톰캣에서 WebApplicationInitializerFourones이 호출 되기 까지의 호출 스택이다.
+
+```
+<init>:9, WebApplicationInitializerFouronesImpl (com.glqdlt.ex)
+newInstance0:-1, NativeConstructorAccessorImpl (sun.reflect)
+newInstance:62, NativeConstructorAccessorImpl (sun.reflect)
+newInstance:45, DelegatingConstructorAccessorImpl (sun.reflect)
+newInstance:423, Constructor (java.lang.reflect)
+newInstance:442, Class (java.lang)
+onStartup:152, SpringServletContainerInitializer (org.springframework.web)
+startInternal:5506, StandardContext (org.apache.catalina.core)
+start:150, LifecycleBase (org.apache.catalina.util)
+addChildInternal:901, ContainerBase (org.apache.catalina.core)
+addChild:877, ContainerBase (org.apache.catalina.core)
+addChild:652, StandardHost (org.apache.catalina.core)
+manageApp:1809, HostConfig (org.apache.catalina.startup)
+invoke0:-1, NativeMethodAccessorImpl (sun.reflect)
+invoke:62, NativeMethodAccessorImpl (sun.reflect)
+invoke:43, DelegatingMethodAccessorImpl (sun.reflect)
+invoke:498, Method (java.lang.reflect)
+invoke:301, BaseModelMBean (org.apache.tomcat.util.modeler)
+invoke:819, DefaultMBeanServerInterceptor (com.sun.jmx.interceptor)
+invoke:801, JmxMBeanServer (com.sun.jmx.mbeanserver)
+createStandardContext:618, MBeanFactory (org.apache.catalina.mbeans)
+createStandardContext:565, MBeanFactory (org.apache.catalina.mbeans)
+invoke0:-1, NativeMethodAccessorImpl (sun.reflect)
+invoke:62, NativeMethodAccessorImpl (sun.reflect)
+invoke:43, DelegatingMethodAccessorImpl (sun.reflect)
+invoke:498, Method (java.lang.reflect)
+invoke:301, BaseModelMBean (org.apache.tomcat.util.modeler)
+invoke:819, DefaultMBeanServerInterceptor (com.sun.jmx.interceptor)
+invoke:801, JmxMBeanServer (com.sun.jmx.mbeanserver)
+invoke:468, MBeanServerAccessController (com.sun.jmx.remote.security)
+doOperation:1468, RMIConnectionImpl (javax.management.remote.rmi)
+access$300:76, RMIConnectionImpl (javax.management.remote.rmi)
+run:1309, RMIConnectionImpl$PrivilegedOperation (javax.management.remote.rmi)
+doPrivileged:-1, AccessController (java.security)
+doPrivilegedOperation:1408, RMIConnectionImpl (javax.management.remote.rmi)
+invoke:829, RMIConnectionImpl (javax.management.remote.rmi)
+invoke0:-1, NativeMethodAccessorImpl (sun.reflect)
+invoke:62, NativeMethodAccessorImpl (sun.reflect)
+invoke:43, DelegatingMethodAccessorImpl (sun.reflect)
+invoke:498, Method (java.lang.reflect)
+dispatch:357, UnicastServerRef (sun.rmi.server)
+run:200, Transport$1 (sun.rmi.transport)
+run:197, Transport$1 (sun.rmi.transport)
+doPrivileged:-1, AccessController (java.security)
+serviceCall:196, Transport (sun.rmi.transport)
+handleMessages:573, TCPTransport (sun.rmi.transport.tcp)
+run0:834, TCPTransport$ConnectionHandler (sun.rmi.transport.tcp)
+lambda$run$0:688, TCPTransport$ConnectionHandler (sun.rmi.transport.tcp)
+run:-1, 937444256 (sun.rmi.transport.tcp.TCPTransport$ConnectionHandler$$Lambda$5)
+doPrivileged:-1, AccessController (java.security)
+run:687, TCPTransport$ConnectionHandler (sun.rmi.transport.tcp)
+runWorker:1149, ThreadPoolExecutor (java.util.concurrent)
+run:624, ThreadPoolExecutor$Worker (java.util.concurrent)
+run:748, Thread (java.lang)
+```
+
+
+우리는 SpringSessionJdbc 를 사용할 것이다. REDIS 에 대한 가이드는 많이 있으니 알아서 보도록 해라.
+JDBC 를 사용하는 것은 현재 근무하는 곳이 기술 스택이 매우 레거시하고 부채가 심각하기 때문이다. 
+
+```@EnableScheduling``` 이 하는 역활은 세션 만료일이 도례한 등록 세션을 제거해주는 역활을 한다. RDB 구조상 의미 없이 쌓이는 데이터는 제거를 해줘야 검색 속도가 높아지기 때문이다.
+
+[공식가이드](https://docs.spring.io/spring-session/docs/current-SNAPSHOT/reference/html/httpsession.html) 를 보면 ```@EnableJdbcHttpSession ```  를 사용해라는 무책임한 내용이 있는 것을 알수가 있다. EnableJdbcHttpSession 은 JdbcHttpSessionConfiguration 의 설정을 활성화 시켜주고 서블릿 컨테이너에 필터를 등록시켜주는 역활을 한다. 
+JdbcHttpSessionConfiguration 의 내부에는 sessionRepository 라는 이름의 빈을 등록시켜주는 역활이 대다수이다. 사실 sessionRepository 는 JdbcOperationsSessionRepository 인데,  이름에서 알 수 있듯이 JDBC 를 사용하는 레포지토리 클래스이고, 빈 속성으로 datasource 나 트랜잭션 매니저를 의존하는 빈 이다보니, JdbcHttpSessionConfiguration 내부에는 Datasource 와 txm 을 찾는 것 밖에 없다.  JdbcHttpSessionConfiguration 을 통해서 만들어진 sessionRepository는 
+SpringSessionRepositoryFilter 라는 빈에의해 참조된다. SpringSessionRepositoryFilter 빈은 JdbcHttpSessionConfiguration 에서 생성하기 때문에 JdbcHttpSessionConfiguration 에서 필터도 만들고, 필터에서 사용하는 sessionRepository 도 모두 만드는 셈이 된다. 여기까지 다 만들면 되는게 아니라, 이제 실제 톰캣의 필터에 이 springSessionRepositoryFilter 를 등록시켜주어야 한다. 스프링 시큐리티 처럼 springSessionRepositoryFilter 역시 스프링 기반의 필터이기 때문에 스프링 의존성을 갖는다. 그렇다면 당연히 뭐겠는가? 가이드에도 나와있듯이 DelegatingFilterProxy 를 감싸서 필터를 서블릿 컨테이너(톰캣)에 등록시켜주면 된다. 
+
+```
+<filter>
+	<filter-name>springSessionRepositoryFilter</filter-name>
+	<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+</filter>
+<filter-mapping>
+	<filter-name>springSessionRepositoryFilter</filter-name>
+	<url-pattern>/*</url-pattern>
+	<dispatcher>REQUEST</dispatcher>
+	<dispatcher>ERROR</dispatcher>
+</filter-mapping>
+```
