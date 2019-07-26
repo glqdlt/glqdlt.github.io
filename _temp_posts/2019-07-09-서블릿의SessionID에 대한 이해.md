@@ -2274,3 +2274,93 @@ public class SsoClientSecurityConfig extends WebSecurityConfigurerAdapter{
 ```
 
 addFilterBefore() 를 주목해야는 데, BasicAuthenticationFilter 로 등록된 필터에 내부적으로 순서대로 호출된다.
+
+스프링의 복합섹션 
+
+https://docs.spring.io/spring-session/docs/1.3.4.RELEASE/reference/html5/guides/users.html
+
+스프링의 세션이 만들어지는 순간에 대한 얘기는 [여기서](https://www.baeldung.com/spring-security-session) 찾을 수 있다.
+
+```
+2. When Is The Session Created?
+We can control exactly when our session gets created and how Spring Security will interact with it:
+
+always – a session will always be created if one doesn’t already exist
+ifRequired – a session will be created only if required (default)
+never – the framework will never create a session itself but it will use one if it already exists
+stateless – no session will be created or used by Spring Security
+1
+<http create-session="ifRequired">...</http>
+Java configuration:
+
+1
+2
+3
+4
+5
+@Override
+protected void configure(HttpSecurity http) throws Exception {
+    http.sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+}
+It’s very important to understand that this configuration only controls what Spring Security does – not the entire application. Spring Security may not create the session if we instruct it not to, but our app may!
+
+By default, Spring Security will create a session when it needs one – this is “ifRequired“.
+
+For a more stateless application, the “never” option will ensure that Spring Security itself will not create any session; however, if the application creates one, then Spring Security will make use of it.
+
+Finally, the strictest session creation option – “stateless” – is a guarantee that the application will not create any session at all.
+
+This was introduced in Spring 3.1 and will effectively skip parts of the Spring Security filter chain – mainly the session related parts such as HttpSessionSecurityContextRepository, SessionManagementFilter, RequestCacheFilter.
+
+These more strict control mechanisms have the direct implication that cookies are not used and so each and every request needs to be re-authenticated. This stateless architecture plays well with REST APIs and their Statelessness constraint. They also work well with authentication mechanisms such as Basic and Digest Authentication.
+
+```
+
+여기서 주목할 것은
+```
+By default, Spring Security will create a session when it needs one – this is “ifRequired“.
+```
+
+이다. ifRequired 옵션은 세션 생성이 필요할 경우에 스프링 시큐리티 프레임워크에 의해 추가로 생성이 된다. 이게 스프링 시큐리티를 사용했을 때에 놀라운 일이 생기는 것인데, http session 즉 서블릿에서 관리되는 세션을 삭제하거나 cookie 에서 JsessionID 를 제거하여서 세션 누락을 인지시켜서 로그인 화면을 보이게 의도하더라도, 로그인을 한 인증 세션이었다면 스프링 프레임워크에 의해 새로운 세션이 만들어졌기 때문에 스프링 시큐리티 필터 체인에서 해당 세션이 인증 된 세션임을 인식할 수 있어서 이미 로그인 된 사용자인 것을 알고 있다.
+
+이에 대해서는 여러가지 도움이 되는 부분이 있는 데, 세션 하이잭킹과 같은 공격에서 방어를 할 수 있는 이점이 있다.  그렇다면 기존 전통적인 세션 체킹을 위해 쿠키에 세션을 실어서 보내는 아키텍처를 뛰어넘는, 매 요청에 대해 같은 단일 브라우저에서 요청이 오는 것인지를 알 수가 있다는 것인데.. 세션 생성 매카니즘을 알고 싶어서 이리저리 뒤져봤지만 보이질 않았다.
+
+https://stackoverflow.com/questions/2504590/how-can-i-use-spring-security-without-sessions
+
+여기에 따르면 
+
+```
+Just a quick note: it's "create-session" rather than "create-sessions"
+
+create-session
+
+Controls the eagerness with which an HTTP session is created.
+
+If not set, defaults to "ifRequired". Other options are "always" and "never".
+
+The setting of this attribute affect the allowSessionCreation and forceEagerSessionCreation properties of HttpSessionContextIntegrationFilter. allowSessionCreation will always be true unless this attribute is set to "never". forceEagerSessionCreation is "false" unless it is set to "always".
+
+So the default configuration allows session creation but does not force it. The exception is if concurrent session control is enabled, when forceEagerSessionCreation will be set to true, regardless of what the setting is here. Using "never" would then cause an exception during the initialization of HttpSessionContextIntegrationFilter.
+
+For specific details of the session usage, there is some good documentation in the HttpSessionSecurityContextRepository javadoc.
+```
+
+```
+Controls the eagerness with which an HTTP session is created. If not set, defaults to "ifRequired". Other options are "always" and "never". The setting of this attribute affect the allowSessionCreation and forceEagerSessionCreation properties of SecurityContextPersistenceFilter. allowSessionCreation will always be true unless this attribute is set to "never". forceEagerSessionCreation is "false" unless it is set to "always". So the default configuration allows session creation but does not force it. The exception is if concurrent session control is enabled, when forceEagerSessionCreation will be set to true, regardless of what the setting is here. Using "never" would then cause an exception during the initialization of SecurityContextPersistenceFilter.
+```
+
+[SecurityContetxtPersistenceFilter](https://docs.spring.io/spring-security/site/docs/4.2.12.RELEASE/apidocs/org/springframework/security/web/context/SecurityContextPersistenceFilter.html) 를 뒤져 보았다/.
+
+
+```
+This filter will only execute once per request, to resolve servlet container (specifically Weblogic) incompatibilities.
+```
+
+즉 내 예상 데로 서블릿 세션(HttpSession)과 달리 스프링 시큐리티에서 별도의 관리 세션을 만들며, 
+
+```
+This filter MUST be executed BEFORE any authentication processing mechanisms. Authentication processing mechanisms (e.g. BASIC, CAS processing filters etc) expect the SecurityContextHolder to contain a valid SecurityContext by the time they execute.
+```
+
+모든 필터의 사전에 최초로 요청이 되어지기 때문에, JessionID 를 삭제해서 세션 만료를 야기시키게 되어 서블릿에서 세션을 만들더라도 스프링 시큐리티 필터 체인의 최우선에서 보호된 세션임을 인지하게 되는 것이다.
