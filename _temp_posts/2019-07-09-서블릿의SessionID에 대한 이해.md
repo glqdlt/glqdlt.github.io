@@ -2245,4 +2245,32 @@ public class AuthorizationEndpoint extends AbstractEndpoint {
 로그아웃 시에는  LogoutFilter.doFilter() 가 호출되는데, 등록 된 로그아웃 핸들러들을 for 문 돌면서 실행시켜준다.
 
 
+```java
+public class SsoClientSecurityConfig extends WebSecurityConfigurerAdapter{
 
+    @Override
+    public void configure(HttpSecurity http) throws Exception {
+        http
+                .antMatcher("/**")
+                .addFilterBefore( new RequestContextFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new OAuth2ClientContextFilter(), BasicAuthenticationFilter.class)
+                .addFilterBefore(new OAuth2ClientAuthenticationProcessingFilter(), BasicAuthenticationFilter.class)
+
+                .authorizeRequests()
+                .antMatchers("/denied").permitAll()
+                .anyRequest().authenticated()
+                .and()
+
+                .logout()
+                .addLogoutHandler(logoutHandler)
+                .permitAll().and()
+                .csrf().disable()
+                .exceptionHandling()
+                .authenticationEntryPoint(new LoginUrlAuthenticationEntryPoint(localOauth2EntryPoint));
+    }
+
+}
+
+```
+
+addFilterBefore() 를 주목해야는 데, BasicAuthenticationFilter 로 등록된 필터에 내부적으로 순서대로 호출된다.
