@@ -2364,3 +2364,53 @@ This filter MUST be executed BEFORE any authentication processing mechanisms. Au
 ```
 
 모든 필터의 사전에 최초로 요청이 되어지기 때문에, JessionID 를 삭제해서 세션 만료를 야기시키게 되어 서블릿에서 세션을 만들더라도 스프링 시큐리티 필터 체인의 최우선에서 보호된 세션임을 인지하게 되는 것이다.
+
+
+스프링 시큐리티에서 쿠키도 없이 유저를 식별하는 방안에 대해서 궁금해졌다. 과연 이건 어떻게 될까? browser fingerprinting 라는 기반이 있는 데, 브라우저 지문이라는 뜻이다. 
+
+구현 방법으론느 여러가지가 있다, 쿠키는 그 중에서 하나인 셈.
+
+https://pixelprivacy.com/resources/browser-fingerprinting/
+
+https://docs.spring.io/spring-security/site/docs/5.0.5.RELEASE/reference/htmlsingle/
+
+
+아래처럼 매직링크 기반의 로그인도 지원한다.
+
+https://github.com/creactiviti/spring-security-passwordless
+
+
+보안에 관련된 스프링의 가이드
+
+https://www.baeldung.com/spring-security-enumeration-attacks
+
+
+투팩터에 관한 이야기
+
+https://www.baeldung.com/spring-security-two-factor-authentication-with-soft-token
+
+https://cusonar.tistory.com/17
+
+
+
+https://sjh836.tistory.com/165
+
+스프링 시큐리티의 세션을 생성하는 전략은 
+SessionCreationPolicy 이넘의 속성 값을 통해 적용할 수 있다.
+
+헷갈릴 수 있는 부분이
+
+- stateless
+
+- never 
+
+옵션의 차이점인데
+
+stateless 는 완전 비상태유지를 의미 하는 것이고, never는 기존 http session 이 있다면 그걸 보안 세션으로 사용한다는 것을 의미한다.
+
+https://docs.spring.io/spring-security/site/docs/4.2.13.BUILD-SNAPSHOT/apidocs/org/springframework/security/config/http/SessionCreationPolicy.html
+
+
+
+https://www.baeldung.com/spring-security-session
+
