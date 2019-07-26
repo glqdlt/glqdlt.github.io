@@ -2414,3 +2414,6 @@ https://docs.spring.io/spring-security/site/docs/4.2.13.BUILD-SNAPSHOT/apidocs/o
 
 https://www.baeldung.com/spring-security-session
 
+
+
+내가 착각하던 것이, 브라우저 지문이라던지 이런거는 없다. 단지 난수 생성 매카니즘을 서블릿에 있는 것을 사용하고 덧붙이거나 갱신하거나 할 뿐이다. 스프링 세션은 http session 을 확장 할 뿐이지, 쿠키-세션 식별을 벗어난 다른 매카니즘을 사용하지 않는다. 그럴 수도 없다. 
