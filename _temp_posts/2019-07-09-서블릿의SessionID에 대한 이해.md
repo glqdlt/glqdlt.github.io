@@ -1266,3 +1266,404 @@ http://```/api/user/test-user/detail
 
 http://```/app1/api/user/test-user/detail 로 오기 때문에 각 컨트롤러 매핑을 수정해주거나, /** 로 오는 것을 /app1 로 forward(dispatch) 할 수 있게 서블릿 필터를 준비해주어야 한다.
 
+
+
+## SSO 아키텍처
+
+SSO 아키텍처를 하기 위한 필수 전제 조건은 쿠키공유를 위해서 도메인을 묶어야 한다는 점이다. 자세한 것은 추후에 서술하겠다.
+
+1. oauth2 기반의 sso [spring-security-oauth2](https://www.baeldung.com/sso-spring-security-oauth2)
+
+    - 용도 : Oauth2 인가 프로토콜을 통해 개인정보를 보안하고, 로그인 처리와 같은 인증 대행을 위탁하는 형태
+
+    - 장점 : 이기종 간의 SSO 구성이 쉽다. 디바이스 플랫폼 무관하게 같은 인증 대행을 처리할 수 있다. (단, PC 화면으로 로그인하고 모바일 어플리케이션으로 이미 로그인 된 세션으로 진입할수 는 없다. 토큰을 전달할 방법이 없기 때문이다.)
+
+    - 단점 : 토큰 관리를 고려해야 한다. 간단히 in memory 구성으로 해도 되지만, 전문적으로 하게 되는 경우, 유저가 늘어나거나 리소스 서버가 확장되어서 토큰 핸들링이 필요해질 경우나 Auth server 를 클러스터링할 경우에는 토큰 공유를 위해 token store 를 관리할 주체가 필요해진다. 세션 클러스터링과 달리 무결성 토큰에 의존하게 되기 떄문에 세션을 확장하거나 전파가 필요한 경우 어플리케이션 끼리 공유할 수가 없다. 이것을 해결하기 위해서는 토큰을 key 로 두고 추가 데이터를 토큰 발행시에 추가 리소스를 인증 서버에서 데이터를 담아주어야 한다. 데이터가 노출 될 위험이 있기에 토큰에 직접적으로 삽입하기는 힘들고, 토큰 응답 바디에 추가적으로 데이터를 담아두고 클라이언트가 해당 추가 데이터만 consume 하는 식으로 처리를 해야 한다.
+    서버사이드 기반이라면 로그인 된 A에서 로그인 하지 않은 B 라는 웹 서비스 이동 시에, B에서 최초 요청 시에 쿠키를 뒤져서 토큰을 가져오는 식의 사전 처리를 해야 한다. 이후 토큰이 발견되지 않을 시에는 
+
+2. 공유하는 특정 로그인 페이지를 두고, 세션 클러스터링을 통한 WAS 통합
+
+    - 용도 : 본 용도는 WAS 클러스터링과 같은 스케일 아웃 시에 고려해야할 모델이다.
+
+    - 장점 : 세션 속성(attribute)에 세션 자료구조를 확장할 수 있으며, 확장 된 데이터는 모든 WAS에 전파(공유)가 가능해진다는 점이 있다.
+
+    - 단점 : 특정 기술 스택에 커플링이 심해진다는 점이 있다. 이게 무슨말이냐면 클러스터링 아키텍처가 자바 기준이라면 자바와 파이썬간의 이기종 결합이 불가능하다.
+
+1안이든 2안이든, 특정 화면에 바로가기 버튼을 두고 해당 버튼에 쿠키 데이터를 사용자 몰래 덧붙여서 이동시켜주지 않는 이상은 유저가 자유롭게 한 브라우저 윈도우(프로세스)에서 다른 웹 서비스로 이동을 하기 위해서는 서브 도메인으로 묶어 쿠키가 자동으로 리퀘스트에 덧붙여지거나, 자바스크립트가 상위 도메인의 로컬스토리지에 접근할 수 있게끔 해주어야 한다. (하위에서 상위 도메인으로 접근하는 방안은 iframe 을 이용한 꼼수가 있다.)
+
+참고로 로컬스토리지는 도메인 별로 용량 제약을 같이 공유 받게 되는 데, 기본적으로 모바일은 2.5mb, 데스크탑은 10mb 정도로 제한 받는다.
+
+일반적으로 utf-8 기준의 문자 길이가 3바이트인 경우는 쿠키에서 문자를 180글자까지만 받을 수 있다.
+
+자세한 것은 [http://browsercookielimits.squawky.net/](http://browsercookielimits.squawky.net/) 참조
+
+
+자바에서 1안이든 2안이든 [CookieSerializer](https://docs.spring.io/spring-session/docs/current/api/) 를 만들어서 sessionRepositoryFilter 에 셋팅해주어야 한다. 그래야지 jsessionId 가 상위 도메인의 쿠키에 담기게 된다.
+
+
+
+재직 중인 엉터리 SSO 에서 JessionId와 토큰을 공유하지 않는 데 어떻게 SSO 이 되는걸까를 고민했엇다.
+
+스프링 시큐리티 oauth2 기반의 sso 를 [가이드](https://www.baeldung.com/sso-spring-security-oauth2)를 보고 실마리를 찾았는 데, 이유는 이러하다.
+
+[Oauth2ClientContext](https://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/client/OAuth2ClientContext.html) 를 보면 상태 저장에 관련 된 메소드가 ```setPreservedState()``` 나온다.
+
+이 메소드는 Oauth2RestTemplate 에서 호출이 되면서 stateKey 를 넘겨 받는다. 이 stateKey 는 UserRedirectRequiredException 에 포함되어 있다.
+
+```java
+	/**
+	 * Acquire or renew an access token for the current context if necessary. This method will be called automatically
+	 * when a request is executed (and the result is cached), but can also be called as a standalone method to
+	 * pre-populate the token.
+	 * 
+	 * @return an access token
+	 */
+	public OAuth2AccessToken getAccessToken() throws UserRedirectRequiredException {
+
+		OAuth2AccessToken accessToken = context.getAccessToken();
+
+		if (accessToken == null || accessToken.isExpired()) {
+			try {
+				accessToken = acquireAccessToken(context);
+			}
+			catch (UserRedirectRequiredException e) {
+				context.setAccessToken(null); // No point hanging onto it now
+				accessToken = null;
+				String stateKey = e.getStateKey();
+				if (stateKey != null) {
+					Object stateToPreserve = e.getStateToPreserve();
+					if (stateToPreserve == null) {
+						stateToPreserve = "NONE";
+					}
+					context.setPreservedState(stateKey, stateToPreserve);
+				}
+				throw e;
+			}
+		}
+		return accessToken;
+	}
+```
+
+위에서 보면 알겠지만 포인트가 stateKey와 stateToPreserve 이다. stateKey 는 저장 세션을 의미하고, stateToPreserve 는 계속 유지되어야 할 상태를 의미한다.
+
+Oauth 인증 서버에서도 리소스서버에서도 클라이언트에서도 setPreservedState 가 담기는 context 를 사용한다. 이 녀석은  Oauth2RestTemplate 에 포함된 메소드 ``` getOAuth2ClientContext()```에서 리턴한다.
+```
+package org.springframework.security.oauth2.client;
+
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.net.URLEncoder;
+import java.util.Arrays;
+
+import org.springframework.http.HttpMethod;
+import org.springframework.http.client.ClientHttpRequest;
+import org.springframework.security.oauth2.client.http.AccessTokenRequiredException;
+import org.springframework.security.oauth2.client.http.OAuth2ErrorHandler;
+import org.springframework.security.oauth2.client.resource.OAuth2AccessDeniedException;
+import org.springframework.security.oauth2.client.resource.OAuth2ProtectedResourceDetails;
+import org.springframework.security.oauth2.client.resource.UserRedirectRequiredException;
+import org.springframework.security.oauth2.client.token.AccessTokenProvider;
+import org.springframework.security.oauth2.client.token.AccessTokenProviderChain;
+import org.springframework.security.oauth2.client.token.AccessTokenRequest;
+import org.springframework.security.oauth2.client.token.grant.client.ClientCredentialsAccessTokenProvider;
+import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeAccessTokenProvider;
+import org.springframework.security.oauth2.client.token.grant.implicit.ImplicitAccessTokenProvider;
+import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordAccessTokenProvider;
+import org.springframework.security.oauth2.common.AuthenticationScheme;
+import org.springframework.security.oauth2.common.OAuth2AccessToken;
+import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
+import org.springframework.web.client.RequestCallback;
+import org.springframework.web.client.ResponseErrorHandler;
+import org.springframework.web.client.ResponseExtractor;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
+
+/**
+ * Rest template that is able to make OAuth2-authenticated REST requests with the credentials of the provided resource.
+ * 
+ * @author Ryan Heaton
+ * @author Dave Syer
+ */
+public class OAuth2RestTemplate extends RestTemplate implements OAuth2RestOperations {
+
+	private final OAuth2ProtectedResourceDetails resource;
+
+	private AccessTokenProvider accessTokenProvider = new AccessTokenProviderChain(Arrays.<AccessTokenProvider> asList(
+			new AuthorizationCodeAccessTokenProvider(), new ImplicitAccessTokenProvider(),
+			new ResourceOwnerPasswordAccessTokenProvider(), new ClientCredentialsAccessTokenProvider()));
+
+	private OAuth2ClientContext context;
+
+	private boolean retryBadAccessTokens = true;
+
+	private OAuth2RequestAuthenticator authenticator = new DefaultOAuth2RequestAuthenticator();
+
+	public OAuth2RestTemplate(OAuth2ProtectedResourceDetails resource) {
+		this(resource, new DefaultOAuth2ClientContext());
+	}
+
+	public OAuth2RestTemplate(OAuth2ProtectedResourceDetails resource, OAuth2ClientContext context) {
+		super();
+		if (resource == null) {
+			throw new IllegalArgumentException("An OAuth2 resource must be supplied.");
+		}
+
+		this.resource = resource;
+		this.context = context;
+		setErrorHandler(new OAuth2ErrorHandler(resource));
+	}
+
+	/**
+	 * Strategy for extracting an Authorization header from an access token and the request details. Defaults to the
+	 * simple form "TOKEN_TYPE TOKEN_VALUE".
+	 * 
+	 * @param authenticator the authenticator to use
+	 */
+	public void setAuthenticator(OAuth2RequestAuthenticator authenticator) {
+		this.authenticator = authenticator;
+	}
+
+	/**
+	 * Flag to determine whether a request that has an existing access token, and which then leads to an
+	 * AccessTokenRequiredException should be retried (immediately, once). Useful if the remote server doesn't recognize
+	 * an old token which is stored in the client, but is happy to re-grant it.
+	 * 
+	 * @param retryBadAccessTokens the flag to set (default true)
+	 */
+	public void setRetryBadAccessTokens(boolean retryBadAccessTokens) {
+		this.retryBadAccessTokens = retryBadAccessTokens;
+	}
+
+	@Override
+	public void setErrorHandler(ResponseErrorHandler errorHandler) {
+		if (!(errorHandler instanceof OAuth2ErrorHandler)) {
+			errorHandler = new OAuth2ErrorHandler(errorHandler, resource);
+		}
+		super.setErrorHandler(errorHandler);
+	}
+	
+	@Override
+	public OAuth2ProtectedResourceDetails getResource() {
+		return resource;
+	}
+
+	@Override
+	protected ClientHttpRequest createRequest(URI uri, HttpMethod method) throws IOException {
+
+		OAuth2AccessToken accessToken = getAccessToken();
+
+		AuthenticationScheme authenticationScheme = resource.getAuthenticationScheme();
+		if (AuthenticationScheme.query.equals(authenticationScheme)
+				|| AuthenticationScheme.form.equals(authenticationScheme)) {
+			uri = appendQueryParameter(uri, accessToken);
+		}
+
+		ClientHttpRequest req = super.createRequest(uri, method);
+
+		if (AuthenticationScheme.header.equals(authenticationScheme)) {
+			authenticator.authenticate(resource, getOAuth2ClientContext(), req);
+		}
+		return req;
+
+	}
+
+	@Override
+	protected <T> T doExecute(URI url, HttpMethod method, RequestCallback requestCallback,
+			ResponseExtractor<T> responseExtractor) throws RestClientException {
+		OAuth2AccessToken accessToken = context.getAccessToken();
+		RuntimeException rethrow = null;
+		try {
+			return super.doExecute(url, method, requestCallback, responseExtractor);
+		}
+		catch (AccessTokenRequiredException e) {
+			rethrow = e;
+		}
+		catch (OAuth2AccessDeniedException e) {
+			rethrow = e;
+		}
+		catch (InvalidTokenException e) {
+			// Don't reveal the token value in case it is logged
+			rethrow = new OAuth2AccessDeniedException("Invalid token for client=" + getClientId());
+		}
+		if (accessToken != null && retryBadAccessTokens) {
+			context.setAccessToken(null);
+			try {
+				return super.doExecute(url, method, requestCallback, responseExtractor);
+			}
+			catch (InvalidTokenException e) {
+				// Don't reveal the token value in case it is logged
+				rethrow = new OAuth2AccessDeniedException("Invalid token for client=" + getClientId());
+			}
+		}
+		throw rethrow;
+	}
+
+	/**
+	 * @return the client id for this resource.
+	 */
+	private String getClientId() {
+		return resource.getClientId();
+	}
+
+	/**
+	 * Acquire or renew an access token for the current context if necessary. This method will be called automatically
+	 * when a request is executed (and the result is cached), but can also be called as a standalone method to
+	 * pre-populate the token.
+	 * 
+	 * @return an access token
+	 */
+	public OAuth2AccessToken getAccessToken() throws UserRedirectRequiredException {
+
+		OAuth2AccessToken accessToken = context.getAccessToken();
+
+		if (accessToken == null || accessToken.isExpired()) {
+			try {
+				accessToken = acquireAccessToken(context);
+			}
+			catch (UserRedirectRequiredException e) {
+				context.setAccessToken(null); // No point hanging onto it now
+				accessToken = null;
+				String stateKey = e.getStateKey();
+				if (stateKey != null) {
+					Object stateToPreserve = e.getStateToPreserve();
+					if (stateToPreserve == null) {
+						stateToPreserve = "NONE";
+					}
+					context.setPreservedState(stateKey, stateToPreserve);
+				}
+				throw e;
+			}
+		}
+		return accessToken;
+	}
+
+	/**
+	 * @return the context for this template
+	 */
+	public OAuth2ClientContext getOAuth2ClientContext() {
+		return context;
+	}
+
+	protected OAuth2AccessToken acquireAccessToken(OAuth2ClientContext oauth2Context)
+			throws UserRedirectRequiredException {
+
+		AccessTokenRequest accessTokenRequest = oauth2Context.getAccessTokenRequest();
+		if (accessTokenRequest == null) {
+			throw new AccessTokenRequiredException(
+					"No OAuth 2 security context has been established. Unable to access resource '"
+							+ this.resource.getId() + "'.", resource);
+		}
+
+		// Transfer the preserved state from the (longer lived) context to the current request.
+		String stateKey = accessTokenRequest.getStateKey();
+		if (stateKey != null) {
+			accessTokenRequest.setPreservedState(oauth2Context.removePreservedState(stateKey));
+		}
+
+		OAuth2AccessToken existingToken = oauth2Context.getAccessToken();
+		if (existingToken != null) {
+			accessTokenRequest.setExistingToken(existingToken);
+		}
+
+		OAuth2AccessToken accessToken = null;
+		accessToken = accessTokenProvider.obtainAccessToken(resource, accessTokenRequest);
+		if (accessToken == null || accessToken.getValue() == null) {
+			throw new IllegalStateException(
+					"Access token provider returned a null access token, which is illegal according to the contract.");
+		}
+		oauth2Context.setAccessToken(accessToken);
+		return accessToken;
+	}
+
+	protected URI appendQueryParameter(URI uri, OAuth2AccessToken accessToken) {
+
+		try {
+
+			// TODO: there is some duplication with UriUtils here. Probably unavoidable as long as this
+			// method signature uses URI not String.
+			String query = uri.getRawQuery(); // Don't decode anything here
+			String queryFragment = resource.getTokenName() + "=" + URLEncoder.encode(accessToken.getValue(), "UTF-8");
+			if (query == null) {
+				query = queryFragment;
+			}
+			else {
+				query = query + "&" + queryFragment;
+			}
+
+			// first form the URI without query and fragment parts, so that it doesn't re-encode some query string chars
+			// (SECOAUTH-90)
+			URI update = new URI(uri.getScheme(), uri.getUserInfo(), uri.getHost(), uri.getPort(), uri.getPath(), null,
+					null);
+			// now add the encoded query string and the then fragment
+			StringBuffer sb = new StringBuffer(update.toString());
+			sb.append("?");
+			sb.append(query);
+			if (uri.getFragment() != null) {
+				sb.append("#");
+				sb.append(uri.getFragment());
+			}
+
+			return new URI(sb.toString());
+
+		}
+		catch (URISyntaxException e) {
+			throw new IllegalArgumentException("Could not parse URI", e);
+		}
+		catch (UnsupportedEncodingException e) {
+			throw new IllegalArgumentException("Could not encode URI", e);
+		}
+
+	}
+
+	public void setAccessTokenProvider(AccessTokenProvider accessTokenProvider) {
+		this.accessTokenProvider = accessTokenProvider;
+	}
+
+}
+
+```
+
+client context 를 받는 것은 UserInfoTokenServices 와 ClientRestTemplate 이다. 이 context가 클라이언트에서 http request 에 실리게 되는 자료구조가 된다. 마찬가지로 server에서도 해당 context 에서 데이터를 꺼내고, access Token 이 있는 지, 저장 된 state 인지를 체크한다. 마치 gRPC의 protoBuf 의 model 같이  쓰는 것이다.
+
+SSO 이 되고 있는 stateKey 가 핵심인데, 이 stateKey 는 같은 브라우저에서 접근하기만 하면 어떻게든 똑같은 난수가 만들어진다. 그래서 jessessionID 나 토큰을 공유하지 않아도 SSO 처럼 돌아가는 것이다.
+
+[DefaultOauth2ClientContext](https://docs.spring.io/spring-security/oauth/apidocs/org/springframework/security/oauth2/client/DefaultOAuth2ClientContext.html) 설명에서 setPreservedState() 를 보면 이해할 수가 있다.
+
+나의 이 내용은 https://stackoverflow.com/questions/33006234/spring-security-oauth2-invalidate-session-after-authentication
+
+에서 비슷한 질문이 있어 여기를 참고하길 바란다.
+
+
+관련된 내용은 실제로 이슈로 등록되어 있다.
+
+https://github.com/spring-projects/spring-security-oauth/issues/140
+
+
+망각한게 있는데 톰켓에서 만드는 session 즉 jSessionId 는 httpSession 이고 스프링시큐리티에서 인증 성공이 되면 만드는 세션은 springSession 이다. 두개는 엄연히 차이가 있다.
+
+실제로 스프링 세션 jdbc 에서 데이터 베이스 스키마를 보면 PRIMARY_ID 와 SESSION_ID 라는 두개의 필드가 존재하는 걸 볼 수가 있따.
+
+https://stackoverflow.com/questions/29479840/spring-session-and-spring-security
+
+
+https://docs.spring.io/spring-session/docs/current/reference/html5/#httpsession
+
+http session 이 spring session 으로 통합될 것이란 걸 개발자는 몰라도 된다. 단순히 http session 을 가지고 와서 핸들링하면 이게 spring session 으로 변활될지 말지는 신경쓰지 말라는 의미이다. 즉, 2개는 다르다. 
+
+UserRedirectRequiredException 이 녀석이 아주 골 떄리는데 내용이 굉장히 웃기다.
+
+Special exception thrown when a user redirect is required in order to obtain an OAuth2 access token.
+
+즉 예외를 예외처럼 쓰지 않는 녀석이다.
+
+## Oauth2 플로우
+
+client 의 필터를 타고 요청을 해야한다고 판단하면 AuthorizationEndpoint.authorize() 로 이동하게 된다.
+
+여기서 authorize 는 Principal principal 를 파라미터로 받고 있는 데, 이 principal 이 auth server와 유저 브라우저 간의 세션이 맺혀있는 정보이다.
+
+스프링 세션은 단일 브라우저에서 멀티 계정에 대한 접속을 허용한다고 했었다. 그거 때문에 현재 조직의 SSO가 동작하는 거 같다.
+
+각 서비스 별로 별도의 로그아웃이 되기 때문이다.
