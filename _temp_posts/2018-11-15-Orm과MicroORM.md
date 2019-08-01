@@ -159,6 +159,8 @@ Micro ORM 에 대해서는 개인적으로 아래의 이유로 경량(Micro) ORM
 
 - 테스트를 위한 목킹(Mock) 처리를 하는 것이 수월하지 않다.
 
+- orm 과 micro orm(query mapper) 의 결정적인 차이는 객체 관계에 대해 micro orm 은 고려하지 않는다. A 와 B 가 is a 관계에 있거나, A를 B가 집약(aggregation) 하던 말던 micro orm 은 mapping target object 의 상태에만 관심이 있다.
+
     
 
 
