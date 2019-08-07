@@ -2460,6 +2460,10 @@ public class ErstControllerErrorAdvice {
 아래와 같다.
 
 ```java
+/**
+ * @author Jhun
+ * 2019-08-07
+ */
 public abstract class RestfulApiException extends RuntimeException {
     public RestfulApiException(String message) {
         super(message);
@@ -2475,30 +2479,58 @@ public abstract class RestfulApiException extends RuntimeException {
 
     public abstract HttpStatus getHttpStatus();
 
+    /**
+     * @author Jhun
+     * 2019-08-07
+     */
+    public static class CustomHttpStatusError extends RestfulApiException{
+
+        private HttpStatus httpStatus;
+
+        public CustomHttpStatusError(String message, HttpStatus httpStatus) {
+            super(message);
+            this.httpStatus = httpStatus;
+        }
+
+        public CustomHttpStatusError(String message, Throwable cause, HttpStatus httpStatus) {
+            super(message, cause);
+            this.httpStatus = httpStatus;
+        }
+
+        public CustomHttpStatusError(Throwable cause, HttpStatus httpStatus) {
+            super(cause);
+            this.httpStatus = httpStatus;
+        }
+
+        @Override
+        public HttpStatus getHttpStatus() {
+            return this.httpStatus;
+        }
+    }
 
     /**
      * @author Jhun
      * 2019-08-07
      */
     public static class ApiInternalError extends RestfulApiException {
-    
+
         public ApiInternalError(String message) {
             super(message);
         }
-    
+
         public ApiInternalError(String message, Throwable cause) {
             super(message, cause);
         }
-    
+
         public ApiInternalError(Throwable cause) {
             super(cause);
         }
-    
+
         @Override
         public HttpStatus getHttpStatus() {
             return HttpStatus.INTERNAL_SERVER_ERROR;
         }
-    
+
     }
 
     /**
@@ -2509,21 +2541,22 @@ public abstract class RestfulApiException extends RuntimeException {
         public BadRequestError(String message) {
             super(message);
         }
-    
+
         public BadRequestError(String message, Throwable cause) {
             super(message, cause);
         }
-    
+
         public BadRequestError(Throwable cause) {
             super(cause);
         }
-    
+
         @Override
         public HttpStatus getHttpStatus() {
             return HttpStatus.BAD_REQUEST;
         }
     }
 }
+
 
 ```
 
@@ -2563,3 +2596,42 @@ public class RestControllerAdvice {
 별 차이점이 없다. 차리라 그냥 내가 에러 모델링을 더 확장할 수 있게 직접 만든 걸 쓰는 것이 나을 것이다.
 
 
+현재는 content-type 도 핸들링하는 걸 추가해서 최종적으로는 아래처럼 사용하고 있다.
+
+```java
+
+/**
+ * @author Jhun
+ * 2019-08-07
+ */
+@ControllerAdvice(annotations = RestController.class)
+public class RestControllerAdvice {
+
+    @ExceptionHandler(RestfulApiException.class)
+    public ResponseEntity apiError(RestfulApiException e) {
+        return ResponseEntity.status(e.getHttpStatus())
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .body(new ApiErrorMessage(e.getMessage(), e.getHttpStatus().value()));
+    }
+
+    public static class ApiErrorMessage {
+        private String message;
+        private Integer status;
+
+        public ApiErrorMessage(String message, Integer status) {
+            this.message = message;
+            this.status = status;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public Integer getStatus() {
+            return status;
+        }
+    }
+}
+
+
+```
