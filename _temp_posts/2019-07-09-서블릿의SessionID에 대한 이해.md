@@ -2417,3 +2417,149 @@ https://www.baeldung.com/spring-security-session
 
 
 내가 착각하던 것이, 브라우저 지문이라던지 이런거는 없다. 단지 난수 생성 매카니즘을 서블릿에 있는 것을 사용하고 덧붙이거나 갱신하거나 할 뿐이다. 스프링 세션은 http session 을 확장 할 뿐이지, 쿠키-세션 식별을 벗어난 다른 매카니즘을 사용하지 않는다. 그럴 수도 없다. 
+
+
+## 스프링 부트의 에러 페이지 ㅓ리
+
+https://docs.spring.io/autorepo/docs/spring-boot/current/reference/htmlsingle/#boot-features-error-handling-custom-error-pages
+
+
+https://www.baeldung.com/exception-handling-for-rest-with-spring
+
+
+https://www.baeldung.com/spring-response-status-exception
+
+
+관심사는 그 문제였다.
+
+RestController 와, Controller 의 에러 응답 전략 차이이다.
+
+무슨 말이냐면, Controller 의 에러의 경우 에러 페이지를 노출해야 한다. 즉 content-type: text/html 이 되어야한다.
+
+RestController 는 content-type : text/plain 이나 application/json 을 보내줘야 한다. 문제가 되는 부분이 이런 부분이다.
+
+흔히 우리가 Ajax 라고 하는 화면 입장에서 비동기방법으로 화면 갱신을 하는 기능이 최근 많아졌다. 이 경우 RestController 에서 처리하게 되는 데, RestController 의 에러 반환은 text/html 이 되어버릴 경우, 적절한 에러 표현이 어렵다. 예를 들어서 Jquery 의 Ajax Error catch 시에 응답온 status 가 4xx 5xx 라면 에러 핸들러에서 처리를 쉽게 할 수 있는 데, 이때 메세지 본문을 alert() 으로 띄우려고 한다면.. html 소스가 그대로 출력되어버릴 것이다. Content-type text/html 이기 때문이다. 사실 이 말은 서버에서 html 을 보내줬기 때문이다 라는 말이 더 정확하긴 하다.
+
+이를 위해서 기존에 아래처럼 RestController 만을 위한 에러 핸들러를 등록했었다.
+
+```java
+@ControllerAdvice(annotations = RestController.class)
+public class ErstControllerErrorAdvice {
+
+    @ExceptionHandler(Throwable.class)
+    public ResponseEntity someError(Throwable e) {
+        return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
+}
+```
+
+이렇게 되면 text/plain 으로 500 status 로 반환이 된다.  문제는 위의 코드는 객체지향적이지 못하다. 그도 그럴 것이 가장 최고의 Throwable 을 잡아서 에러를 전부 캐치하기 때문에.. 디테일한 조정이 불가능하다. 예를 들어서 ```IllegalArgumentException``` 또는 ```InvalidParameterException``` 의 경우에는 시에는 400. Bad Request 로 보내고 싶을 때가 있다. 에러에 따른 httpStatus 를 지정하는 것이 포인트이기 때문에 나는 RuntimeException 을 확장한 개별 에러로 만들고, 해당 에러의 필드에 Subtype 에서 HttpStatus 를 가지도록 강제화했다.
+
+아래와 같다.
+
+```java
+public abstract class RestfulApiException extends RuntimeException {
+    public RestfulApiException(String message) {
+        super(message);
+    }
+
+    public RestfulApiException(String message, Throwable cause) {
+        super(message, cause);
+    }
+
+    public RestfulApiException(Throwable cause) {
+        super(cause);
+    }
+
+    public abstract HttpStatus getHttpStatus();
+
+
+    /**
+     * @author Jhun
+     * 2019-08-07
+     */
+    public static class ApiInternalError extends RestfulApiException {
+    
+        public ApiInternalError(String message) {
+            super(message);
+        }
+    
+        public ApiInternalError(String message, Throwable cause) {
+            super(message, cause);
+        }
+    
+        public ApiInternalError(Throwable cause) {
+            super(cause);
+        }
+    
+        @Override
+        public HttpStatus getHttpStatus() {
+            return HttpStatus.INTERNAL_SERVER_ERROR;
+        }
+    
+    }
+
+    /**
+     * @author Jhun
+     * 2019-08-07
+     */
+    public static class BadRequestError extends RestfulApiException {
+        public BadRequestError(String message) {
+            super(message);
+        }
+    
+        public BadRequestError(String message, Throwable cause) {
+            super(message, cause);
+        }
+    
+        public BadRequestError(Throwable cause) {
+            super(cause);
+        }
+    
+        @Override
+        public HttpStatus getHttpStatus() {
+            return HttpStatus.BAD_REQUEST;
+        }
+    }
+}
+
+```
+
+getHttpStatus() 를 강제화함으로써 각 에러에서 Status 를 return 할수 있게 했다. 그리고 이를 restcontroller advice 에서 캐치하게 했다.
+
+
+```java
+@ControllerAdvice(annotations = RestController.class)
+public class RestControllerAdvice {
+
+    @ExceptionHandler(RestfulApiException.class)
+    public ResponseEntity apiError(RestfulApiException e) {
+        return new ResponseEntity<>(e.getMessage(), e.getHttpStatus());
+    }
+
+}
+
+```
+
+오우 멋지게되었다.
+
+
+스프링 5 에서는  ```ResponseStatusException``` 라는 에러가 등장했다. 이 에러는 에러에 httpstatus 를 주입할 수 있게 되어 있다. 나는 이 녀석으로 에러를 throw 만 해도 자동적으로 content-type : text/html 이 아닌.. text/plain 이나 스프링에서 Exception 내부 속성들을 json 직렬화해서 보내줄 줄 알았다.. 실험을 해봤더니 내가 만든 RestfulApiException과 똑같이 에러를 구별하고 statuscode 를 얻기 위할 뿐인 녀석이다. ResponseStatusException 을 throw 해도 결국 에러는 spring boot 기준 /error/error.html 에 있는 전역 페이지를 응답하게 되고.. ResponseStatusException 의 에러 내용이 화면에 렌더링 될 뿐이다. 다만 차이점이 있다면, ResponseStatusException의 경우 error.html 이 응답될 때 HttpStatus 를 컨트롤할 수 있다는 점이 있다. ResponseStatusException 란 이름 그대로 HttpStatus 를 응답할 때 제어할 뿐이다. 결국 이 녀석도 내가 의도했던 Controller 와 RestController 의 개별적인 에러 context 전략을 취하려면 각각 개별적인 controller advice 를 두고 해야한다. 아래와 같이
+```java
+@ControllerAdvice(annotations = RestController.class)
+public class RestControllerAdvice {
+
+    @ExceptionHandler(ResponseStatusException.class)
+    public ResponseEntity apiError(ResponseStatusException e) {
+        return new ResponseEntity<>(e.getMessage(), e.getStatus());
+    }
+
+}
+
+```
+
+별 차이점이 없다. 차리라 그냥 내가 에러 모델링을 더 확장할 수 있게 직접 만든 걸 쓰는 것이 나을 것이다.
+
+
