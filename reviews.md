@@ -6,12 +6,14 @@ permalink: reviews
 comments : false
 ---
 
-# 읽은 도서
+# Reviews
 
 + 클린 코더
++ 클린 코드
++ 코드
 + DDD Start
 + 프로그래머의 길 멘토에게 묻다.
-+ 아키텍트 이야기.
++ 아키텍트 이야기
 + 프로그래머의 리더쉽
 + 코딩을 지탱하는 기술
 + 해커와 화가
@@ -24,8 +26,8 @@ comments : false
 + 코드로 배우는 스프링 웹 프로젝트
 + 실전 스프링 부트 워크북
 + 가장 빨리 만나는 스프링 부트
-+ HANBIT_Beginning_Akka
-+ HANBIT_Java8_Lambda
++ HANBIT Beginning Akka
++ HANBIT Java8 Lambda
 + 자바 ORM 표준 JPA 프로그래밍
 + 토비의 스프링 3.1 Vol_1
 + 자바 성능 튜닝이야기
@@ -66,9 +68,7 @@ comments : false
 + 마이크로 서비스 아키텍처 구축
 
 
-
-# 예정 도서
-
+# Wishlist
 
 + [클라우드 네이티브 스트럭처](http://www.yes24.com/24/Goods/64467321)
 
