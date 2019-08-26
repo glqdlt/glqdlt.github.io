@@ -3,7 +3,15 @@ JPA 에서 상속 모델의 구현은 참 난해하다.
 
 김영한님의 JPA 책에서도 그렇고, [Baeldung 가이드](https://www.baeldung.com/hibernate-inheritance) 에서도 똑같은 데.. 엔티티 클래스에 대한 정의에 대한 내용만 있을 뿐 실제 이를 활용하는 Repository(또는 DB기준 한정적인 의미인 DAO) 기준으로의 내용은 없다.
 
-팁이지만 위의 경우는 슈퍼테이블의 PK를 하위 테이블에도 PK 로 JOIN 하는 식별 관계 방법을 얘기하는 데, 굳이 저렇게 하지 않고 비식별관계(부모의 키를 자식에서 PK로 사용하지 않는 것) 으로 처리할 수 있을까를 고민해봤다. 기본적으로 상속 관계의 매핑은 @ID 를 하나만 있어야한다고 강제화하기 때문에 불가능하다. 이 경우 상속으로 처리할 것이 아니라, 필드에 집약 처리 즉 관계 매핑으로 처리해야 한다. 
+팁이지만 위의 경우는 슈퍼테이블의 PK를 하위 테이블에도 PK 로 JOIN 하는 식별 관계 방법을 얘기하는 데, 굳이 저렇게 하지 않고 비식별관계(부모의 키를 자식에서 PK로 사용하지 않는 것) 으로 처리할 수 있을까를 고민해봤다. 기본적으로 상속 관계의 매핑은 @ID 를 하나만 있어야한다고 강제화하기 때문에 불가능하다.
+아래 에러 메세지를 주구장창 볼 것이다.
+
+```
+
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'localContainerEntityManagerFactoryBean' defined in class path resource [com/glqdlt/ ....]: Invocation of init method failed; nested exception is java.lang.ClassCastException: org.hibernate.mapping.JoinedSubclass cannot be cast to org.hibernate.mapping.RootClass
+```
+
+이 경우 상속으로 처리할 것이 아니라, 필드에 집약 처리 즉 관계 매핑으로 처리해야 한다. 
 
 우선 실무 기준으로 있엇던 일을 얘기하면, 게임 포털 쿠폰과 프로모션을 설계할 때의 일화이다.
 
@@ -45,7 +53,6 @@ public class MultipleCoupon extends Coupon implements CouponSerial {
 }
 
 public interface CouponSerial {
-    Long getSerialId();
 
     String getSerialCode();
 
