@@ -45,9 +45,7 @@ comments : false
 + [A/B 테스트를 통한 웹사이트 전환율 최적화 : 콜린 맥파랜드](https://book.naver.com/bookdb/book_detail.nhn?bid=7310675)
 
 + [미래를 바꾼 아홉 가지 알고리즘 : 존 맥코믹](https://book.naver.com/bookdb/book_detail.nhn?bid=7214772)
-+ 누가 내 치즈를 훔쳤을까?
 + [REMOTE 사무실 따위 필요없어 : 제이슨 프리드, 데이빗 하니에마이어 한슨](https://book.naver.com/bookdb/book_detail.nhn?bid=8552172)
-+ 성당과 시장
 + [더 나은 프로그래밍을 위한 코드 골프 : 야나이 마사카즈](https://book.naver.com/bookdb/book_detail.nhn?bid=8721703)
 + [스프링 5.0 마이크로서비스 : 라제시 RV](https://book.naver.com/bookdb/book_detail.nhn?bid=13270981)
 + [테스트 주도 개발로 배우는 개체 지향의 설계와 실천 : 스티브 프리먼, 냇 프라이스](https://book.naver.com/bookdb/book_detail.nhn?bid=7231228)
@@ -67,6 +65,7 @@ comments : false
 + HANBIT Beginning Akka
 + HANBIT_Docker
 + HANBIT Java8 Lambda
++ 누가 내 치즈를 훔쳤을까?
 
 ## Ridibooks
 
