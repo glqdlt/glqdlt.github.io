@@ -76,7 +76,9 @@ public interface CouponSerial {
 
 세번째를 구현하는 방법은 여러가지가 있다. entitymanager 에서 criteria builder 를 통해 직접 JPQL 을 만드는 방법이나 이를 한번 매핑한 queryDSL 라이브러리를 사용해보는 방법도 있다. 또는 @Query 어노테이션을 통해서 JPQL 을 사용하거나, Native Query 를 사용해 볼 수도 있다.
 
-관련해서 구현 방법을 찾아보면 @NoRepositoryBean 어노테이션 관련 키워드가 나온다. 이 녀석은 뭘까?
+하지만 이렇게 되면 Read 용 Repository 따로, Create Update Delete 가 포함된 Repository 가 따로 구현 되어서 사용해야될 것 같다.. 뭔가 깔끔한 방법이 없을까? 
+
+관련해서 찾아보면 @NoRepositoryBean 어노테이션 관련 키워드가 나온다. 이 녀석은 뭘까?
 
 [Baeldung](https://www.baeldung.com/spring-data-jpa-method-in-all-repositories) 의 가이드를 보면 이 녀석은 우리가 일반적으로 사용하는 SimpleJpaRepository 를 확장시켜서 특별한 메소드를 추가하고 싶을 때 사용하는 녀석임을 알 수가 있다.
 
