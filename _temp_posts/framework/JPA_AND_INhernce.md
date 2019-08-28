@@ -101,7 +101,7 @@ public interface CouponSerial {
 아까 위에서 비식별관계 일 때에는 상속관계를 사용하지 못한다고 했었다. 이 말에 대해 궁금한 사람들이 많을 것이다. 이는 무엇인지 실제 소스를 보면 이해하기 쉬울 것이다.
 
 ```java
-public class Coupon {
+public abstract class Coupon {
     private Integer couponId;
     private Integer gameId;
     private String name;
