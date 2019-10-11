@@ -37,7 +37,7 @@ comments : false
 
 #### [apache/phoenix](https://github.com/apache/phoenix)  
 
-- [(Open)PHOENIX-5130 removed 'static' keyword from 'private static enum'](https://github.com/apache/phoenix/pull/438)
+- [(Merged)PHOENIX-5130 removed 'static' keyword from 'private static enum'](https://github.com/apache/phoenix/pull/438)
 
 
 ## Links
