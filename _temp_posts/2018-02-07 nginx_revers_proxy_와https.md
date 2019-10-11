@@ -53,3 +53,37 @@ author: "glqdlt"
 - SSL 암호화
 
 - 캐싱
+
+
+
+### qweqwe
+
+openssl s_client -connect google.com:443 -tls1_2
+윈도우10 지원
+자체서명 인증서 생성은 아래 참고했음 (centos7)
+https://zetawiki.com/wiki/리눅스_자체서명_SSL_인증서_생성
+간단히 아래처럼 구성
+server {
+   listen       38080 ssl;
+   server_name  eastasia.webview-qa.epoch.4ones.com;
+   #server_name localhost;
+   ssl_certificate /etc/nginx/server.crt;
+   ssl_certificate_key /etc/nginx/server.key;
+   ssl_protocols TLSv1.2;
+   #charset koi8-r;
+   #access_log  /var/log/nginx/host.access.log  main;
+   location / {
+       proxy_pass http://127.0.0.1:38081;
+   }
+}
+
+전일웅 3:35 PM
+서버 버전정보를 감추라고 하는데, 버전정보 감추기는 간단히 되나 server 헤더 자체를 없애려면 플러그인을 깔던지 header 조작을 해주어야 한다
+https://serverfault.com/questions/214242/can-i-hide-all-server-os-info
+
+Server FaultServer Fault
+Can I hide all server / os info?
+I don't want anyone to be able to detect that I'm using NGINX or even Ubuntu from the internet. There are tools out there (such as BuiltWith) which scan servers to detect what tools they're using. ...
+전일웅 3:40 PM
+custom 포트에서 http 로 접근시 https 로 강제 리다이렉션
+https://k2boys.tistory.com/34
