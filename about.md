@@ -19,25 +19,29 @@ comments : false
 
 ## Contributions
 
-#### [apache/maven-javadoc-plugin](https://github.com/apache/maven-javadoc-plugin) 
+#### [Azure/azure-storage-java](https://github.com/Azure/azure-storage-java)
 
-- [(Merged)[MJAVADOC-577] Modified the Wrong closing tag](https://github.com/apache/maven-javadoc-plugin/pull/20)
-
-#### [http3-explained](https://github.com/bagder/http3-explained)
-
-- [(Merged)(ko) fixed typo](https://github.com/bagder/http3-explained/pull/86)
-
-#### [okjsp/okky](https://github.com/okjsp/okky) 
-
-- [(Merged)fixed typo 'scope'](https://github.com/okjsp/okky/pull/173)
-
-#### [spring-guides/tut-spring-boot-oauth2](https://github.com/spring-guides/tut-spring-boot-oauth2)
-
-- [(Open)'spring-security-oauth2-autoconfigure' version update](https://github.com/spring-guides/tut-spring-boot-oauth2/pull/100)
+- [(Merged) Update 'Code Sample'](https://github.com/Azure/azure-storage-java/pull/502)
 
 #### [apache/phoenix](https://github.com/apache/phoenix)  
 
-- [(Merged)PHOENIX-5130 removed 'static' keyword from 'private static enum'](https://github.com/apache/phoenix/pull/438)
+- [(Merged) PHOENIX-5130 removed 'static' keyword from 'private static enum'](https://github.com/apache/phoenix/pull/438)
+
+#### [apache/maven-javadoc-plugin](https://github.com/apache/maven-javadoc-plugin) 
+
+- [(Merged) [MJAVADOC-577] Modified the Wrong closing tag](https://github.com/apache/maven-javadoc-plugin/pull/20)
+
+#### [http3-explained](https://github.com/bagder/http3-explained)
+
+- [(Merged) (ko) fixed typo](https://github.com/bagder/http3-explained/pull/86)
+
+#### [okjsp/okky](https://github.com/okjsp/okky) 
+
+- [(Merged) fixed typo 'scope'](https://github.com/okjsp/okky/pull/173)
+
+#### [spring-guides/tut-spring-boot-oauth2](https://github.com/spring-guides/tut-spring-boot-oauth2)
+
+- [(Open) 'spring-security-oauth2-autoconfigure' version update](https://github.com/spring-guides/tut-spring-boot-oauth2/pull/100)
 
 
 ## Links
