@@ -4,7 +4,7 @@ title:  "뭐 같은 sql 서버"
 author: "glqdlt"
 ---
 
-
+https://docs.microsoft.com/ko-kr/sql/t-sql/data-types/data-type-conversion-database-engine?view=sql-server-ver15
 
 varchar 컬럼에 인덱스가 잡혀있는데, 쿼리가 nvarchar 로 타입캐스팅이 일어나면서 varchar 인덱스를 타지 않는 이슈가 있었다.
 
@@ -172,3 +172,7 @@ varchar 인덱스의 경우 nvarchar 와는 문자 체계가 다르기 때문이
 위는 Mybatis 를 사용하는 쿼리이고, JPA 의 경우에는 참고한 [레퍼런스(https://woowabros.github.io/study/2019/01/25/sqlserver-jdbc-driver.html)](https://woowabros.github.io/study/2019/01/25/sqlserver-jdbc-driver.html)
 
 에서 도움이 많이 되었다. 
+
+jpa 에서는 jpql 을 직접 조작해서 (대문자 CAST 로 작성해야함을 주의) 하거나,   @Nationalized 어노테이션을 통해 내부적으로 CAST  하도록 명시 해주어야 한다.
+
+https://stackoverflow.com/questions/46188918/casting-integer-to-string-in-jpql
