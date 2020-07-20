@@ -20,6 +20,7 @@
 
 - 재귀적 스타일
   - admin cms 에서 naviation menu 를 구성한다고 가정하면, 절차식으로 하면 지옥을 맛본다. 그걸 계기로 재귀에 눈을 뜸
+  - '수평사고 (lateral thinking)'
 
 
 믹스인과 트레이트 간의 차이
