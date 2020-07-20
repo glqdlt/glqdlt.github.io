@@ -1,0 +1,16 @@
+
+믹스인과 트레이트 간의 차이
+
+아래 좋은 내용의 내용이 있더라
+https://stackoverflow.com/questions/925609/mixins-vs-traits
+
+읽고 난 뒤 매우 공감되었음
+
+- 믹스인은 암시적으로 충돌 (implicit conflict resolution)
+- 트레이트는 명시적으로 충돌 (explicit conflict resolution)
+
+믹스인은 동적인 언어에서 가지는 특징에 기반하는 인상이었다. 나는 자바8를 통해서 트레이트를 배웠기 때문에 (SOLID 에서 ISP 인터페이스 분활원칙) default method 가 충돌이 날 경우 새로이 정의해야하는 점에 대해서 이해를 하고 있다.
+
+이는 A.fly(), B.fly() 2개의 같은 함수(@FunctionalInterface 라고 가정하자) 를 동시에 구현 받는 C 클래스가 있을 경우, C 입장에서 A의 fly 와 B의 fly 둘 중에 뭘 사용해야할지 모르는 상황이 생긴다.
+
+C impelments A,B  이렇게 선언이 되기 때문에 어떤게 먼저 치고 왔는 지 판단도 어렵다. 그래서 C 가 직접 fly(){..} 를 구현하게 강제화 한 것이다.
