@@ -75,3 +75,8 @@ https://stackoverflow.com/questions/45872802/azure-service-bus-topics-multiple-s
 
 https://docs.microsoft.com/ko-kr/azure/service-bus-messaging/service-bus-dotnet-get-started-with-queues
 
+https://docs.microsoft.com/ko-kr/azure/architecture/patterns/publisher-subscriber
+
+https://docs.microsoft.com/ko-kr/azure/event-grid/compare-messaging-services
+
+https://docs.microsoft.com/ko-kr/azure/architecture/guide/architecture-styles/event-driven
