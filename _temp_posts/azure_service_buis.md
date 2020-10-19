@@ -80,3 +80,9 @@ https://docs.microsoft.com/ko-kr/azure/architecture/patterns/publisher-subscribe
 https://docs.microsoft.com/ko-kr/azure/event-grid/compare-messaging-services
 
 https://docs.microsoft.com/ko-kr/azure/architecture/guide/architecture-styles/event-driven
+
+https://www.serverlessnotes.com/docs/en/publish-subscribe-with-azure-service-bus
+
+https://www.serverlessnotes.com/docs/en/azure-service-bus-fifo-pattern
+
+
