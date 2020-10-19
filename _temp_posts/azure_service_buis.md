@@ -67,3 +67,11 @@ https://github.com/Azure/azure-service-bus/pull/395
 
 
 
+## 레퍼런스
+
+https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-queues-topics-subscriptions#topics-and-subscriptions
+
+https://stackoverflow.com/questions/45872802/azure-service-bus-topics-multiple-subscribers
+
+https://docs.microsoft.com/ko-kr/azure/service-bus-messaging/service-bus-dotnet-get-started-with-queues
+
