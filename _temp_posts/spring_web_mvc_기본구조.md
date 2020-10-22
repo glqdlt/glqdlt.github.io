@@ -30,7 +30,7 @@
 
 조금 더 이를 JAVA EE 와 스프링 프레임워크 용어로 설명하면 아래와 같다.
 
-사용자 URL 접근 --> WAS --> Servlet Container --> Servlet ( Dispatch Servlet --> HandlerMapping --> Controller --> Service --> Component --> Service --> Controller --> View )
+사용자 URL 접근 --> WAS --> Servlet Container --> Servlet ( Dispatch Servlet --> HandlerMapping --> Controller --> Service --> Component --> Service --> Controller --> ViewName --> Dispatch Servlet --> ViewResolver --> View )
 
 
 
