@@ -74,17 +74,6 @@ https://www.baeldung.com/spring-handler-mappings
 위 예시를 참고해서 스프링에서 제공하는 기본 구현체로 샘플을 만들어보았다.
 
 ```
-
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
-import org.springframework.web.servlet.mvc.AbstractUrlViewController;
-
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
-
 @EnableWebMvc
 @Configuration
 public class SomeConfiguration {
@@ -95,7 +84,7 @@ public class SomeConfiguration {
      * <p>
      * 아래 예시에서는 /hello/World 라는 endpoint 로 요청 오면 simpleMyController 라는 이름의 컨트롤러 빈에게 처리 되도록 한다.
      * simpleMyController 는 Controller 를 구현해야 한다. 만약 구현하지 않은 일반 객체라면, ModelAndView 가 반환되지 않기 때문에 우리가 흔히 생각하는 브라우저 에 결과가 노출되지 않는다.
-     * 단순히 200 응답만 하게 된다.
+     * 결국 The DispatcherServlet configuration needs to include a HandlerAdapter that supports this handler 라는 에러와 함께 처리를 하지 못한다.
      *
      * @return
      */
