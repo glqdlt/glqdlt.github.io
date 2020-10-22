@@ -71,4 +71,82 @@ HandlerMapping  과 Controller 를 분리하는 것은 URL 이라는 개념으�
 https://www.baeldung.com/spring-handler-mappings
 
 
+위 예시를 참고해서 스프링에서 제공하는 기본 구현체로 샘플을 만들어보았다.
+
+```
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.mvc.AbstractUrlViewController;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.HashMap;
+import java.util.Map;
+
+@EnableWebMvc
+@Configuration
+public class SomeConfiguration {
+
+    /**
+     * url 패턴에 반응하는 단순한 핸들러 매핑을 빈으로 등록한다.
+     * 핸들러매핑 빈 타입은 스프링에서 DispatchServlet 이 동작할 때, for 문을 돌며 적당한 핸들러에게 요청이갈수 있도록 처리 된다.
+     * <p>
+     * 아래 예시에서는 /hello/World 라는 endpoint 로 요청 오면 simpleMyController 라는 이름의 컨트롤러 빈에게 처리 되도록 한다.
+     * simpleMyController 는 Controller 를 구현해야 한다. 만약 구현하지 않은 일반 객체라면, ModelAndView 가 반환되지 않기 때문에 우리가 흔히 생각하는 브라우저 에 결과가 노출되지 않는다.
+     * 단순히 200 응답만 하게 된다.
+     *
+     * @return
+     */
+    @Bean
+    public SimpleUrlHandlerMapping simpleUrlHandlerMapping() {
+        SimpleUrlHandlerMapping simpleUrlHandlerMapping = new SimpleUrlHandlerMapping();
+        Map<String, Object> urlMap = new HashMap<>();
+        urlMap.put("/viewName/*", simpleMyController());
+        urlMap.put("/null/*", simpleClass());
+        simpleUrlHandlerMapping.setUrlMap(urlMap);
+        return simpleUrlHandlerMapping;
+    }
+
+    @Bean
+    public SimpleViewController simpleMyController() {
+        return new SimpleViewController();
+    }
+
+    @Bean
+    public SimpleClass simpleClass() {
+        return new SimpleClass();
+    }
+
+    public static class SimpleClass {
+        public String hi() {
+            return "hi";
+        }
+    }
+
+    public static class SimpleViewController extends AbstractUrlViewController {
+
+        @Override
+        protected String getViewNameForRequest(HttpServletRequest request) {
+            String zz = request.getRequestURI();
+            if (zz.endsWith("/login")) {
+                return getLoginViewName();
+            } else {
+                return getHelloViewName();
+            }
+        }
+
+        public String getHelloViewName() {
+            return "hello";
+        }
+
+        public String getLoginViewName() {
+            return "login";
+        }
+    }
+
+}
+
+```
 
