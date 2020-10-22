@@ -30,6 +30,8 @@
 
 조금 더 이를 JAVA EE 와 스프링 프레임워크 용어로 설명하면 아래와 같다.
 
+<img src="https://www.baeldung.com/wp-content/uploads/2016/08/SpringMVC.png">
+
 사용자 URL 접근 --> WAS --> Servlet Container(Application Context, Servlet Context) --> Servlet ( Dispatch Servlet --> HandlerMapping --> Controller --> Service --> Component --> Service --> Controller --> ViewName --> Dispatch Servlet --> ViewResolver --> View )
 
 Application Context 는 전역에서 구동되는 공유 메모리 경계이고,
