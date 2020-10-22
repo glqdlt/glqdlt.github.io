@@ -30,7 +30,20 @@
 
 조금 더 이를 JAVA EE 와 스프링 프레임워크 용어로 설명하면 아래와 같다.
 
-사용자 URL 접근 --> WAS --> Servlet Container --> Servlet ( Dispatch Servlet --> HandlerMapping --> Controller --> Service --> Component --> Service --> Controller --> ViewName --> Dispatch Servlet --> ViewResolver --> View )
+사용자 URL 접근 --> WAS --> Servlet Container(Application Context, Servlet Context) --> Servlet ( Dispatch Servlet --> HandlerMapping --> Controller --> Service --> Component --> Service --> Controller --> ViewName --> Dispatch Servlet --> ViewResolver --> View )
+
+Application Context 는 전역에서 구동되는 공유 메모리 경계이고,
+
+Servlet Context 는 해당 서블릿 내부에서만 존재하는 메모리 경계이다.
+
+Servlet Context에서 Application Context 는 접근되지만, 반대로는 안된다.
+
+보통 Application Context는 로깅, 모니터링 유틸 같은 공통 모듈이 자리잡을 수 있다.
+
+서블릿 컨텍스트는 원룸으로 생각하면 된다. WAS 라는 거대한 건물에 방을 나누어서 세를 내놓는거다.
+
+
+
 
 
 
