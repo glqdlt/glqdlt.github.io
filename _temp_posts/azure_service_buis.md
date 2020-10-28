@@ -63,6 +63,40 @@ Azure 에서는 이 과정이 번거롭다. Azure Template 이라는 것을 통�
 
 https://github.com/Azure/azure-service-bus/pull/395
 
+## 2번째빡침
+
+Topic 을 리스너가 붙을 때, Topic/Subscriptions/Susb1 이런 식으로 중간에 SUbscriptions 딜리미터를 붙이는것도 짜증나는데, Subs1 이런것처럼 커넥션에 붙을 때 존재하지 않을수 있는 SUbscriptions 명을 붙여서 연결해야한다. 이게 좀 괴랄한게
+
+Azure에서 구독 이란 개념은, 구독풀 또는 구독accessPoint 개념이 아니다. 이게 무슨 말이냐면, 
+
+Topic/Subscriptions/Sub1 이란 곳에 3개의 서비스 인스턴스가 붙었다고 가정하자. 이 경우 Sub1로 토픽의 이벤트가 흘러들어왔을 때, 3개 모두가 브로드캐스팅 되는개념이 아니고 큐처럼 동작한다. 
+
+즉 이 말은 3개의 인스턴스가 각 TOPIC에 붙을수있게 구독이 3개가 동적으로 만들어져야 한다. 아래 처럼 말이다.
+
+- Topic/Subscriptions/App1(hostname)
+- Topic/Subscriptions/App2(hostname)
+- Topic/Subscriptions/App3(hostname)
+
+문제는 rabbitmq 의 경우 subject(azure 에서는 topic) 의 구독이 선언된게 없으면 바로 자동으로 신규 구독이 만들어지는 데, azure 의 경우 없다고 하고 에러내고 끝이다 -_-
+
+그렇다면 없을 경우 내가 새로이 createApi 호출해서 만들수있게 해야하는데, 그 개념이 없다.
+
+management api 를 제공하기는 하는데 (https://docs.microsoft.com/en-us/previous-versions/azure/reference/hh780748(v=azure.100)?redirectedfrom=MSDN)
+
+이걸 사용하려면 새로이 AD에 연결해서 토큰을 발급받는 등의 별도의 세션으로 접근해야한다.
+
+왜 이런가해서 찾아봤더니, topic 에 붙을수있는 방법이, azure 의 서버 인스턴스가 로드되는 시점에 파워쉘과 같은 초기화 스크립트, 또는 리소스 식별 AD로 접근할수 있게 설계를 했던것이다.
+
+이 경우 AZURE에서 관리 제공하는 PAAS나 SAAS 의 경우 쉽게 프로비저능 되는데, IAAS 또는 외부에서 연결하는 형태는 불가능하다 ㅡㅡ
+
+com.microsoft.azure.servicebus.SubscriptionClient.class
+```java
+public final class SubscriptionClient extends InitializableEntity implements ISubscriptionClient {
+    private static final Logger TRACE_LOGGER = LoggerFactory.getLogger(SubscriptionClient.class);
+    private static final String SUBSCRIPTIONS_DELIMITER = "/subscriptions/";
+}
+```
+
 
 
 
