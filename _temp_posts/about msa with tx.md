@@ -6,7 +6,9 @@ SOA나 MSA 나 모두 모놀리스와 달리 N 레이어로 나누어지는 구�
 
 다만 SOA는 같은 성격의 모듈을 같은 레이어에 묶어놓은 반면, MSA는 겉으로 보거나 일련의 흐름 대로 봤을 때 SOA처럼 비슷한 성격이 같은레이어 있는 것처럼 보일지도 모른다, 모듈은 레이어에도 속하지 않고 완전히 독립적으로 구성되는 데 있다.
 
-이런 의미로 마이크로서비스는 SOA지만 모든 SOA가 MSA 인 것은 아니다.
+> 이런 의미로 마이크로서비스는 SOA지만 모든 SOA가 MSA 인 것은 아니다.
+> 코틀린마이크로서비스개발 -후안 안토니오 메디나 이글레시아스 챕터 1에서
+
 
 <img src='https://blog.kakaocdn.net/dn/wWafH/btqFaUVjWLh/hjHujUUMVz4YYrLFfPJR11/img.jpg'>
 
