@@ -8,6 +8,8 @@ SOA나 MSA 나 모두 모놀리스와 달리 N 레이어로 나누어지는 구�
 
 이런 의미로 마이크로서비스는 SOA지만 모든 SOA가 MSA 인 것은 아니다.
 
+<img src='https://blog.kakaocdn.net/dn/wWafH/btqFaUVjWLh/hjHujUUMVz4YYrLFfPJR11/img.jpg'>
+
 
 
 MSA 를 설계하다 보면 흔히 많이 마주 치는 실수가 있는 데, MSA 로 나누는 이유에 대해서 단편적인 부분만 알고 접근하는 사례가 매우매우 많다.
