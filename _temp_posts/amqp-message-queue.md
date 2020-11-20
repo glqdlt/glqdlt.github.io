@@ -181,9 +181,9 @@ https://docs.microsoft.com/ko-kr/azure/architecture/patterns/cqrs
 
 CQRS 는 말그대로, 커맨드 쿼리의 롤을 스플릿 한다는 얘기다.
 
-커맨드는 CRUD 에서 READ 를 제외한 모든 트랜잭션 유발작업을 말한다. 
+커맨드는 CRUD 에서 READ 를 제외한 모든 트랜잭션 유발작업을 말한다.  
 
-쿼리는 READ 를 의미한다
+쿼리는 READ 를 의미한다. DB에 국한하지 않는다 질의라는 개념의 쿼리를 말함.
 
 모델은 비지니스 로직 및 도메인 오브젝트를 포함하는 도메인 핵심 계층을 말한다.
 
