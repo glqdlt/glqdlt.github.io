@@ -188,3 +188,20 @@ CQRS 는 말그대로, 커맨드 쿼리의 롤을 스플릿 한다는 얘기다.
 모델은 비지니스 로직 및 도메인 오브젝트를 포함하는 도메인 핵심 계층을 말한다.
 
 한국 SI로 말하면, DTO 와 DAO 그리고 이 둘을 연결하는 SPRING SERVICE 컴포넌트를 말할 수 있다.
+
+이는 기존에 조회는 READONLY SLAVE DB 에 조회한다. WRITE 는 MASTER DB에 한다의 경험과 유사하게 맞아 떨어진다. 사실 이는 저수준의 CQRS 이다.
+
+<img src='https://docs.microsoft.com/ko-kr/azure/architecture/patterns/_images/command-and-query-responsibility-segregation-cqrs-separate-stores.png'>
+
+https://docs.microsoft.com/ko-kr/azure/architecture/patterns/cqrs
+
+> 읽기 저장소는 쓰기 저장소의 읽기 전용 복제본이거나 읽기 및 쓰기 저장소가 전혀 다른 구조일 수 있습니다. 읽기 전용 복제본을 여러 개 사용 하면 특히 읽기 전용 복제본이 응용 프로그램 인스턴스에 가까운 위치에 있는 분산 시나리오에서 쿼리 성능을 향상 시킬 수 있습니다.
+
+다만 이는 복제 DB의 성격 탓에 조회 모델에만 있어야할 필드가 아직도 커맨드 모델에도 존재한다거나, 조회 모델에는 관계를 맺지 않아도 될 객체 조인이 되는 문제가 발생할수 도 있다.
+
+조회 모델에만 있어야할 필드가 만약 수정되거나 삭제되면 적어도 생성자나 정적 생성 메소드로 클래스를 인스턴스 하는 순간에 커맨드 모델에도 영향이 갈수도 있다.
+
+또한 관계를 맺지 않아도 되는 경우에 대한 이야기는, @OneToMany 처럼 Lazy 로 로드 되는 경우는 괜찮으나, @OneToOne 과 같은 EAGER 로 즉시 조회가 되는 경우에는 DB 부하가 증가한다. (여기서 부하란 DB에서 쿼리에 따른 응답을 위해 전체 응답 레코드들을 메모리에 소비하는  (출력 스트림을 여는) 것을 이야기 한다.)
+
+
+
