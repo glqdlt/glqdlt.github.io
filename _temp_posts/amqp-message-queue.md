@@ -162,3 +162,11 @@ Work Queues 와 다르게 Pub/Sub은 무조건 2개 이상의 Queue가 있을 �
 <img src="https://www.rabbitmq.com/img/tutorials/direct-exchange.png">
 
 Queue의 용도에 따라 Exchange 가 어디 Queue로 쏴야할지를 판단하는 패턴이다. L4처럼 라우팅 하는 개념.
+
+
+
+## 이벤트 소싱
+
+## CQRS
+
+https://docs.microsoft.com/ko-kr/azure/architecture/patterns/cqrs
