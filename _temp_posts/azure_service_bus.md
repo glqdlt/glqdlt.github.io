@@ -97,9 +97,58 @@ public final class SubscriptionClient extends InitializableEntity implements ISu
 }
 ```
 
+### 메세지 속성
+
+Java 버전의 Service Bus 는 기본적으로 IMessage 라는 클래스를 통해 메세지를 주고 받는다. 이 자료구조에는 대부분 사용할법한 기본적인 속성이 몇가지 있다. 속성에 없는 커스터마이징이 필요하다면 body에 본인이 직접 별도로 자료구조를 구성해야한다.
+
+IMessage
+
+-label
+
+-replyTo
+
+-replyToSessionId
+
+-parintionKey
+
+-deadletterSource
+
 ### 나의 무뇌함
 
 메세지를 보내는건 단순하지만, 메세지를 수신하는 게 조금 까다롭다. 
+
+수신 하는 방법은 기본적으로 2가지이다.
+
+자동모드(ReceiveAndDelete) 그리고 PeekLock(명시적으로수신)
+
+이름부터느끼겠지만, 리시브앤드딜리트는 수신하면 자동으로 수신했다는 이벤트를 브로커에 알리고 메세지가 삭제되는 개념이다.
+
+com.microsoft.azure.servicebus.ReceiveMode
+```
+public enum ReceiveMode {
+    /**
+     * In this mode, received message is not deleted from the queue or subscription, instead it is temporarily locked to the receiver, making it invisible to other receivers. Then the service waits for one of the three events
+     * <ul>
+     * <li>If the receiver processes the message successfully, it calls <code>complete</code> and the message will be deleted.</li>
+     * <li>If the receiver decides that it can't process the message successfully, it calls <code>abandon</code> and the message will be unlocked and made available to other receivers.</li>
+     * <li>If the receiver wants to defer the processing of the message to a later point in time, it calls <code>defer</code> and the message will be deferred. A deferred can only be received by its sequence number.</li>
+     * <li>If the receiver wants to dead-letter the message, it calls <code>deadLetter</code> and the message will be moved to a special sub-queue called deadletter queue.</li>
+     * <li>If the receiver calls neither of these methods within a configurable period of time (by default, 60 seconds), the service assumes the receiver has failed. In this case, it behaves as if the receiver had called <code>abandon</code>, making the message available to other receivers</li>
+     * </ul>
+     */
+    PEEKLOCK,
+    /**
+     * In this mode, received message is removed from the queue or subscription and immediately deleted. This option is simple, but if the receiver crashes
+     * before it finishes processing the message, the message is lost. Because it's been removed from the queue, no other receiver can access it.
+     */
+    RECEIVEANDDELETE
+}
+
+```
+
+PeekLock은 수신중이다는 이벤트를 알리는 것도 수동으로, 최종적으로 수신했다or 실패했다 처리 까지 수동으로 하는 개념이다.
+
+아래는 PeekLock 에서 해주어야할 ack 개념에 대해 이야기한다.
 
 메세지를 수신했다는 ack 를 보내주어야한다. 왜냐면 queue 입장에서 메세지가 잘 수신됬는지 판단을 해야, 다시 보내줄지 말지를 고려할수 있기 때문이다.
 
