@@ -97,6 +97,40 @@ public final class SubscriptionClient extends InitializableEntity implements ISu
 }
 ```
 
+2020-11-24
+
+SDK를 까서 역공학을 해보니 ManagementClient 라는 이름의 클래스가 있어서 이를 사용해보았다.
+
+최종적으로는 아래 createSubscription() 메소드를 만들어서 프로그래밍으로 처리가 가능함을 확인했으며, 또한 TopicClient 에서 사용하는 동일한 커넥션스트링도 사용이 되는걸 확인했다.
+
+참고로 커넥션스트링의 스코프가 보내기,수신 외에 관리라는 스코프도 같이 있어야하는 것으로 보인다.
+
+```
+
+    public String createSubscription(String connectionString,
+                                     String topic,
+                                     String context) throws ServiceBusException, InterruptedException {
+        ConnectionStringBuilder connectionStringBuilder = new ConnectionStringBuilder(connectionString);
+        ManagementClient mng = new ManagementClient(connectionStringBuilder);
+        String random = UUID.randomUUID().toString().split("-")[0];
+        String time = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
+
+        final String subName = String.format("%s-%s-%s", context, time, random);
+
+        SubscriptionDescription subscriptionDescription = new SubscriptionDescription(topic, subName);
+        subscriptionDescription.setAutoDeleteOnIdle(Duration.ofDays(14));
+        try {
+            SubscriptionDescription aaa = mng.createSubscription(subscriptionDescription);
+            return aaa.getSubscriptionName();
+        } catch (MessagingEntityAlreadyExistsException e) {
+            return subName;
+        }
+    }
+    
+    
+```
+
+
 ### 메세지 속성
 
 Java 버전의 Service Bus 는 기본적으로 IMessage 라는 클래스를 통해 메세지를 주고 받는다. 이 자료구조에는 대부분 사용할법한 기본적인 속성이 몇가지 있다. 속성에 없는 커스터마이징이 필요하다면 body에 본인이 직접 별도로 자료구조를 구성해야한다.
