@@ -39,6 +39,10 @@ super_log_table
 |2 | 2018-01-01... | a| hello| null | null | null| 
 |1 | 2018-01-02... | b| null| admin| userabc | submit message |
 
+SuperLog 의 모든 집합을 쿼리
+```sql
+select * from super_log_table as t;
+```
 
 case 2) 정규화인 경우
 
@@ -62,8 +66,14 @@ sub_type_b_table
 |---|---|---|---|
 |1|admin|userabc|submit message|
 
+SuperLog 의 모든 집합을 쿼리
+```sql
+select * from super_log_table as t 
+    join sub_type_a_table as t2 on t.id == t2.id 
+    join sub_type_b_table as t3 on t.id == t3.id;
+```
 
-이렇게 하면 얼추 흉내는 가능하지만,  null 이 도배되는 모양새가 된다.
+이렇게 하면 얼추 흉내는 가능하지만, 필드를 포함하고 있지 않지만 RDB의 표현의 한계 때문에 null 이 도배되는 모양새가 된다.
 또한 아래의 경우처럼 중첩 확장(중첩 상속)은 표현할수가 없다.
 
 ![](images/4e86753f.png)
