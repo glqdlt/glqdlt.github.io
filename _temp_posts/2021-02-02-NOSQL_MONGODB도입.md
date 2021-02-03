@@ -95,7 +95,7 @@ super_log_table
 |id|regDate|type|textMessage|adminId|targetUserId|eventMessage|subTypeFlag|sub_type_c_id|
 |---|---|---|---|---|---|---|---|---|
 |3 | 2018-01-03... | c| null| admin| userabc2| submit message 2| true | 1|
-|2 | 2018-01-01... | a| hello| null | null | null|  null|
+|2 | 2018-01-01... | a| hello| null | null | null|  null|null|
 |1 | 2018-01-02... | b| null| admin| userabc | submit message |false | null|
 
 sub_type_c_table
