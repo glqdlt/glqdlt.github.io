@@ -30,26 +30,36 @@ RDB는 자료 구조를 확장하는 데에 한계가 있다. 단순하게 자�
 
 RDB 에서는 위 상속 관계를 표현하려면 아래처럼 2가지 방법 중에 하나를 선택 해야한다.
 
-case1) 싱글 테이블
+case 1) 싱글 테이블인 경우
 
 super_log_table
-|--id--|--regDate--|--type--| --textMessage--|-- adminId--|--targetUserId--|--eventMessage--|
+
+|id|regDate|type|textMessage|adminId|targetUserId|eventMessage|
+|---|---|---|---|---|---|---|
 |2 | 2018-01-01... | a| hello| null | null | null| 
 |1 | 2018-01-02... | b| null| admin| userabc | submit message |
 
-case2) 정규화
+
+case 2) 정규화인 경우
 
 super_log_table
-|--id--|--regDate--|--type--|
+
+|id|regDate|type|
+|---|---|---|
 |2|2018-01-01...|a|
 |1|2018-01-02...|b|
 
 sub_type_a_table
-|--id--|--textMessage--|
+
+|id|textMessage|
+|---|---|
 |2|hello|
 
+
 sub_type_b_table
-|--id--|--adminId--|--targetUserId--|--eventMessage--|
+
+|id|adminId|targetUserId|eventMessage|
+|---|---|---|---|
 |1|admin|userabc|submit message|
 
 
@@ -64,7 +74,9 @@ sub_type_b_table
 만약 단순하게 생각해서 아래처럼 서브타입을 구분하는 Type 컬럼에 추가적으로 c를 등록해보자
 
 super_log_table
-|--id--|--regDate--|--type--| --textMessage-- | -- adminId--  |--  targetUserId-- | eventMessage| --menuTitle--|
+
+|id|regDate|type|textMessage|adminId|targetUserId|eventMessage|menuTitle|
+|---|---|---|---|---|---|---|---|
 |3 | 2018-01-03... | c| null| admin| userabc2| submit message 2|  menu001|
 |2 | 2018-01-01... | a| hello| null | null | null|  null|
 |1 | 2018-01-02... | b| null| admin| userabc | submit message | null|
@@ -79,13 +91,17 @@ super_log_table
 이 경우 SubTypeB 인지 SubTypeC 인지에 대한 참조를 확인하기 위해서는 별도의 flag 를 나타내는 필드(컬럼)을 추가로 만들어야 한다.
 
 super_log_table
-|--id--|--regDate--|--type--| --textMessage-- | -- adminId--  |--  targetUserId-- | eventMessage| --subTypeFlag--|--sub_type_c_id--|
+
+|id|regDate|type|textMessage|adminId|targetUserId|eventMessage|subTypeFlag|sub_type_c_id|
+|---|---|---|---|---|---|---|---|---|
 |3 | 2018-01-03... | c| null| admin| userabc2| submit message 2| true | 1|
 |2 | 2018-01-01... | a| hello| null | null | null|  null|
 |1 | 2018-01-02... | b| null| admin| userabc | submit message |false | null|
 
 sub_type_c_table
-|--id--|--menuTitle--|
+
+|id|menuTitle|
+|---|---|
 |1 | menu001|
 
 ![](images/cb96134d.png)
@@ -98,7 +114,7 @@ ps
 혹시나 union 으로 풀었는데요 하는 사람이 있을 수도 있다. union 은 전혀 다른 타입의 엔티티들을 단순히 결합하는 개념이다.
 SuperLog 의 하위 타입들의 모든 집합을 쿼리하고 싶다라고 한다면 불가능하다.  왜냐면 정규화처럼 하위타입이 슈퍼타입의 PK를 참조하지 않기 때문이다.
 
-그렇다면 nosql 로 한다면?
+## 그렇다면 nosql 로 한다면?
 
 
 문서 기반의 NOSQL 인 몽고 DB를 처리하면 아래처럼 깔끔하게 표현 할 수 있다.
