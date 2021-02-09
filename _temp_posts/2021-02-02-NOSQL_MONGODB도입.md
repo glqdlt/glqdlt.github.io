@@ -481,11 +481,10 @@ https://github.com/glqdlt/example-mongo
 ```
 package com.example.mmongo.mmongoexample; 
 import org.springframework.data.mongodb.core.mapping.Document; 
-import java.time.LocalDateTime; 
-import java.util.UUID; 
+import java.time.LocalDateTime;  
 @Document(collection = "summary_log") 
 public abstract class SomeLog { 
-    private String id = UUID.randomUUID().toString(); 
+    private String id; 
     private LocalDateTime regDate = LocalDateTime.now(); 
     public abstract String getType(); 
     public String getId() { 
@@ -715,8 +714,8 @@ type 필드가 저장이안되어서 여러가지 실험을 했다.
 
 @Document(collection = "summary_log")
 public abstract class SomeLog {
-    private String id = UUID.randomUUID().toString();
-    private LocalDateTime regDate = LocalDateTime.now();
+    private String id;
+    private LocalDateTime regDate;
     private String type;
 
     public void setType(String type) {
