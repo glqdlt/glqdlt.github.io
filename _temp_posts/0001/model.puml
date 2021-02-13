@@ -1,0 +1,39 @@
+@startuml
+
+abstract class Item{
+    -name : String
+    -regDate : LocalDateTime
+    -register : String
+    -attributes : List<Attribute<?>>
+}
+
+interface Attribute<V>{
+
+}
+
+Item -> Attribute
+
+interface AttributeValue<V>{
+}
+
+interface AttributeKey<V>{
+
+}
+
+class StringAttributeKey<String> implements AttributeKey{
+}
+
+class StringAttributeValue<String> implements AttributeValue{
+}
+
+
+class NumberAttributeKey<Number> implements AttributeKey{
+}
+
+class NumberAttributeValue<Number> implements AttributeValue{
+}
+
+Attribute ---> AttributeKey
+Attribute ---> AttributeValue
+
+@enduml

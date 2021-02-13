@@ -175,7 +175,146 @@ ps
 
 혹시나 union 으로 풀수있지 않냐고 생각하는 사람이 있을 수도 있다. union 은 전혀 다른 타입의 지합들의 쿼리 결과를 단순하게 결합하는 개념이다.
 SuperLog 의 하위 타입들의 모든 집합을 쿼리하고 싶다라고 한다면 불가능하다.  왜냐면 정규화처럼 하위타입이 슈퍼타입의 PK를 참조하지 않기 때문이다.
-예를 들어서 하위타입을 모두 포함한 SuperLog 의 엔티티들에 대해 PAGING 과 같은 쿼리를 날리려고 한다면 어떻게 해야될까?를 생각해보면 이해가 되리라 본다. 
+예를 들어서 하위타입을 모두 포함한 SuperLog 의 엔티티들에 대해 PAGING 과 같은 쿼리를 날리려고 한다면 어떻게 해야될까?를 생각해보면 이해가 되리라 본다.
+
+
+### RDB 와 NOSQL 의 다형성에 대하여
+
+예를 들어 아래의 제네릭이 사용된 자료형이 있다고 가정을 해보자.
+아래 자료형은 value 라는 속성을 추상화했다. value 속성의 타입은 제네릭으로 선언되어 런타임 시점에 값의 타입이 결정이 될수있음을 이해하여야 한다.
+
+```java
+
+public class SuperType<T>{
+    private Long identity;
+    private T value;
+    
+    public Long getIdentity(){
+        return identity;
+    }
+   
+    public T getValue(){
+        return value;
+    }
+    
+}
+
+```
+
+이를 RDB에서는 어떻게 표현할수있을까? 절대로 불가능하다. 이유는 RDB에의 필드에 해당하는 컬럼은 특정 자료형 단 하나만 고정이 되어야하며, 제네릭이라는 개념이 없다.
+아래와 같은 경우 과연 RDB에서 에러 없이 가능할까? 
+
+|identity|value|
+|---|---|
+|1|"String"|
+|2|1|
+
+이를 RDB에서 저장하기 위해서는 2진 바이너리로 저장을 하던지, 각 타입에 맞는 컬럼을 각기 선언하고, 어떠한 컬럼에 접근해서 데이터를 얻어야할지 추상화 하여야 한다. 
+
+즉, 이를 자바 클래스로 표현하면 아래와 같다.
+
+ 
+```java
+
+public class SuperType<T>{
+    private Long identity;
+    private T value;
+    
+    public Long getIdentity(){
+        return identity;
+    }
+   
+    public T getValue(){
+        return value;
+    }
+    
+}
+
+public class TextType extends SuperType<String>{
+    private String textValue;
+    private Integer type;
+    
+    @Orderride
+    public String getValue(){
+        return textValue;
+    }
+    
+}
+
+public class NumberType extends SuperType<Long>{
+    private Long numberValue;
+    private Integer type;
+        
+    @Orderride
+    public String getValue(){
+        return numberValue;
+    }
+    
+}
+
+```
+
+|identity|type|textValue|numberValue|
+|---|---|---|---|
+|1|1|"String"|null|
+|2|2|null|1|
+
+RDB 는 이러한 객체 타입의 다형성을 표현할수가 없다. 반면 nosql 은 아래처럼 저장이 가능하다.
+
+```javascript
+
+[
+    {
+        identity : 1,
+        type : 1,
+        value : "string"
+    },
+    {
+        indentity : 2,
+        type : 2,
+        value : 1
+    }
+]
+
+```
+
+이러한 다형성을 표현할수 있는 점에서 매우 강력하다. 예시로 한 제네릭 개념으로 보아도, 기존 rdb 에서는 런타임 시점에 사용될 수 있는 모든 경우의 자료형에 대해 미리 테이블 구조를 만들어야 한다면, nosql 에서는 자료형 자체를 런타임 시점에 결정해도 저장할수 있는 강력한 다형성을 표현할수 있다.
+
+위 예시에서 아래와 같이 배열 구조의 데이터나, 객체의 객체가 꼬리에 꼬리를 무는 데이터들이 생긴다면 어떨까?
+
+```javascript
+
+
+[
+    {
+        identity : 1,
+        type : 1,
+        value : "Stirng"
+    },
+    {
+        indentity : 2,
+        type : 2,
+        value : 1
+    },
+    {
+        identity : 3,
+        type : 3,
+        value : [
+            {
+                ...
+            }
+        ]
+    }
+]
+
+```  
+
+이러한 이유로 소셜 네트워크 기반의 시스템에서는 미디어의 빠른 진보로 인해 빠르게 확장할수 있는 구조의 필요성과 대량의 데이터들을 파티셔닝하고 성능병목을 없애기 위해 nosql 을 도입하게 되었다고 볼수 있다.
+
+심지어 이러한 다형성을 가지는 필드에 인덱스도 걸수 있다. 인덱스가 동작하는 원리에 대해서는 이 문서[https://docs.mongodb.com/manual/reference/bson-type-comparison-order/](https://docs.mongodb.com/manual/reference/bson-type-comparison-order/) 를 참조.
+
+
+
 
 ### 그렇다면 이 문제를 nosql 로 한다면 어떻게 될까?
 
