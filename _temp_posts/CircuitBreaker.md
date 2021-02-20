@@ -25,6 +25,14 @@ User << >> Service A << >> Service B
 
 <img src='https://docs.aws.amazon.com/whitepapers/latest/modern-application-development-on-aws/images/image8.png'>
 
+Circuit Breaker 의 패턴의 핵심은 장애나 병목 발생시에 업스트림 요청을 fall back 시킨다는 점에 있다.
+
+A 와 B 사이에 프록시를 두는 구성인데, 이 프록시가 하는 역활이 장애에 대한 서비스 병목을 막도록 하는 역활을 한다.
+ 
+예를 들어 3회 이상 타임아웃 발생과 같은 특정 조건을 만족하면 CB 는 즉시 B 로 향하는 모든 업스트림을 차단하고, 바로 장애에 대해서 알려주는 식으로 한다. 이 경우는 Maybe 모나드와 유사한 형태이고, 옵션으로 B 에서 제공해주어야할 기본형 데이터를 대신 전달해주거나, 다른 서비스 D 에 접근하여 가저갈수 있도록 연결해줄수도 있다.
+
+<img src='https://docs.aws.amazon.com/whitepapers/latest/modern-application-development-on-aws/images/image9.png'>
+
 
 - Hystrix
 
@@ -33,6 +41,10 @@ User << >> Service A << >> Service B
 - envoy.io
 
 역방향 프록시 개념으로 인프라 차원에서 처리가 필요할 경우에 고려를 한다.
+
+- Azure AppGateway
+
+필자는 Azure 에서 AppGateway 를 이러한 형태로 사용했었다.
 
 
 # Reference
