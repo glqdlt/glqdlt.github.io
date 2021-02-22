@@ -1,0 +1,5 @@
+https://github.com/spring-projects/spring-security-oauth/blob/master/spring-security-oauth2/src/main/java/org/springframework/security/oauth2/provider/BaseRequest.java
+
+BaseRequest#setScope()
+
+에서 nullpoint입셉션이 난다
