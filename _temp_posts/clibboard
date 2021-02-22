@@ -8,3 +8,7 @@ BaseRequest#setScope()
 ClientDetails#isScoped() 가 false 로 해놔도
 
 getScope() 를 호출해서 이를 복사해가면서 null로 떨어진다 개 웃기네
+
+일단 무의미한 데이터를 넣어놨다. 그러니 통과가 된다.. isScoped() 를 호출해서 비교를 할지 말지에 대한 처리 정도인가보다.
+
+scope 사이즈가 0이어도 동작해야하는게아닌가?
