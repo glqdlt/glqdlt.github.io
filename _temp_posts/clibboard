@@ -3,3 +3,8 @@ https://github.com/spring-projects/spring-security-oauth/blob/master/spring-secu
 BaseRequest#setScope()
 
 에서 nullpoint입셉션이 난다
+
+
+ClientDetails#isScoped() 가 false 로 해놔도
+
+getScope() 를 호출해서 이를 복사해가면서 null로 떨어진다 개 웃기네
