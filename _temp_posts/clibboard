@@ -16,6 +16,42 @@ scope 사이즈가 0이어도 동작해야하는게아닌가?
 
 Dispatch Servlet
 
+org.springframework.web.servlet.DispatcherServlet.class ..|> javax.servlet.Servlet
+
+서블릿 표준스펙은 서블릿컨테이너는 web.xml (배포 서술자 라고도 한다) 에 등록된 정보에 따라 특정 REQUEST 엔드포인트에 어떠한 서블릿이 대응할수있을지를 설계하게 되어있다.
+예를 들면 아래 web.xml 을 보면 ComingSoonServlet 은 Servlet 인터페이스를 구현한 서블릿이고, 해당 서블릿은 모든 요청이라는 와일드카드 /* 로 설정되어 모든 요청이 ComingSoonServlet#serviet(req,res) 메소드로 전달이 된다.
+
+```xml
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1">
+    <servlet>
+        <servlet-name>comingsoon</servlet-name>
+        <servlet-class>mysite.server.ComingSoonServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>comingsoon</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
+</web-app>
+
+```
+ 
+DispatcherServlet 도 Servlet 인터페이스를 구현한 녀석으로, 스프링이 만든 서블릿컨테이너 안의 서블릿컨테이너이다.
+
+예시를 말해보면, 건물은 톰캣과 같은 JavaEE 의 WAS 스펙을 구현한 서버이고, 건물안의 원룸은 Servlet 인터페이스 인 셈이다. 각 101호 102호 와 같은 것이 url path 인 셈이고..
+
+여기서 DispatcherServlet 을 만든 것은 101호 안에서도 101-1호 101-2호 로, 각 방에 세를 놓겠다는 개념과 유사하다고 생각하면 좋다.
+
+나는 101호 라는 원룸 안에서 내부적으로 이것저것 지지고 복고 할 수 있다. 각 방에 세를 두거나 하는 것은 독자적인 나만의 룰로 할수도 있고,
+
+DispatcherServlet 이 딱 그러하다. 스프링 프레임워크 진형 입장에서 자유롭게 창의적으로 접근하려면 자신에게 할당된 서블릿 (예: 101호) 안에서 세계관을 구축할수 있기 떄문이다.
+
+DispacerServlet 의 동작원리를 보면 WAS 
+ 
+ 
 
 ```
 Dispatcher-Servlet이 등장함에 따라 Spring MVC의 web.xml의 역할이 축소되었다. 기존에는 모든 서블릿에 대해 URL 매핑을 활용하기 위해서 web.xml에 모두 등록해주어야만 했다. 그러나 Dispatcher-Servlet이 들어오는 모든 요청을 핸들링해주면서 작업을 상당히 편리하게 할 수 있게 되었다.
