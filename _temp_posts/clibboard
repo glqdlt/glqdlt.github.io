@@ -68,3 +68,271 @@ Dispatcher Servlet이 요청들을 Controller로 넘겨주는 것은 편해보�
 인터셉터는 책임연쇄패턴으로 필터를 지나 거쳐온 URL 이 향하는 목적지 path 에 대응가능한 컨트롤러(핸들러매핑)에 넘겨질 때, 해당 핸들러매핑으로 넘어가는 시점을 가로채는 인터셉팅이 가능하다.
 
 이게 무슨말이냐면 인터셉터는 필터와 달리 특정 핸들러매핑에만 인터셉팅이 가능하단 얘기이기 때문에, 핸들러매핑이 여러개라면 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+----
+
+### Description
+
+Hello.
+
+When I run the plugin, it says "CommandHandlerImp.java, line 80..
+  Deadlocked by process.waitFor()" in the source.
+
+I debugged the problem.
+
+I found the problem in this file (RunMojo.java).
+
+There seems to be a problem with the method below.
+
+RunMojo # checkRuntimeExistence()
+
+This method checks whether the'func' command can be executed. 
+
+The problem arises when the argument of the'showStdout' parameter is false.
+
+If false, pipes the subprocess's stream output to PIPE.
+
+The stream buffer is full and doesn't clear it, leaving it'freeze'.
+I have referenced the official documentation below.
+(https://docs.oracle.com/javase/8/docs/api/java/lang/Process.html)
+
+> By default, the created subprocess does not have its own terminal or console. All its standard I/O (i.e. stdin, stdout, stderr) operations will be redirected to the parent process, where they can be accessed via the streams obtained using the methods getOutputStream(), getInputStream(), and getErrorStream(). The parent process uses these streams to feed input to and get output from the subprocess. Because some native platforms only provide limited buffer size for standard input and output streams, failure to promptly write the input stream or read the output stream of the subprocess may cause the subprocess to block, or even deadlock.
+
+
+It seems that the checkRuntimeExistence() method should be set to INHERIT, not PIPE. Please comment.
+
+I confirmed that it works by setting it to true (INHERIT) in a separate local test code.
+
+I do not speak English well. So I would like to explain it in the source code.
+
+Let's add a Pull Request. please note.
+
+Please comment.
+
+Thank you.
+
+### My Local Env
+
+Windows 10 Enterprise (version 1809)
+
+openjdk version "1.8.0_242"
+OpenJDK Runtime Environment (Zulu 8.44.0.11-CA-win64) (build 1.8.0_242-b20)
+OpenJDK 64-Bit Server VM (Zulu 8.44.0.11-CA-win64) (build 25.242-b20, mixed mode)
+
+
+Azure Functions Core Tools
+Core Tools Version:       3.0.3388 Commit hash: fb42a4e0b7fdc85fbd0bcfc8d743ff7d509122ae
+Function Runtime Version: 3.0.15371.0
+
+Intelij IDEA 2020.1.2
+
+
+
+### Plugin name and version
+
+```
+    <artifactId>azure-functions-maven-plugin</artifactId>
+    <version>1.9.1</version>
+
+```
+
+### Plugin configuration in your `pom.xml`
+
+```
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <java.version>1.8</java.version>
+        <azure.functions.maven.plugin.version>1.9.1</azure.functions.maven.plugin.version>
+        <azure.functions.java.library.version>1.4.0</azure.functions.java.library.version>
+        <functionAppName>logicapp-1617072939138</functionAppName>
+        <stagingDirectory>${project.build.directory}/azure-functions/${functionAppName}</stagingDirectory>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+            <version>2.4.4</version>
+        </dependency>
+        <dependency>
+            <groupId>com.microsoft.azure.functions</groupId>
+            <artifactId>azure-functions-java-library</artifactId>
+            <version>${azure.functions.java.library.version}</version>
+        </dependency>
+
+        <!-- Test -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.4.2</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.23.4</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.microsoft.azure</groupId>
+                <artifactId>azure-functions-maven-plugin</artifactId>
+                <version>${azure.functions.maven.plugin.version}</version>
+                <configuration>
+                    <!-- function app name -->
+                    <appName>${functionAppName}</appName>
+                    <!-- function app resource group -->
+                    <resourceGroup>java-functions-group</resourceGroup>
+                    <!-- function app service plan name -->
+                    <appServicePlanName>java-functions-app-service-plan</appServicePlanName>
+                    <!-- function app region-->
+                    <!-- refers https://github.com/microsoft/azure-maven-plugins/wiki/Azure-Functions:-Configuration-Details#supported-regions for all valid values -->
+                    <region>westus</region>
+                    <!-- function pricingTier, default to be consumption if not specified -->
+                    <!-- refers https://github.com/microsoft/azure-maven-plugins/wiki/Azure-Functions:-Configuration-Details#supported-pricing-tiers for all valid values -->
+                    <!-- <pricingTier></pricingTier> -->
+
+                    <!-- Whether to disable application insights, default is false -->
+                    <!-- refers https://github.com/microsoft/azure-maven-plugins/wiki/Azure-Functions:-Configuration-Details for all valid configurations for application insights-->
+                    <!-- <disableAppInsights></disableAppInsights> -->
+                    <runtime>
+                        <!-- runtime os, could be windows, linux or docker-->
+                        <os>windows</os>
+                        <javaVersion>8</javaVersion>
+                        <!-- for docker function, please set the following parameters -->
+                        <!-- <image>[hub-user/]repo-name[:tag]</image> -->
+                        <!-- <serverId></serverId> -->
+                        <!-- <registryUrl></registryUrl>  -->
+                    </runtime>
+                    <appSettings>
+                        <property>
+                            <name>FUNCTIONS_EXTENSION_VERSION</name>
+                            <value>~3</value>
+                        </property>
+                    </appSettings>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>package-functions</id>
+                        <goals>
+                            <goal>package</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.1.0</version>
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <overwrite>true</overwrite>
+                            <outputDirectory>${stagingDirectory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>${project.basedir}</directory>
+                                    <includes>
+                                        <include>host.json</include>
+                                        <include>local.settings.json</include>
+                                    </includes>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.1.1</version>
+                <executions>
+                    <execution>
+                        <id>copy-dependencies</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>copy-dependencies</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${stagingDirectory}/lib</outputDirectory>
+                            <overWriteReleases>false</overWriteReleases>
+                            <overWriteSnapshots>false</overWriteSnapshots>
+                            <overWriteIfNewer>true</overWriteIfNewer>
+                            <includeScope>runtime</includeScope>
+                            <excludeArtifactIds>azure-functions-java-library</excludeArtifactIds>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <!--Remove obj folder generated by .NET SDK in maven clean-->
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>obj</directory>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
+
+```
+
+### Expected behavior
+
+1. mvn clean package
+2. mvn azure-functions:run
+3. start app
+
+### Actual behavior
+
+1. mvn clean package
+2. mvn azure-functions:run
+
+### Steps to reproduce the problem
+
+
+0. INTELLIJ IDEA open, java source.
+1. mvn clean package
+2. mvn azure-functions:run
+3. freeze console ( I waited more than an hour) ...
+
+
+
