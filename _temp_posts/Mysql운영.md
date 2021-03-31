@@ -11,6 +11,10 @@ MSA 환경에서 보면 서비스 노드 별로 (조직 별로) DB를 할당 받
 update table AS a JOIN (SELECT * FROM table) AS b  ON a.`pk` = b.pk SET a.__identity = b.id  WHERE a.`pk` = b.pk
 ```
 
+마지막으로 최종확인 한 후에, __ 접두어가 붙은 컬럼을 제거한다.
+
+이후 서비스 패치 이후에 어느정도 모니터링 후, 과거 컬럼을 제거한다.
+
 ## 특정 select 결과를 update 하고 싶을 때
 
 이 경우는 table 에 추가된 컬럼의 값이 다른 테이블의 결과일 때(즉 fk일때) update 치고싶은 상황에서 써먹었다.
