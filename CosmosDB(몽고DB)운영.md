@@ -6,3 +6,6 @@
 
 몽고DB도 그런지 모르지만, cosmos db에서는 index가 잡혀있지 않으면 order by 가 동작하지 않는 이슈가 있었다.
 
+실제 공식문서에도 위 이슈에 대한 내용이 나와있다.
+
+https://docs.microsoft.com/ko-kr/azure/cosmos-db/sql-query-order-by#remarks
