@@ -25,4 +25,8 @@ UPDATE user_authorities AS a JOIN user_info AS b ON a.user_id = b.username SET a
 
 ## select 결과를 insert
 
+가장 많이 썻던 거다. 신규 테이블에 기본 데이터를 넣는 상황에서,  외부 테이블의 참조키를 삽입해야하는 경우이다.
+
+```
 INSERT INTO test_b (id, `varchar`) SELECT b.id,b.varchar FROM test_a AS b
+```
