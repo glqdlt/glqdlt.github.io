@@ -22,7 +22,7 @@ RDB는 자료 구조를 확장하는 데에 제약 사항이 많다. 제약 사�
 
 예를 들어서 아래처럼 어떠한 상속 관계를 가지는 모델이 있다고 가정을 해보자.
 
-![](../_temp_posts/images/a5a28f55.png)
+![](../images/a5a28f55.png)
 
 RDB 에서는 위 상속 관계를 표현하기 위해서는 별도의 기능은 없다. 특히 #getMessage()와 같은 추상 메소드를 표현할 턱이 없다. 
 위 다이어그렘에는 표현이 안되지만, 아래와 같은 추상 메소드 구현 로직을 RDB에서는 어떻게 표현할까?
@@ -97,7 +97,7 @@ RDB 에서 일반적으로 데이터나 행이라고 불리는 레코드들은 �
 만약 아래처럼 중첩 상속의 경우는 어떠할까?
 
 
-![](../_temp_posts/images/4e86753f.png)
+![](../images/4e86753f.png)
 
 자, SubTypeB <|-- SubTypeC 관계를 어떻게 표현해야할까?
 
@@ -126,7 +126,7 @@ select * from super_log_table as t where t.type != 'a';
 
 결국 위 테이블을 모델링으로 표현해보면 아래와 같음을 알수있다.
 
-![](../_temp_posts/images/9033c74c.png)
+![](../images/9033c74c.png)
 
 그럼 다른 방안은 없을까? 아래처럼 type 을 더 쪼개는 type 필드를 만들고 이는 type =='b' 인 경우에만 사용하는 식으로 한번 접근을 해보자.
 이 경우 SubTypeB 인지 SubTypeC 인지에 대한 확장 타입을 구분하기 위해서 별도의 타입 구분을 나타내는 필드를 추가로 만들어야 한다. 아래에서는 subTypeFlag 라는 컬럼이 해당 필드이다.
@@ -136,7 +136,7 @@ select * from super_log_table as t where t.type != 'a';
 #### case1
 
 
-![](../_temp_posts/images/4e86753f.png)
+![](../images/4e86753f.png)
 
 super_log_table
 
@@ -152,7 +152,7 @@ super_log_table
 #### case 2
 
 
-![](../_temp_posts/images/cb96134d.png)
+![](../images/cb96134d.png)
 
 super_log_table
 
@@ -352,7 +352,7 @@ RDB 관게 데이터베이스라는 말처럼, 객체와 객체 간의 관계성
 다만 문서는 JSON 포맷을 띄고 있는데, 이 역시 자바의 타입을 구분하는 개념을 표현하려면 어떠한 서브타입인지를 구분하기 위한 타입 필드가 있어야 하는 것은 동일하다.
 참고로 자바는 기본적으로 객체(클래스가 인스턴스화 될 떄) 가 생성될 때, 타입 원형 정보(클래스 정보)를 같이 가지고 있기 때문에 불필요하지만, JSON 에서는 이러한 타입 데이터가 없기 때문에 필요하다. 이는 RDB 에서도 NOSQL 에서도 데이터의 값으로 타입을 판단하기 위해서는 필요하다. 
 
-![](../_temp_posts/images/2ed89cd7.png)
+![](../images/2ed89cd7.png)
 
 ```
 [
@@ -716,7 +716,7 @@ public interface SomeLogRepo extends MongoRepository<SomeLog, String> {
 저장은 아래처럼 쉽게 처리가 된다.
 매핑 정보를 _class 필드에 담아서 저장이 되고, 이를 읽을때에는 묵음 처리한다.
 
-![](../_temp_posts/images/b444158a.png)
+![](../images/b444158a.png)
 
 
 RDB 기반의 JPA 에 비해 상속 구조 표현이 매우 쉬워진다.
@@ -725,7 +725,7 @@ RDB 기반의 JPA 에 비해 상속 구조 표현이 매우 쉬워진다.
 
 - 추상 클래스인 SomeLog  를 저장하고 싶다면 저장은 되지만, 저장되고 난 이후에는 익명클래스타입으로 저장이 되며, 추상 메소드를 어떻게 매핑해야할지 모르기 때문에 에러가 발생한다. 
 
-![](../_temp_posts/images/48d89551.png)
+![](../images/48d89551.png)
 - 
 - 
 - 
@@ -797,7 +797,7 @@ public class SomeLogSub extends SomeLog {
 }
 ```
 
-![](../_temp_posts/images/aa5044a4.png)
+![](../images/aa5044a4.png)
 
 만약에 동적으로 처리해야하는 경우가 있다면
 아래처럼 처리해야한다, id 라는 문서의 식별값이 꼭 있어야 하는 데이터 구조가 mongodb 의 제약사항임으로 Map자체를 저장할수는 없다.
@@ -825,7 +825,7 @@ public class SomeLogSubDynamicField extends SomeLog {
 
 ```
 
-![](../_temp_posts/images/0092c6da.png)
+![](../images/0092c6da.png)
 
 참고로 캡처 상의 결과에서 regDate 값이 다르다고 느껴질 것이다.  눈치 빠른 독자들은 알겠지만 몽고Db가 설치된 도커 환경에는 UTC로 타임존이 설정되어있다. 반면, 자바 웹앱은 나의 개발 PC 기준으로 KST (+09:00)로 처리가 되기 때문에, 2개의 시간이 다르게 보여지는 것처럼 보일 뿐이다.
 
@@ -844,7 +844,7 @@ public class MongoSetup {
     } 
 }
 ```
-![](../_temp_posts/images/879c59b1.png)
+![](../images/879c59b1.png)
 
 
 - @typeAlias 어노테이션으로 타입 매핑이 불가능하게 된다. 위 캡처처럼 기본형인 클래스 네임스페이스가 저장이 된다.
@@ -866,7 +866,7 @@ public void setTypeMapper(@Nullable MongoTypeMapper typeMapper) {
 	- 이를 곰곰히 생각해보면 결국 맨 처음에 예시안 처럼 type 필드를 별도로 두어서 도메인 공통 언어에 해석할수있도록 별도 저장하고 _class 필드는 자바 언어 해석기를 보유한 시스템만 이를 사용하도록 하게 한다. 다행히 _id 처럼 private 접근이라는 개념의 접두어가 있음으로 이 규약은 한눈에 파악이 된다.
 
 
-![](../_temp_posts/images/e173b660.png)
+![](../images/e173b660.png)
 
 
 
