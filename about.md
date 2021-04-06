@@ -19,6 +19,10 @@ comments : false
 
 ## Contributions
 
+#### [Microsoft/azure-maven-plugins](https://github.com/microsoft/azure-maven-plugins)
+
+- [(Merged) fixed the possibility of deadlock.](https://github.com/microsoft/azure-maven-plugins/pull/1384)
+
 #### [Azure/azure-storage-java](https://github.com/Azure/azure-storage-java)
 
 - [(Merged) Update 'Code Sample'](https://github.com/Azure/azure-storage-java/pull/502)
