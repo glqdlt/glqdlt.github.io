@@ -19,6 +19,8 @@ comments : false
 
 ## Contributions
 
+### Major
+
 #### [Microsoft/azure-maven-plugins](https://github.com/microsoft/azure-maven-plugins)
 
 - [(Merged) fixed the possibility of deadlock.](https://github.com/microsoft/azure-maven-plugins/pull/1384)
@@ -34,6 +36,8 @@ comments : false
 #### [apache/maven-javadoc-plugin](https://github.com/apache/maven-javadoc-plugin) 
 
 - [(Merged) [MJAVADOC-577] Modified the Wrong closing tag](https://github.com/apache/maven-javadoc-plugin/pull/20)
+
+### Minor
 
 #### [http3-explained](https://github.com/bagder/http3-explained)
 
