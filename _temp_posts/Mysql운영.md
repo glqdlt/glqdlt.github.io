@@ -34,3 +34,10 @@ UPDATE user_authorities AS a JOIN user_info AS b ON a.user_id = b.username SET a
 ```
 INSERT INTO test_b (id, `varchar`) SELECT b.id,b.varchar FROM test_a AS b
 ```
+
+---
+
+
+[2018-11-11-커버링인덱스.md](2018-11-11-커버링인덱스.md)
+
+---
