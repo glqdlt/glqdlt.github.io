@@ -1,0 +1,50 @@
+@startuml
+
+
+package PC_GAME_A as 1{
+
+    [A_GAME_SERVER]
+    interface A_GAME_CLIENT
+
+    A_GAME_CLIENT --> A_GAME_SERVER
+
+    database A_MSSQL
+
+    A_MSSQL - A_GAME_SERVER
+
+}
+
+package MOBILE_GAME_B as 2{
+
+    [B_GAME_SERVER]
+    interface B_GAME_CLIENT
+
+    B_GAME_CLIENT --> B_GAME_SERVER
+
+    database B_MYSQL
+
+    B_MYSQL - B_GAME_SERVER
+
+}
+
+
+
+package CROSS_GAME_C{
+
+    interface C_MOBILE_GAME_CLIENT as 4
+
+    interface C_PC_GAME_CLIENT as 5
+
+    [C_GAME_SERVER] as 6
+
+    database C_ORACLE
+
+    C_ORACLE - 6
+
+    4 --> 6
+    5 --> 6
+
+}
+
+
+@enduml

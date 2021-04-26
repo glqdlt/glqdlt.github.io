@@ -1,0 +1,63 @@
+@startuml
+
+package GLOBAL_WEB_SERVICE_D as 0 {
+    [GLOBAL_WEB_SERVICE] #ORANGE
+
+    database D_MYSQL
+
+
+    [D_CMS] #ORANGE
+
+
+}
+
+package PC_GAME_A as 1{
+
+    [A_GAME_SERVER]
+    interface A_GAME_CLIENT
+
+
+    database A_MSSQL
+
+
+    [A_CMS] #ORANGE
+
+    [A_WEB_SERVICE] #ORANGE
+
+}
+
+package MOBILE_GAME_B as 2{
+
+    [B_GAME_SERVER]
+    interface B_GAME_CLIENT
+
+
+    database B_MYSQL
+
+
+    [B_CMS] #ORANGE
+
+    [B_WEB_SERVICE] #ORANGE
+
+}
+
+
+
+package CROSS_GAME_C{
+
+    interface C_MOBILE_GAME_CLIENT as 4
+
+    interface C_PC_GAME_CLIENT as 5
+
+    [C_GAME_SERVER] as 6
+
+    database C_ORACLE
+
+
+    [C_CMS] #ORANGE
+
+}
+
+
+
+@enduml

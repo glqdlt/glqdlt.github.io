@@ -1,0 +1,50 @@
+@startuml
+
+
+package PC_GAME_A as 1{
+
+    [A_GAME_SERVER]
+    interface A_GAME_CLIENT
+
+
+    database A_MSSQL{
+            [PROCEDURE_A] #orange
+    }
+
+
+    [A_CMS] 
+
+    [A_WEB_SERVICE] 
+
+}
+
+
+package MOBILE_GAME_B as 2{
+
+    [B_GAME_SERVER]
+    interface B_GAME_CLIENT
+
+
+    database B_MYSQL{
+        [PROCEDURE_B] #orange
+    }
+
+
+    [B_CMS] 
+
+    [B_WEB_SERVICE] 
+
+}
+
+
+
+
+
+PROCEDURE_A -- B_GAME_SERVER
+PROCEDURE_A -- A_GAME_SERVER
+PROCEDURE_A - A_WEB_SERVICE
+PROCEDURE_A -- A_CMS
+PROCEDURE_B -- B_GAME_SERVER
+
+
+@enduml
