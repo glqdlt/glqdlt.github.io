@@ -111,3 +111,9 @@ regist
 
 오픈소스 이력에도 남길겸 이에 대한 구현체를 만들어보기로 했다.
 
+
+
+다른 사례로 아래와 같은 링크도 있다.
+
+- https://github.com/spring-projects/spring-security-oauth/issues/1529
+
