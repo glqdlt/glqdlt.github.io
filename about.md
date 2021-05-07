@@ -21,6 +21,13 @@ comments : false
 
 ### Major
 
+#### [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework)
+
+- [(Open) Fix bug when 'UriComponentsBuilder#fromUriString()' port was not number. ](https://github.com/spring-projects/spring-framework/pull/26905)
+  
+  -  added this to the 5.3.7 milestone
+
+
 #### [Microsoft/azure-maven-plugins](https://github.com/microsoft/azure-maven-plugins)
 
 - [(Merged) fixed the possibility of deadlock.](https://github.com/microsoft/azure-maven-plugins/pull/1384)
