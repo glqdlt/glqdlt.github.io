@@ -23,7 +23,7 @@ comments : false
 
 #### [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework)
 
-- [UriComponentsBuilder handles invalid port correctly](https://github.com/spring-projects/spring-framework/commit/65797d04f2b7e3469102aacc18ec642f7183a645)
+- [(Merged) UriComponentsBuilder handles invalid port correctly](https://github.com/spring-projects/spring-framework/commit/65797d04f2b7e3469102aacc18ec642f7183a645)
   
   - issued by https://github.com/spring-projects/spring-framework/pull/26905
   
