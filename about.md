@@ -23,9 +23,11 @@ comments : false
 
 #### [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework)
 
-- [(Open) Fix bug when 'UriComponentsBuilder#fromUriString()' port was not number. ](https://github.com/spring-projects/spring-framework/pull/26905)
+- [UriComponentsBuilder handles invalid port correctly](https://github.com/spring-projects/spring-framework/commit/65797d04f2b7e3469102aacc18ec642f7183a645)
   
-  -  added this to the 5.3.7 milestone
+  - issued by https://github.com/spring-projects/spring-framework/pull/26905
+  
+  - added this to the 5.3.7 milestone
 
 
 #### [Microsoft/azure-maven-plugins](https://github.com/microsoft/azure-maven-plugins)
