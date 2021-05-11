@@ -254,6 +254,84 @@ pom.xml 설정이 끝났으면 빌드를 실행해본다. 아마 패키지 명�
 
 ![](.Azure-functions_images/2b1af881.png)
 
+## Trigger
+
+트리거는 DB 트리거와 같은 맥락이다. 어떠한 행위를 조건으로 함수앱이 IDEL 에서 런타임으로 바뀌게 된다.
+
+여기서 조건에 해당하는 것이 트리거이다.
+
+특정 Http Request 에 부합하면 동작하거나, Cron 주기로 런타임되거나, 메세지큐에 메세지를 받거나 큐가 삽입되면 꺠어날수 있다. 
+
+특정 트리거는 Azure스토리지 계정이라는 것이 필요하다. 이 스토리지 계정은 Azure Blob 이나 메세지 큐에 접근하는 용도로 사용이 된다.
+
+필자가 경험한 것은 HttpTrigger 빼고는 다 필요했다.
+
+여기서 많은 삽질을 했는데, 자사에서 스토리지 계정에서 메세지큐에 접근하도록 못해서 이슈가 있었다.
+
+### HttpTrigger
+
+Http Request 에 반응하는 트리거이다. 일반적으로 원격 업무를 처리시킬 때 사용된다.
+
+예를 들면 작업이 오래 걸리기 때문에 웹앱 백그라운드에서 별도의 스레드에서 작업이 처리 되는 개념에 딱 쓰기 좋다.
+
+필자는 CMS 와 같은 업무 툴에서 게임 로그의 여러가지 정보를 집계하고 이를 엑셀로 뱉어주는 기능이 있었는데,
+ 
+여기에 사용했다.
+
+기존에는 CMS 웹페이지에서 기능 사용 Request 시점부터 집계하고 엑셀을 만드는 파이프라인으로, 1차원적이고 직관적인 방법을 사용했는데
+
+게임의 유저풀이 늘면서 DB 부하가 커지는 이슈가 생겼기에 이를 해결해야했다.
+
+변경한 것은 웹페이지에서 기능 사용 Request가 발생하면 기능 접수 개념으로 바로 Response 해버리고, 별도의 스레드에서 집계하고 엑셀로 만드는 작업을 처리 시켰다.
+
+유저 입장에서는 엑셀을 원했으나, 나중에 언젠간 만들어질 엑셀을 찾아갈떄 제출해야하는 토큰을 얻게 되고
+
+언젠가 완료될 시점에 이 토큰을 들고 엑셀로 변환하는 기능에 요청을 해야 한다. 보통은 엑셀이 완성되면 이메일로 전달해주거나
+
+웹소켓으로 이벤트를 알려주는 기능을 생각할수 있다. 필자의 조직에는 여러가지 문제로 이러한 기능까진 만들지 않았다.
+
+여기서 별도의 스레드가 하던 일을 함수앱 HttpTrigger 에게 위임을 시켰다. 기존에는 같은 몸뚱이에서 했기에 개발이 쉬웠을 수 있지만
+
+스케일 아웃과 같은 리소스 부하를 줄이기 위한 행위에서는 문제가 있을수 있기 때문이다.
+
+함수앱은 자체적으로 오토 스케일 아웃을 하고 IDLE 상태에서는 비용이 최소한으로 발생되기 때문에 좋은 접근이라 생각했다.
+
+간단한 코드는 아래와 같다.
+
+```java
+public class MyHttpTrigger {//
+
+    @FunctionName("MyHttpTrigger2") // 클래스 이름도 메소드 이름이 아닌, 이 어노테이션의 이름으로 함수앱의 함수가 생성이 된다.
+    public HttpResponseMessage run(
+            @HttpTrigger(
+                    name = "req",
+                    methods = {HttpMethod.GET, HttpMethod.POST},
+                    authLevel = AuthorizationLevel.ANONYMOUS)
+                    HttpRequestMessage<Optional<String>> request,
+            final ExecutionContext context) {
+        context.getLogger().info("Java HTTP trigger processed a request."); // 기본적으로 어플리케이션의 로그는 이 context 에 의해 관리가 되는데, AppInsight 에 로그가 쌓이게 된다.
+
+        // Parse query parameter
+        final String query = request.getQueryParameters().get("name");
+        final String name = request.getBody().orElse(query);
+
+        if (name == null) {
+            return request.createResponseBuilder(HttpStatus.BAD_REQUEST).body("Please pass a name on the query string or in the request body").build();
+        } else {
+            return request.createResponseBuilder(HttpStatus.OK).body(name).build();
+        }
+    }
+}
+```
+
+### ServiceBusTrigger
+
+KafkaTrigger 라던지 여러가지 트리거들이 존재한다.
+
+필자의 조직은 Azure 서비스버스를 메세지 큐로 사용중에 있다. 참고로 서비스버스는 엔터프라이즈 고가용성 메세지 큐인데 사용해본 느낌으로는 RabbitMQ 와 거의 동일하다고 생각을 하고 있다.
+
+서비스 버스 트리거는 [공식 문서](https://docs.microsoft.com/ko-kr/azure/azure-functions/functions-bindings-service-bus-trigger?tabs=csharp) 에 가이드가 잘되어 있다.
+
 
 
 ## 로직앱
