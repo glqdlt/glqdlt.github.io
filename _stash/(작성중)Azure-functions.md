@@ -324,6 +324,24 @@ public class MyHttpTrigger {//
 }
 ```
 
+### TimerTrigger
+
+크론 트리거로 이름을 바꾸어서 생각해도 좋다. Cron 문법으로 스케줄링 돌면서 만족하는 시간이 되면 IDEL에서 깨어나 일을 하는 녀석이다.
+
+아래 코드를 보면 이해되지만 어노테이션에 schedule 속성에 크론식을 기입하면 된다.
+
+```java
+public class AA{
+@FunctionName("SimpleCronTrigger")
+    public void SimpleCronTrigger2(
+            @TimerTrigger(name = "SimpleCronTrigger", schedule = "0 */10 * * * *") String timerInfo,
+            ExecutionContext context
+    ) {
+        context.getLogger().info("Timer is triggered: " + timerInfo);
+    }
+}
+```
+
 ### ServiceBusTrigger
 
 KafkaTrigger 라던지 여러가지 트리거들이 존재한다.
