@@ -15,21 +15,13 @@ Azure 에서는 서버리스 컴퓨팅을 Azure Functions 라고 부르고, 여�
 
 - Azure Functions
 
-    - Power Automate
-    
-        - 한국어로 PowerMate
-    
-    - Logic Apps 
-    
-        - 한국어로 논리 앱
-    
-    - Functions
-    
-        - 한국어로 함수 앱, 재밌는 건 공식문서에서는 Functions 라고 부르는 데, 골때리는게 모든 서버리스를 칭할때 Functions라고도 하고, 심지어 논리 앱을 설명할때에도 Functions 라고 번역이 되어있다. 이것 때문에 겁나 고생했다.
-    
-    - Webjobs
-    
-       - 한국어로 웹앱(내부에 기능이다, webjobs 라는 기능이 있다.)
+|영문|국문|용도|
+|---|---|---|
+|Power Authomate|PowerMate||
+|Logic Apps|논리 앱| |
+|Functions| 함수 앱| 한국어 번역에서 서버리스를 칭할때 Functions 와 이 함수 앱을 칭할때도 Functions 라 한다.|
+|Webjobs|웹앱_일감| 웹앱(웹서비스) 안의 내부 기능이다.| 
+
 
 [레퍼런스 문서](https://docs.microsoft.com/ko-kr/azure/azure-functions/functions-compare-logic-apps-ms-flow-webjobs)
 
