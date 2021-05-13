@@ -1,6 +1,10 @@
 
 Azure 클라우드에서 서버리스 설계를 했을 때의 경험을 기록한다.
 
+본 아티클에 나오는 소스 코드 원본은 모두 아래 깃허브에서 확인할수있다.
+
+https://github.com/glqdlt/ex-azure-functions.git
+
 
 
 
@@ -341,6 +345,46 @@ KafkaTrigger 라던지 여러가지 트리거들이 존재한다.
 필자의 조직은 Azure 서비스버스를 메세지 큐로 사용중에 있다. 참고로 서비스버스는 엔터프라이즈 고가용성 메세지 큐인데 사용해본 느낌으로는 RabbitMQ 와 거의 동일하다고 생각을 하고 있다.
 
 서비스 버스 트리거는 [공식 문서](https://docs.microsoft.com/ko-kr/azure/azure-functions/functions-bindings-service-bus-trigger?tabs=csharp) 에 가이드가 잘되어 있다.
+
+서비스 버스 트리거는 삽질을 많이 했던 친구다.
+
+왜냐면 다른 트리거들과 달리 Service Bus 에 연결할수있다는 자격증명 셋업이 추가로 필요하기 때문이다.
+
+만약 이 부분이 미흡하다면 아래와 같은 에러를 볼수가 있다.
+
+![](.(작성중)Azure-functions_images/5e6d3368.png)
+
+서비스버스에 대한 자격증명은 2가지가 같이 설정되어야 한다.
+
+하나는, 함수 앱 내의 함수 런타임 환경 설정에 속성을 추가하는 것이고..
+
+다른 하나는 함수 소스 내에서 위에서 추가한 속성의 키를 입력하는 것이다.
+
+함수의 런타임 환경 설정은 함수앱 대시보드에서 설정> 구성 에서 넣을수있다.
+
+![](.(작성중)Azure-functions_images/3d20086e.png)
+
+위 캡처에는 SB_CON_STRING 이라는 키로 등록을 했다.
+
+위에서 추가한 키는 아래 캡처처럼 어노테이션의 connection 속성에서 기입할수 있다.
+
+![](.(작성중)Azure-functions_images/264a5f4a.png)
+
+이후에 서비스 버스에 메세지를 전송하면 아래처럼 잘 수신이 되는 걸 알수 있다.
+
+![](.(작성중)Azure-functions_images/1785bc14.png)
+
+
+
+
+연결 문자열은 서비스 버스 대시보드에서 "[공유 엑세스 정책]" 에서 얻을 수 있다.
+
+만약 등록된 키가 없다면 새로 추가해서 추가한 항목을 눌러보면 아래처럼 연결 문자열을 볼수있는 탭이 노출된다.
+
+
+![](.(작성중)Azure-functions_images/3314030f.png)
+
+
 
 ## Spring Framework 와의 조인
 
