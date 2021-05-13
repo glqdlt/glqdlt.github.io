@@ -18,8 +18,8 @@ Azure 에서는 서버리스 컴퓨팅을 Azure Functions 라고 부르고, 여�
 |영문|국문|용도|
 |---|---|---|
 |Power Authomate|PowerMate||
-|Logic Apps|논리 앱| |
 |Functions| 함수 앱| 한국어 번역에서 서버리스를 칭할때 Functions 와 이 함수 앱을 칭할때도 Functions 라 한다.|
+|Logic Apps|논리 앱| 함수 앱과 같다. 단순히 함수 앱 소스 생성기(탬플릿)로 이해하면 쉽다. 실제로 리소스 타입이 함수앱으로 나온다. 다만 함수앱 대시보드와 달리 함수 생성 템플릿을 선택해서 웹페이지에서 함수를 바로 만들수있다는 장점이 있다.|
 |Webjobs|웹앱_일감| 웹앱(웹서비스) 안의 내부 기능이다.| 
 
 
@@ -341,6 +341,44 @@ KafkaTrigger 라던지 여러가지 트리거들이 존재한다.
 필자의 조직은 Azure 서비스버스를 메세지 큐로 사용중에 있다. 참고로 서비스버스는 엔터프라이즈 고가용성 메세지 큐인데 사용해본 느낌으로는 RabbitMQ 와 거의 동일하다고 생각을 하고 있다.
 
 서비스 버스 트리거는 [공식 문서](https://docs.microsoft.com/ko-kr/azure/azure-functions/functions-bindings-service-bus-trigger?tabs=csharp) 에 가이드가 잘되어 있다.
+
+## Spring Framework 와의 조인
+
+스프링 클라우드 프로젝트가 있는데, 나는 처음에 Azure 나 AWS 처럼 별도의 클라우드 벤더로 스프링 제단에서 출범한줄 알았다.
+
+그게 아니고, 유사 FAAS 처럼 스프링 프레임워크 위에서 동작하는 Azure 나 AWS 에 배포할수있도록 아답팅 해주는 프로젝트였다.
+
+프로젝트는 https://github.com/spring-cloud/spring-cloud-function 이곳에서 관리가 되고 있고,
+
+다양한 배포 플러그인과 클라우드 벤더의 아답터를 개발하고 있다.
+
+
+Azure 환경에서는 2가지 방법으로 Spring Framework 와 브릿지 할수 있다.
+
+1) azure-spring-cloud 솔루션을 통해 프로비저닝
+
+azure 에서는 azure spring cloude 라는 솔루션을 판매하고 있다. MS와 pivotal 간의 관계는 어떻게 되는지 모르겠지만 일종의 웹서비스를 바로 프로비저닝할수 있게끔
+
+잘 만들어져있다. 이 문서에는 성격이 맞지 않아 다루지 않는다.  
+
+https://docs.microsoft.com/ko-kr/azure/spring-cloud/
+
+2) MS 함수앱에 Spring Framework 를 아답팅하는 방법
+
+이 문서에 성격에 맞는 방법이다. 함수 앱의 소스와 스프링 CONTEXT와 연결하는 브릿지를 제공하는 라이브러리가 있다.
+
+이를 통해 함수앱 소스코드 안에서 스프링 BEAN 을 호출해서 사용할수가 있다. application.properties 정보가 담긴 Enviroment 들도 사용할수 있다.
+
+다만 아직 걸음마 과정이라 그런지 몇 가지 버그와.. 제약사항이 있었다.
+
+
+
+
+
+   
+
+https://docs.microsoft.com/ko-kr/azure/developer/java/spring-framework/getting-started-with-spring-cloud-function-in-azure
+
 
 
 
