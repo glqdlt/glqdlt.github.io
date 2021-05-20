@@ -428,7 +428,7 @@ https://docs.microsoft.com/ko-kr/azure/spring-cloud/
 
 함수 앱의 소스와 스프링 빈컨테이너와 연결하는 브릿지를 제공하는 라이브러리가 있다.```spring-cloud-function-adapter-azure```
 
-이 라이브러리는 maven central에는 없다. 아래처럼 스프링 제단의 공개 레포지토리에서 가져와야한다.
+이 라이브러리는 아직 maven central에는 없다. 아래처럼 스프링 제단의 공개 레포지토리에서 가져오는 형태로 해야한다.
 
 ```xml
 
@@ -481,19 +481,83 @@ https://docs.microsoft.com/ko-kr/azure/spring-cloud/
 
 또한 일반적으로 사용되던 여러가지 Enviroment 들(application.properties 등)도 사용할수 있다.
 
-다만 아직 걸음마 과정이라 그런지 몇 가지 버그와 제약사항이 있었다.
+다만 아직 걸음마 과정이라 그런지 몇 가지 버그와 제약사항이 있었다. 단 하나의 함수앱에만 스프링을 플러그인할수 있다.
+ 
+이는 아래 코드를 설명하며 자세히 얘기하고자 한다.
 
-함수앱은 함수앱 리소스 안에 여러개의 함수를 등록할수 있는 아키텍처이다, WAS 위에 WAR 를 여러개 배포하는 개념처럼. 
+### 코드
 
-다만 문제는 스프링 연동은 단 하나의 함수에 플러그인할 수 있다.
+기본적으로 자바8 FUnction API를 토대로 구성이 된다.
 
-이는 메카니즘에서 오는 문제인데, 플러그인 하는 조건이 Function 자료형 단 하나만 연결되기 때문이다.
+아래 코드를 참고해보자.
 
-이것은 [FunctionInvoker](https://github.com/spring-cloud/spring-cloud-function/blob/main/spring-cloud-function-adapters/spring-cloud-function-adapter-aws/src/main/java/org/springframework/cloud/function/adapter/aws/FunctionInvoker.java) 에 의해 수행이 된다.
+```java
 
-함수 라우팅이라는 개념이 있는데, 이러한 상황에서 쓰이도록 최근에 만들어진것으로 확인된다.
+@Component
+public class HelloAFunction implements Function<String, String> {
+
+    @Autowired
+    private Environment environment;
+
+    @Value("${my.simple.props}")
+    private String props;
+
+    @Override
+    public String apply(String s) {
+
+        return s + "!!" + props;
+    }
+}
+
+```
+
+입력과 출력이 모두 String 인 단순한 함수이고, 스프링 빈이다. 기능은 입력의 문자열 뒤에 느낌표를 덧붙여주고, 끝자락에는 ```${my.simple.props}``` 라는 앱 환경 속성의 값을 덧붙여준다.
+
+아래 클래스는 실제 함수앱이 되는 소스블록이다. 특징으로는 org.springframework.cloud.function.adapter.azure.FunctionInvoker 를 상속 받았다.
+
+이 FunctionInvoker에 의해 마법이 일어난다.  FunctionInvoker#handleRequest() 메소드가 있는데, 이 메소드를 통해 위에서 만들었던 함수를 구현한 스프링 빈과 상호작용할 수 있게 된다.
+
+
+ ```java
+ 
+public class SpringHelloHandler extends FunctionInvoker<String, String> {
+
+    @FunctionName("HttpTriggerWithSpring")
+    public HttpResponseMessage execute(
+            @HttpTrigger(name = "request", methods = {HttpMethod.GET, HttpMethod.POST},
+                    authLevel = AuthorizationLevel.ANONYMOUS) HttpRequestMessage<Optional<String>> request,
+            ExecutionContext context) {
+        String reqPayload = request.getQueryParameters().get("message");
+
+        context.getLogger().info("Greeting user req: " + reqPayload);
+        return request
+                .createResponseBuilder(HttpStatus.OK)
+                .body(handleRequest(reqPayload, context))
+                .header("Content-Type", "application/json")
+                .build();
+    }
+}
+```
+
+아직까지 초기버전이어서 그런지 제약사항이 많다.
+
+위에서 봤던 Function 을 구현한 스프링 빈은 단 하나만 허용이 된다. 여러가지 케이스를 테스트 해보았는데, 아래의 결과가 나왔다.
+
+ - 1개의 Function 만 Bean 으로 등록 (O)
+ - 같은 제네릭의 2개의 FUnction 을 등록 (X)
+ - A(String,String) B(Object,String) 서로 다른 제네릭의 경우 (Object,String) (X)
+ - A(String,String) B(Integer,String) 인풋 값이 서로 다른 제네릭의 경우 (Integer,String) (X)
+
+
+결론적으로 함수앱은 함수앱 리소스 안에 여러개의 함수를 등록할수 있는 아키텍처인데, 위 제약사항으로 인해 답답해지는 모양새가 된다.
+
+디버깅을 해보면 Function 자료형으로만 매핑하기 때문에 발생하는 것으로 보여진다.
+
+이러한 제약사항을 극복하려 했는지, 최근에 함수 라우팅이라는 개념이 생겼다. 
 
 https://docs.spring.io/spring-cloud-function/docs/3.1.1/reference/html/spring-cloud-function.html#_function_routing_and_filtering
+
+
 
 
 ## 로직앱
