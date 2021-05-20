@@ -426,17 +426,70 @@ https://docs.microsoft.com/ko-kr/azure/spring-cloud/
 
 #### 2) MS 함수앱에 Spring Framework 를 플러그인하는 방법
 
-함수 앱의 소스와 스프링 빈컨테이너와 연결하는 브릿지를 제공하는 라이브러리가 있다.
+함수 앱의 소스와 스프링 빈컨테이너와 연결하는 브릿지를 제공하는 라이브러리가 있다.```spring-cloud-function-adapter-azure```
 
-이를 통해 함수앱 소스코드 안에서 스프링 BEAN 을 호출해서 사용할수가 있다. application.properties 정보가 담긴 Enviroment 들도 사용할수 있다.
+이 라이브러리는 maven central에는 없다. 아래처럼 스프링 제단의 공개 레포지토리에서 가져와야한다.
+
+```xml
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-function-adapter-azure</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-function-webflux</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+...
+
+    <dependencies>
+
+ <repository>
+            <id>spring-snapshots</id>
+            <name>Spring Snapshots</name>
+            <url>https://repo.spring.io/libs-snapshot-local</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+        </repository>
+        <repository>
+            <id>spring-milestones</id>
+            <name>Spring Milestones</name>
+            <url>https://repo.spring.io/libs-milestone-local</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+        <repository>
+            <id>spring-releases</id>
+            <name>Spring Releases</name>
+            <url>https://repo.spring.io/release</url>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </repository>
+
+```
+
+이 라이브러리를 통해 함수앱 소스코드 안에서 스프링빈을 호출 해서 사용할수가 있다. 
+
+또한 일반적으로 사용되던 여러가지 Enviroment 들(application.properties 등)도 사용할수 있다.
 
 다만 아직 걸음마 과정이라 그런지 몇 가지 버그와 제약사항이 있었다.
 
-함수앱은 함수앱 리소스 안에 여러개의 함수를 등록할수 있다.
+함수앱은 함수앱 리소스 안에 여러개의 함수를 등록할수 있는 아키텍처이다, WAS 위에 WAR 를 여러개 배포하는 개념처럼. 
 
-WAS 위에 WAR 를 여러개 배포하는 개념처럼. 문제는 스프링 연동은 단 하나의 함수에 플러그인할 수 있다.
+다만 문제는 스프링 연동은 단 하나의 함수에 플러그인할 수 있다.
 
 이는 메카니즘에서 오는 문제인데, 플러그인 하는 조건이 Function 자료형 단 하나만 연결되기 때문이다.
+
+이것은 [FunctionInvoker](https://github.com/spring-cloud/spring-cloud-function/blob/main/spring-cloud-function-adapters/spring-cloud-function-adapter-aws/src/main/java/org/springframework/cloud/function/adapter/aws/FunctionInvoker.java) 에 의해 수행이 된다.
 
 https://docs.microsoft.com/ko-kr/azure/developer/java/spring-framework/getting-started-with-spring-cloud-function-in-azure
 
