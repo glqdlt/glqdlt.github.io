@@ -1,5 +1,5 @@
 
-Azure 클라우드에서 서버리스 설계의 경험을 기록한다.
+Azure 클라우드에서 서버리스 설계의 경험을 기록한다. 
 
 본 아티클에 나오는 소스 코드 원본은 모두 깃허브(https://github.com/glqdlt/ex-azure-functions.git)에서 확인할수있다.
 
