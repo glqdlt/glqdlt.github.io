@@ -500,7 +500,7 @@ https://docs.spring.io/spring-cloud-function/docs/3.1.1/reference/html/spring-cl
 
 로직앱은 함수앱과 사실상 동일한데, portal 에서 도 같은 리소스 타입으로 표기가 된다.
 
-로직 앱은 함수 앱의 소스 블록을 포탈에서 완성시켜주는 템플릿을 제공하는 점이 차이이다.
+로직 앱은 함수 앱의 소스 블록을 포탈에서 완성시켜주는 템플릿을 제공하는 점에서 차이가 있다.
 
 ![](.(작성중)Azure-functions_images/3729f75f.png)
 
@@ -510,6 +510,7 @@ https://docs.spring.io/spring-cloud-function/docs/3.1.1/reference/html/spring-cl
 웃픈 거는 C# 기반의 csx 스크립트만 지원을 한다. (https://docs.microsoft.com/ko-kr/azure/azure-functions/functions-reference-csharp)
 
 ![](.(작성중)Azure-functions_images/4ab477a9.png)
+
 
  
 
