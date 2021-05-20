@@ -400,6 +400,34 @@ public class AA{
 
 ![](.(작성중)Azure-functions_images/3314030f.png)
 
+### 코드
+
+서비스 버스 리스너의 코드도 매우 심플하다. 다만 헷갈리는 부분이 있는데 어노테이션의 connection 어트리뷰트가 어려울 수 있다.
+
+필자도 그렇고 주변 동료들도 당연히 어트리뷰트에는 연결스트링이 들어갈것으로 생각했다. 예를들면 jdbcUrl 같은 것 말이다.
+
+다만 그것이 아니고, connection 이 의미하는 것은 함수앱 리소스의 앱 환경변수의 속성 키를 의미한다.
+
+이 사실을 엄청 삽질하고나서야 알았는데, 따지고보면 connection이 아니라 connectionPropertyKey 라는 어트리뷰트가 되었어야 하는게 아닌가 싶다.
+
+```java
+public class BusListenTrigger {
+
+    @FunctionName("BusTrigger")
+    public void SimpleCronTrigger2(
+            @ServiceBusTopicTrigger(name = "msg", topicName = "test", 
+                                    subscriptionName = "33333", connection = "SB_CON_STRING") String message,
+            ExecutionContext context
+    ) {
+        context.getLogger().info("Bus message: " + message);
+    }
+}
+
+```
+
+위 예시는 SB_CON_STRING 은 아래처럼 앱 환경변수에 등록이 되어있는 걸 사용하겠다는 의미가 된다.
+
+![](.(작성중)Azure-functions_images/3d20086e.png)
 
 
 ## Spring Framework 플러그인
