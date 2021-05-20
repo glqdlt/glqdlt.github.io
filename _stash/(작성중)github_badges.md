@@ -53,6 +53,10 @@ travis ci 를 통해 마지막 빌드된 아티팩트 뱃지를 노출시킬수�
 
 https://blog.outsider.ne.kr/1388
 
+github tag 가 추가되면 travis ci 를 사용해서 maven central 에 지속적으로 처리할수있는 것도 있는것같다.
+
+https://github.com/stefanbirkner/travis-deploy-to-maven-central
+
 ### Build badge
 
 Github 에서도 동적인 벳지를 제공한다.
