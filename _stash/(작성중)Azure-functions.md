@@ -404,16 +404,17 @@ public class AA{
 
 ## Spring Framework 플러그인
 
-스프링 클라우드 프로젝트가 있는데, 나는 처음에 Azure 나 AWS 처럼 별도의 클라우드 벤더로 스프링 제단에서 출범한줄 알았다.
+### 스프링 클라우드 프로젝트
 
-그게 아니고, 유사 FAAS 처럼 스프링 프레임워크 위에서 동작하는 Azure 나 AWS 에 배포할수있도록 아답팅 해주는 프로젝트였다.
+스프링 클라우드 프로젝트가 있는데, 처음에 Azure 나 AWS 처럼 스프링 제단에서  별도의 클라우드 벤더로 출범한줄 알았다.
 
-프로젝트는 https://github.com/spring-cloud/spring-cloud-function 이곳에서 관리가 되고 있고,
+그게 아니고, 유명 벤더 클라우드의 PAAS 상품에 스프링 프레임워크를 얹힌 것었다.
+
+스프링 클라우드 프로젝트는 https://github.com/spring-cloud/spring-cloud-function 이곳에서 관리가 되고 있다.
 
 다양한 배포 플러그인과 클라우드 벤더의 아답터를 개발해서 플러그인 하고 있다.
 
-
-Azure 환경에서는 2가지 방법으로 Spring Framework 를 사용할수 있다.
+Azure 환경에서는 2가지 방법으로 Spring Framework 를 사용 할 수 있다.
 
 #### 1) azure-spring-cloud 솔루션을 통해 프로비저닝
 
@@ -429,13 +430,15 @@ https://docs.microsoft.com/ko-kr/azure/spring-cloud/
 
 이를 통해 함수앱 소스코드 안에서 스프링 BEAN 을 호출해서 사용할수가 있다. application.properties 정보가 담긴 Enviroment 들도 사용할수 있다.
 
-다만 아직 걸음마 과정이라 그런지 몇 가지 버그와.. 제약사항이 있었다.
+다만 아직 걸음마 과정이라 그런지 몇 가지 버그와 제약사항이 있었다.
 
-   
+함수앱은 함수앱 리소스 안에 여러개의 함수를 등록할수 있다.
+
+WAS 위에 WAR 를 여러개 배포하는 개념처럼. 문제는 스프링 연동은 단 하나의 함수에 플러그인할 수 있다.
+
+이는 메카니즘에서 오는 문제인데, 플러그인 하는 조건이 Function 자료형 단 하나만 연결되기 때문이다.
 
 https://docs.microsoft.com/ko-kr/azure/developer/java/spring-framework/getting-started-with-spring-cloud-function-in-azure
-
-
 
 
 ## 로직앱
