@@ -477,7 +477,7 @@ https://docs.microsoft.com/ko-kr/azure/spring-cloud/
 
 ```
 
-이 라이브러리를 통해 함수앱 소스코드 안에서 스프링빈을 호출 해서 사용할수가 있다. 
+이 라이브러리를 통해 함수앱 소스코드 안에서 스프링빈을 호출 해서 사용할수가 있다.  (https://docs.microsoft.com/ko-kr/azure/developer/java/spring-framework/getting-started-with-spring-cloud-function-in-azure)
 
 또한 일반적으로 사용되던 여러가지 Enviroment 들(application.properties 등)도 사용할수 있다.
 
@@ -491,7 +491,6 @@ https://docs.microsoft.com/ko-kr/azure/spring-cloud/
 
 이것은 [FunctionInvoker](https://github.com/spring-cloud/spring-cloud-function/blob/main/spring-cloud-function-adapters/spring-cloud-function-adapter-aws/src/main/java/org/springframework/cloud/function/adapter/aws/FunctionInvoker.java) 에 의해 수행이 된다.
 
-https://docs.microsoft.com/ko-kr/azure/developer/java/spring-framework/getting-started-with-spring-cloud-function-in-azure
 
 
 ## 로직앱
