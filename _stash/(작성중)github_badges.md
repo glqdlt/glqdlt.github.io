@@ -47,6 +47,11 @@ image 사이즈를 실제 화면에서 테스트하기 위해 제공되던 서�
 
 ### Travis badge
 
+travis ci 를 통해 마지막 빌드된 아티팩트 뱃지를 노출시킬수도 있다.
+
+이 아티클과는 조금 거리가 먼데, travis ci 로 지속적인 CI를 하는 방안에 대해서 아웃사이더님이 정리한 글이 좋아보여서 링크해둔다.
+
+https://blog.outsider.ne.kr/1388
 
 ### Build badge
 
