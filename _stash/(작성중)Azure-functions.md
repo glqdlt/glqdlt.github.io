@@ -1,23 +1,24 @@
 
-Azure 클라우드에서 서버리스 설계를 했을 때의 경험을 기록한다.
+Azure 클라우드에서 서버리스 설계의 경험을 기록한다.
 
-본 아티클에 나오는 소스 코드 원본은 모두 아래 깃허브에서 확인할수있다.
-
-https://github.com/glqdlt/ex-azure-functions.git
-
-
-
+본 아티클에 나오는 소스 코드 원본은 모두 깃허브(https://github.com/glqdlt/ex-azure-functions.git)에서 확인할수있다.
 
 
 # Azure 서버리스 솔루션 비교
 
-Azure 에는 용도에 맞는 서버리스 모델이 굉장히 많다. 개념 잡는 거야 서버리스 컴퓨팅에 대한 것만 이해하면 쉽게 할수있다, 문제는 유사한 이름이 많아서 이놈이 이놈인가? 저놈이 저놈인가 하면서 고생을 했다.
+Azure 에는 서버리스 모델이 굉장히 많다. 개념 잡는 거야 서버리스 컴퓨팅에 대한 것만 이해하면 쉽게 할수있다지만 
 
-Azure 에서는 서버리스 컴퓨팅을 Azure Functions 라고 부르고, 여러가지 구현체들이 있다. 정리하면 아래와 같은데 이름이 비슷한것들이 참 많다.
+다양한 모델을 두고 어떠한 것을 선택해야할지 학습곡선이 높다. 
+
+심지어 문제는 유사한 이름이 많아서 이게 이건가? 저게 저건가? 하면서 고생을 많이 했다.
+
+Azure 에서는 서버리스 컴퓨팅을 Azure Functions 라고 부르는데 여러가지 모델들이 있다. 
+
+정리해보면 아래 도표처럼 정리해볼수있다, 이름이 비슷한것들이 참 많다.
 
 
 
-- Azure Functions
+### Azure Functions
 
 |영문|국문|용도|
 |---|---|---|
@@ -26,43 +27,55 @@ Azure 에서는 서버리스 컴퓨팅을 Azure Functions 라고 부르고, 여�
 |Logic Apps|논리 앱| 함수 앱과 같다. 단순히 함수 앱 소스 생성기(탬플릿)로 이해하면 쉽다. 실제로 리소스 타입이 함수앱으로 나온다. 다만 함수앱 대시보드와 달리 함수 생성 템플릿을 선택해서 웹페이지에서 함수를 바로 만들수있다는 장점이 있다.|
 |Webjobs|웹앱_일감| 웹앱(웹서비스) 안의 내부 기능이다.| 
 
-
-[레퍼런스 문서](https://docs.microsoft.com/ko-kr/azure/azure-functions/functions-compare-logic-apps-ms-flow-webjobs)
+https://docs.microsoft.com/ko-kr/azure/azure-functions/functions-compare-logic-apps-ms-flow-webjobs
 
 
 # 자바 기반의 구성 방법
 
-아래는 
+아래는 자바 환경에서의 Azure 서버리스를 구성해본 경험을 기록한 것이다.
+
+위에서 언급했지만 모든 코드는 아래 깃허브에서 확인할수있다.
+
+https://github.com/glqdlt/ex-azure-functions.git
 
 ## 함수앱
 
-함수앱은 VSCode, IntelliJ 로 할 경우에 쉽게 프로비저닝 할수있다.
+함수 앱은 VSCode, IntelliJ 로 할 경우에 쉽게 프로비저닝 할 수 있다.
 
-Intellij 는 2020.1 버전 기준 Azure Functions 라는 플러그인을 지원한다.
+### 인텔리J에서의 방법
 
-프로젝트를 등록할 때 템플릿을 선택해서 Maven 프로젝트 구성을 할수가 있다. 
+필자는 Intellij 2020.1 버전을 사용중에 있다, 이 버전에서는 Azure Functions 라는 플러그인을 지원하는 걸 경험했다.
+
+같은 버전이거나 그 이상의 버전일 경우 아래 캡처처럼 프로젝트를 시작할 때, 프로젝트 템플릿을 선택해서 쉽게 셋업 할수가 있다. 
 ![](.(작성중)Azure-functions_images/69390991.png)
 
-다만 지원되는 것이 서비스 버스 트리거와 같은 것들은 없다, 아마 이 트리거들은 최근에 생긴 모양.
+다만 지원되는 것이 서비스 버스 트리거와 같은 것들은 없다, 아마 이 트리거들은 최근에 생긴 모양으로 플러그인 버전업이 되면 지원할듯.
 
-Azure 포탈에서는 VS Code 와 Maven 셋업에 관한 내용으로 소개가 된다. 시키는 데로 하면 되는데, 약간의 버그(2020년 05월 기준)가 있다.
+인텔리J 구성에서의 이슈가 발생하거나 좀 더 심도있게 알고 싶으면 아래 수동 구성 방법을 참고하면 도움 될 것이다.
 
-버그는 Azure 클라우드 위치(리전)가 한국인이라면 Korea Central 에 일반적으로 위치할 것인데, 이 클라우드 리전정보를 Maven 에 기입하면 중간에 공백문자 때문에 이슈가 발생한다.
+### 수동 구성
 
-이에 대해서는 필자가 버그 트러블슈팅을 할것이나, 현재로서는 꼼수를 써야한다. 이에 대한 가이드는 아래 프로젝트 셋업 에서 설명하겠다. 
+Azure 포탈에서는 VS Code 와 Maven 셋업에 관한 내용으로 소개가 되고 있다. 
 
-가이드는 함수앱 리소스 자체를 새로이 구축하는 것부터 시작한다. 자세히 내부를 살펴보지는 않았는데, Maven 설정에 기존 함수앱이 있는지에 대한 설정이 없다면 신규로 생성하는 것으로 생각된다.
+가이드에서 시키는 데로 하면 되는데, 약간의 버그(2020년 05월 기준)가 있다.
 
-참고로 Maven은 자바 프로젝트 빌드를 위한 용도일 뿐, Azure 관련 된 모든것은 node js 기반의 툴에 의해 실행된다.
+버그는 Azure 클라우드 위치(리전)가 한국인이라면 Korea Central 에 일반적으로 위치할 것인데, 이 클라우드 리전정보를 Maven 에 기입하면 'korea'와 'Central' 사이의 공백 문자 때문에 이슈가 발생한다.
 
-가이드에도 아래 캡처처럼 azure-functions-core-tools 라는 것을 생성해라고 한다.
+이에 대해서는 필자가 버그 트러블슈팅을 해보았는데, 가장 최근 개발 버전에 패치가 된 것으로 확인했다.
+ 
+현재로서는 꼼수를 써야한다. 이에 대한 가이드는 아래 프로젝트 셋업 에서 설명하겠다. 
+
+가이드는 함수앱 리소스 자체를 새로이 구축하는 것부터 시작한다., Maven 설정에 기존 함수앱이 있는지에 대한 설정을 기입하면 기존 리소스와 연결이 되고
+ 
+이 정보가 없다면 신규로 생성한다.
+
+참고로 Maven은 자바 프로젝트 빌드를 위한 용도일 뿐이고, 플러그인 대부분의 기능은 node js 기반의 툴에 의해 실행된다.
+
+가이드에도 아래 캡처처럼 azure-functions-core-tools 라는 것을 생성 해야함을 명시하고 있다.
 
 ![](.Azure-functions_images/1dd42bdb.png)
  
-
-실제로 Maven 플러그인에 버그가 있어서 디버깅하면서 이를 알게 되었는데, 단순히 azure-functions-core-tools 를 Maven 이 하위 프로세스로 실행하는 정도의 수준이다.
-
-각 언어에 맞는 걸 만들기에는 시간이 모잘랐는지 Maven으로 wrapping 한 수준이란 셈. 
+결론적으로 플러그인의 역활은 node js 아답터의 용도일뿐이다, 단순히 azure-functions-core-tools 를 Maven 이 하위 프로세스로 실행하는 정도의 수준이다. 
 
 ### 메이븐으로 프로젝트 수동 구성
 
@@ -70,7 +83,7 @@ Azure 포탈에서는 VS Code 와 Maven 셋업에 관한 내용으로 소개가 
 
 0. Node Js 설치
 
-1. npm install -g azure-functions-core-tools 를 입력하여 자바스크립트 기반 툴을 설치한다.
+1. npm install -g azure-functions-core-tools 를 입력하여 자바스크립트 기반 툴을 OS 전역에 설치한다.
 
 > npm install -g azure-functions-core-tools
 
@@ -90,7 +103,7 @@ Azure 포탈에서는 VS Code 와 Maven 셋업에 관한 내용으로 소개가 
 
 ![](.Azure-functions_images/9ab8d435.png)
 
-아래 내용을 터미널에서 실행시킨다.
+아래 내용을 터미널에서 실행한다.
 
 > mvn archetype:generate -DarchetypeGroupId=com.microsoft.azure -DarchetypeArtifactId=azure-functions-archetype -DappName=${1번} -DappRegion=Korea Central -DresourceGroup={2번} -DgroupId=com.{functionAppName}.group -DartifactId={functionAppName}-functions -Dpackage=com.${functionAppName} -DinteractiveMode=false
 
@@ -106,11 +119,11 @@ Azure 포탈에서는 VS Code 와 Maven 셋업에 관한 내용으로 소개가 
 
 ![](.Azure-functions_images/11c9584d.png)
 
-왜냐면 ```-DappRegion=Korea Central``` 이 구문 떄문이다.
+이유는 위에서 잠깐 언급했지만 ```-DappRegion=Korea Central``` 이 구문 때문이다.
 
-위에서 잠깐 언급했지만 Korea Central 에서 띄어 쓰기가 있기 때문에 이슈가 있다. 그래서 임시방편으로 Korea-Central 로 기업 하면 좋다.
+Korea Central 에서 가운데에 공백문자가 있기 때문에 이슈가 있다. 그래서 임시방편으로 Korea-Central 로 임시방편으로 기입한다.
 
-만약에 리소스 이름이 myFunctionApp 이고 리소스 그룹이 my-resource-group 이라면 최종적으로는 아래처럼 입력하면 프로젝트 셋업이 된다.
+만약에 리소스 이름이 myFunctionApp 이고 리소스 그룹이 my-resource-group 이라면 최종적으로는 아래처럼 입력하면 프로젝트 셋업이 가능하다.
 
 > mvn archetype:generate -DarchetypeGroupId=com.microsoft.azure -DarchetypeArtifactId=azure-functions-archetype -DappName=myFunctionApp -DappRegion=Korea-Central -DresourceGroup=my-resource-group -DgroupId=com.{functionAppName}.group -DartifactId={functionAppName}-functions -Dpackage=com.${functionAppName} -DinteractiveMode=false
 
@@ -259,41 +272,39 @@ pom.xml 설정이 끝났으면 빌드를 실행해본다. 아마 패키지 명�
 
 ## Trigger
 
-트리거는 DB 트리거와 같은 맥락이다. 어떠한 행위를 조건으로 함수앱이 IDEL 에서 런타임으로 바뀌게 된다.
+트리거는 DB 트리거와 같은 개념이다. 
 
-여기서 조건에 해당하는 것이 트리거이다.
+함수앱은 기본적으로 IDLE 상태에 돌입해서 비용절감이 된다. 트리거가 발동될 경우에 IDEL이 깨어나서 런타임상태로 돌아가는 구조.
 
-특정 Http Request 에 부합하면 동작하거나, Cron 주기로 런타임되거나, 메세지큐에 메세지를 받거나 큐가 삽입되면 꺠어날수 있다. 
+참고로 유료 계층에서는 (프리미엄 티어) IDLE 타임으로 빠지지 않고 상시 런타임 으로 구성도 가능하다. (https://docs.microsoft.com/ko-kr/azure/azure-functions/functions-premium-plan?tabs=portal)
+
+트리거는 특정 Http Request 에 부합하면 동작하거나, Cron 주기로 런타임되거나, 메세지큐에 메세지를 받거나 큐가 메세지가 입력되면 트리거 될수 있다. 
 
 특정 트리거는 Azure스토리지 계정이라는 것이 필요하다. 이 스토리지 계정은 Azure Blob 이나 메세지 큐에 접근하는 용도로 사용이 된다.
 
-필자가 경험한 것은 HttpTrigger 빼고는 다 필요했다.
-
-여기서 많은 삽질을 했는데, 자사에서 스토리지 계정에서 메세지큐에 접근하도록 못해서 이슈가 있었다.
+필자가 경험한 것은 HttpTrigger, Scheduler Trigger 빼고는 다 필요한 것으로 경험했다.
 
 ### HttpTrigger
 
-Http Request 에 반응하는 트리거이다. 일반적으로 원격 업무를 처리시킬 때 사용된다.
+Http 요청에 반응 하는 트리거이다. 서비스 중에 대용량 처리 작업을 백그라운드로 돌려야 하는 경우 등에 적합하다.
 
-예를 들면 작업이 오래 걸리기 때문에 웹앱 백그라운드에서 별도의 스레드에서 작업이 처리 되는 개념에 딱 쓰기 좋다.
+필자는 CMS 와 같은 업무 툴에서 게임 로그의 여러가지 정보를 집계하고 이를 엑셀로 뱉어주는 기능이 있었는데 여기에 사용했다.
 
-필자는 CMS 와 같은 업무 툴에서 게임 로그의 여러가지 정보를 집계하고 이를 엑셀로 뱉어주는 기능이 있었는데,
- 
-여기에 사용했다.
+기존에는 CMS 웹페이지에서 기능 사용 Request 시점부터 집계하고 엑셀을 만드는 형태로 1차원적이고 직관적인 방법을 사용했는데
 
-기존에는 CMS 웹페이지에서 기능 사용 Request 시점부터 집계하고 엑셀을 만드는 파이프라인으로, 1차원적이고 직관적인 방법을 사용했는데
-
-게임의 유저풀이 늘면서 DB 부하가 커지는 이슈가 생겼기에 이를 해결해야했다.
+게임의 유저풀이 늘면서 DB 사이즈가 커짐에 따라 요청 처리 시간이 길어지고, DB 부하가 늘면서 이를 해결해야했다.
 
 변경한 것은 웹페이지에서 기능 사용 Request가 발생하면 기능 접수 개념으로 바로 Response 해버리고, 별도의 스레드에서 집계하고 엑셀로 만드는 작업을 처리 시켰다.
 
-유저 입장에서는 엑셀을 원했으나, 나중에 언젠간 만들어질 엑셀을 찾아갈떄 제출해야하는 토큰을 얻게 되고
+택배 접수 개념과 동일하다고 보면 될 것이다.
+
+유저 입장에서는 엑셀을 원했으나, 나중에 언젠간 만들어질 엑셀을 다운로드 할 때 필요한 토큰(자격증명)을 얻게 되는 것이고
 
 언젠가 완료될 시점에 이 토큰을 들고 엑셀로 변환하는 기능에 요청을 해야 한다. 보통은 엑셀이 완성되면 이메일로 전달해주거나
 
-웹소켓으로 이벤트를 알려주는 기능을 생각할수 있다. 필자의 조직에는 여러가지 문제로 이러한 기능까진 만들지 않았다.
+웹소켓으로 이벤트를 알려주는 기능을 생각하는 식으로 확장해볼수도 있다.
 
-여기서 별도의 스레드가 하던 일을 함수앱 HttpTrigger 에게 위임을 시켰다. 기존에는 같은 몸뚱이에서 했기에 개발이 쉬웠을 수 있지만
+여기서 별도의 스레드가 하던 일을 함수앱 HttpTrigger 에게 위임을 시켰다. 
 
 스케일 아웃과 같은 리소스 부하를 줄이기 위한 행위에서는 문제가 있을수 있기 때문이다.
 
@@ -329,7 +340,7 @@ public class MyHttpTrigger {//
 
 ### TimerTrigger
 
-크론 트리거로 이름을 바꾸어서 생각해도 좋다. Cron 문법으로 스케줄링 돌면서 만족하는 시간이 되면 IDEL에서 깨어나 일을 하는 녀석이다.
+크론 트리거로 이름을 바꾸어서 생각해도 좋다. Cron 문법으로 스케줄링 돌면서 만족하는 시간이 되면 IDLE 에서 깨어나 일을 하게 된다.
 
 아래 코드를 보면 이해되지만 어노테이션에 schedule 속성에 크론식을 기입하면 된다.
 
@@ -347,9 +358,9 @@ public class AA{
 
 ### ServiceBusTrigger
 
-KafkaTrigger 라던지 여러가지 트리거들이 존재한다.
+서비스버스 트리거는 메세지 교환소에 대한 트리거이다. KafkaTrigger 라던지 여러가지 트리거들이 존재한다.
 
-필자의 조직은 Azure 서비스버스를 메세지 큐로 사용중에 있다. 참고로 서비스버스는 엔터프라이즈 고가용성 메세지 큐인데 사용해본 느낌으로는 RabbitMQ 와 거의 동일하다고 생각을 하고 있다.
+필자의 조직은 Azure 서비스버스를 메세지 교환소로 사용 중에 있다. 참고로 서비스버스는 엔터프라이즈 고가용성 메세지 큐인데 사용해본 느낌으로는 RabbitMQ 와 거의 동일하다는 인상으로 생각 하고 있다.
 
 서비스 버스 트리거는 [공식 문서](https://docs.microsoft.com/ko-kr/azure/azure-functions/functions-bindings-service-bus-trigger?tabs=csharp) 에 가이드가 잘되어 있다.
 
@@ -382,8 +393,6 @@ KafkaTrigger 라던지 여러가지 트리거들이 존재한다.
 ![](.(작성중)Azure-functions_images/1785bc14.png)
 
 
-
-
 연결 문자열은 서비스 버스 대시보드에서 "[공유 엑세스 정책]" 에서 얻을 수 있다.
 
 만약 등록된 키가 없다면 새로 추가해서 추가한 항목을 눌러보면 아래처럼 연결 문자열을 볼수있는 탭이 노출된다.
@@ -393,7 +402,7 @@ KafkaTrigger 라던지 여러가지 트리거들이 존재한다.
 
 
 
-## Spring Framework 와의 조인
+## Spring Framework 플러그인
 
 스프링 클라우드 프로젝트가 있는데, 나는 처음에 Azure 나 AWS 처럼 별도의 클라우드 벤더로 스프링 제단에서 출범한줄 알았다.
 
@@ -401,30 +410,26 @@ KafkaTrigger 라던지 여러가지 트리거들이 존재한다.
 
 프로젝트는 https://github.com/spring-cloud/spring-cloud-function 이곳에서 관리가 되고 있고,
 
-다양한 배포 플러그인과 클라우드 벤더의 아답터를 개발하고 있다.
+다양한 배포 플러그인과 클라우드 벤더의 아답터를 개발해서 플러그인 하고 있다.
 
 
-Azure 환경에서는 2가지 방법으로 Spring Framework 와 브릿지 할수 있다.
+Azure 환경에서는 2가지 방법으로 Spring Framework 를 사용할수 있다.
 
-1) azure-spring-cloud 솔루션을 통해 프로비저닝
+#### 1) azure-spring-cloud 솔루션을 통해 프로비저닝
 
 azure 에서는 azure spring cloude 라는 솔루션을 판매하고 있다. MS와 pivotal 간의 관계는 어떻게 되는지 모르겠지만 일종의 웹서비스를 바로 프로비저닝할수 있게끔
 
-잘 만들어져있다. 이 문서에는 성격이 맞지 않아 다루지 않는다.  
+잘 만들어져있다. 이 아티클과는 성격이 맞지 않아 다루지 않는다.  
 
 https://docs.microsoft.com/ko-kr/azure/spring-cloud/
 
-2) MS 함수앱에 Spring Framework 를 아답팅하는 방법
+#### 2) MS 함수앱에 Spring Framework 를 플러그인하는 방법
 
-이 문서에 성격에 맞는 방법이다. 함수 앱의 소스와 스프링 CONTEXT와 연결하는 브릿지를 제공하는 라이브러리가 있다.
+함수 앱의 소스와 스프링 빈컨테이너와 연결하는 브릿지를 제공하는 라이브러리가 있다.
 
 이를 통해 함수앱 소스코드 안에서 스프링 BEAN 을 호출해서 사용할수가 있다. application.properties 정보가 담긴 Enviroment 들도 사용할수 있다.
 
 다만 아직 걸음마 과정이라 그런지 몇 가지 버그와.. 제약사항이 있었다.
-
-
-
-
 
    
 
@@ -449,13 +454,6 @@ https://docs.microsoft.com/ko-kr/azure/developer/java/spring-framework/getting-s
 ![](.(작성중)Azure-functions_images/4ab477a9.png)
 
  
-
-
-
-
-
-
-
 
 # 레퍼런스
 
