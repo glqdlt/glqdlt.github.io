@@ -50,6 +50,12 @@ image 사이즈를 실제 화면에서 테스트하기 위해 제공되던 서�
 
 ### Build badge
 
+Github 에서도 동적인 벳지를 제공한다.
+
+```
+[![Build Status](https://github.com/프로젝트주소/badge.svg)](https://github.com/프로젝트주소/actions?workflow=Build)
+```
+
 ### Release badge
 
 ### Coverage badge
