@@ -491,6 +491,9 @@ https://docs.microsoft.com/ko-kr/azure/spring-cloud/
 
 이것은 [FunctionInvoker](https://github.com/spring-cloud/spring-cloud-function/blob/main/spring-cloud-function-adapters/spring-cloud-function-adapter-aws/src/main/java/org/springframework/cloud/function/adapter/aws/FunctionInvoker.java) 에 의해 수행이 된다.
 
+함수 라우팅이라는 개념이 있는데, 이러한 상황에서 쓰이도록 최근에 만들어진것으로 확인된다.
+
+https://docs.spring.io/spring-cloud-function/docs/3.1.1/reference/html/spring-cloud-function.html#_function_routing_and_filtering
 
 
 ## 로직앱
