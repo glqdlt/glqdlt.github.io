@@ -356,7 +356,25 @@ public class AA{
 }
 ```
 
-### ServiceBusTrigger
+### ServiceBusQueueTrigger
+
+https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.functions.annotation.servicebusqueuetrigger?view=azure-java-stable
+
+서비스 버스 특정 큐에 메세지가 삽입되면 트리거 되는 녀석이다.
+
+특이한 것은 큐에 삽입된 메세지가 함수앱까지 도달이 되서 트리거 되면 큐의 메세지는 삭제된다.
+
+즉 이 말이 무엇이냐면, 큐에 대한 작업을 락킹 해서 처리가 무조건 되었을 때만 삭제된다는 트랜잭션 관점의 처리가 불가능하다.
+
+메세지가 전달 되었다 까지는 되지만, 메세지에 따른 행동이 완료되었다가 안된다.
+
+말그대로 트리거에만 반응한다는 컨셉인거같은데.. 이 컨셉이 왜 필요한지 모르겠다는 인상이다. 서비스적으로는 사실상 망한듯
+
+
+### ServiceBusTopicTrigger
+
+https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.functions.annotation.servicebustopictrigger?view=azure-java-stable
+
 
 서비스버스 트리거는 메세지 교환소에 대한 트리거이다. KafkaTrigger 라던지 여러가지 트리거들이 존재한다.
 
