@@ -215,6 +215,10 @@ dead letter(죽은 메세지) 는 일반 메세지와는 별도의 큐에서 관
 
 ## 레퍼런스
 
+Azure 의 자바 기반 SDK 에 대한 모든 개발문서에 대한 링크
+
+- https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.functions.annotation.tableinput?view=azure-java-stable
+
 https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-queues-topics-subscriptions#topics-and-subscriptions
 
 https://stackoverflow.com/questions/45872802/azure-service-bus-topics-multiple-subscribers
