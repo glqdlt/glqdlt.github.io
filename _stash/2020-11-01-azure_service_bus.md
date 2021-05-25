@@ -204,11 +204,41 @@ TOPIC 이나 QUEUE 나 모두 메세지 큐를 사용하기 때문에, 이러한
 
 응답ack 로 총 3가지의 개념이 있다. complete() , abandon(), deadletter() 3가지이다.
 
-complete는 초딩도 알수있는것처럼 성공처리이다.  peek-lock 모드일지라도, abadon() 이나 deadletter() 를 명시적으로 사용하지 않거나, 별도의 에러가 발생하지 않으면 SDK 내에서 자동으로 complete() 처리를 하기도 한다. 이는 후임이 peek-lock 모드에서 명시적으로 호출하지 않고 Void 처리하는 걸 보고 경험했다. 
+이 모드를 처리하려면 auto commit 모드를 제거해야한다. 
+
+예를 들면 아래처럼 일반적인 자동생성 구성으로 할 경우엔 complete(), abandom() 과 같은 상태변화를 일으키는 메서드 호출시에 에러가 발생한다.
+
+```
+2021-05-25 17:45:10.947  INFO 7396 --- [pool-1-thread-4] c.g.e.s.ServiceBusExampleApplication     : COMPLETE
+2021-05-25 17:45:10.947 ERROR 7396 --- [pool-1-thread-4] c.g.e.s.ServiceBusExampleApplication     : Delivery not found on the receive link.
+
+java.lang.IllegalArgumentException: Delivery not found on the receive link.
+	at com.microsoft.azure.servicebus.primitives.CoreMessageReceiver.generateDeliveryNotFoundException(CoreMessageReceiver.java:1177) ~[azure-servicebus-3.6.3.jar:na]
+```
+
+이러한 것은 auto commit 모드
+
+아래처럼 SessionHandlerOptions 를 인자로 받는 메소드를 통해 수동 구성을 해야 이슈가 없다.
+```
+   receiveClient.registerMessageHandler(new IMessageHandler() {
+            @Override
+            public CompletableFuture<Void> onMessageAsync(IMessage iMessage) {
+             
+            }
+
+            @Override
+            public void notifyException(Throwable throwable, ExceptionPhase exceptionPhase) {
+             
+            }
+        }, new MessageHandlerOptions(1, false, Duration.ofMinutes(1)), EXECUTOR);
+```
+
+complete는 초딩도 알수있는것처럼 성공처리이다.  peek-lock 모드일지라도, abadon() 이나 deadletter() 를 명시적으로 사용하지 않거나, 별도의 에러가 발생하지 않으면 SDK 내에서 자동으로 complete() 처리를 하기도 한다. auto commit 모드가 true 일 때에는 peek-lock 모드일지라도 자동으로 커밋된다. 
 
 abandon (거부하다)와 deadletter(죽은편지) 는 모두 실패한다는 개념인데, 무슨 차이가 있는지 경계가 조금 애매모해서 삽질을 좀 했다.
 
 abandon은 메세지를 일시적으로 수신할수 없다는 개념이다. 즉 메세지를 다시 보내달라는 요청이다. 다시 보내달라는 요청은 제한 값이 있다, 
+
 
 이 것은 abandon 은 구독을 생성할 때 있는 "최대 배달 횟수" 를 의미한다. 즉 최대 배달 횟수가 10개로 설정되어있다면 abandon() 이벤트로 다시 보내주는 메세지 최대 갯수는 10번이라는 것이다.
 
@@ -217,6 +247,12 @@ abandon은 메세지를 일시적으로 수신할수 없다는 개념이다. 즉
 ![](.2020-11-01-azure_service_bus_images/5f2f02fe.png)
 
 abandon() 이 최대 배달 횟수의 최대치에 도달하면, 원본 메세지는 dead letter 처리 된다. 한국 번역판에 배달하지 못한 메세지로 되어있어서 번역상의 괴리감 떄문에 조금 헤맸다.
+
+abandon 은 수신한 워커에서 처리가 불가능하다고 생각하고 다시 큐에 메세지를 복원한다.
+
+재밌는 점은 abandon 으로 거부했던 워커가 이 메세지를 다시 수신할수도 있다.
+
+
 
 dead letter(죽은 메세지) 는 일반 메세지와는 별도의 큐에서 관리가 된다. 일반적으로 메트릭에 알람이나 통계용으로 사용되는 게 기본이며, 별도로 dead letter 를 관리하는 큐에 직접 죽은 메세지를 수신해서 다시 처리할지 말지의 로직을 본인이 직접 구현해볼수도 있다.
 
