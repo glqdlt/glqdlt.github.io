@@ -633,3 +633,7 @@ https://docs.spring.io/spring-cloud-function/docs/3.1.1/reference/html/spring-cl
 # 레퍼런스
 
 - https://docs.microsoft.com/ko-kr/azure/azure-functions/functions-compare-logic-apps-ms-flow-webjobs
+
+아래는 개인이 Java 기반의 서비스 버스 예제를 다룬 레포지토리이다, 존경한다.
+
+- https://github.com/damoodamoo/java-function-samples
