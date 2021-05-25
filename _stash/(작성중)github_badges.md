@@ -57,6 +57,51 @@ github tag 가 추가되면 travis ci 를 사용해서 maven central 에 지속�
 
 https://github.com/stefanbirkner/travis-deploy-to-maven-central
 
+#### travis openjdk-latest 이슈
+
+travis 에서는 별도의 자바 버전을 지정하지 않으면 최신 openjdk 컨테이너를 사용한다.
+
+프로젝트가 자바8 기반인경우 간간히 이슈가 발생한다.
+
+나의 경우 covaralls 에서 아래처럼 특정 maven-plugin 에서 최신버전에는 포함되지 않는 모듈을 호출하는 경우 이슈가 있었다.
+![](.(작성중)github_badges_images/a535a330.png)
+
+```
+[INFO] BUILD FAILURE
+[INFO] ------------------------------------------------------------------------
+[INFO] Total time:  20.545 s
+[INFO] Finished at: 2021-05-25T00:42:18Z
+[INFO] ------------------------------------------------------------------------
+[ERROR] Failed to execute goal org.codehaus.mojo:cobertura-maven-plugin:2.7:instrument (default-cli) on project tdd-spring-web-app: Execution default-cli of goal org.codehaus.mojo:cobertura-maven-plugin:2.7:instrument failed: Plugin org.codehaus.mojo:cobertura-maven-plugin:2.7 or one of its dependencies could not be resolved: Could not find artifact com.sun:tools:jar:0 at specified path /usr/local/lib/jvm/openjdk11/../lib/tools.jar -> [Help 1]
+[ERROR] 
+[ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch
+```
+
+
+이는 아래 이슈리포트로 보고가 되었다.
+
+https://github.com/travis-ci/travis-ci/issues/9926
+
+이런 경우에 대해 travis [블로그를 보면](https://blog.travis-ci.com/2013-11-26-test-your-java-libraries-on-java-8) jdk 버전을 명시할수 있는 옵션에 대해 소개한다.
+
+문제는 블로그에는 oraclejdk8 을 소개하는 데, 이 경우 bcl 라이센스에 대한 동의 떄문에 까다로워진다.
+
+```
+Expected feature release number in range of 9 to 17, but got: 8
+The command "~/bin/install-jdk.sh --target "/home/travis/oraclejdk8" --workspace "/home/travis/.cache/install-jdk" --feature "8" --license "BCL"" failed and exited with 3 during .
+```
+![](.(작성중)github_badges_images/16bb64b4.png)
+
+나는 아래처럼 그냥 openjdk8 을 명시해서 문제를 해결했다.
+
+.travis.yml
+
+```
+language: java
+jdk : openjdk8
+```
+ 
+
 ### Build badge
 
 Github 에서도 동적인 벳지를 제공한다.
@@ -79,6 +124,9 @@ https://blog.outsider.ne.kr/954
 ```
 [![Coverage Status](https://coveralls.io/repos/프로젝트경로/badge.svg)](https://coveralls.io/r/프로젝트경로)
 ```
+
+
+
 
 ### Maven Central badge
 
