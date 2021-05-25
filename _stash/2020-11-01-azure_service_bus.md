@@ -206,7 +206,13 @@ TOPIC 이나 QUEUE 나 모두 메세지 큐를 사용하기 때문에, 이러한
 
 complete는 초딩도 알수있는것처럼 성공처리이다. abandon (거부하다)와 deadletter(죽은편지) 는 모두 실패한다는 개념인데, 무슨 차이가 있는지 경계가 조금 애매모해서 삽질을 좀 했다.
 
-abandon은 메세지를 일시적으로 수신할수 없다는 개념이다. 즉 메세지를 다시 보내달라는 요청이다. 다시 보내달라는 요청은 제한 값이 있다, 이 것은 abandon 은 구독을 생성할 때 있는 "최대 배달 횟수" 를 의미한다. 즉 최대 배달 횟수가 10개로 설정되어있다면 abandon() 이벤트로 다시 보내주는 메세지 최대 갯수는 10번이라는 것이다.
+abandon은 메세지를 일시적으로 수신할수 없다는 개념이다. 즉 메세지를 다시 보내달라는 요청이다. 다시 보내달라는 요청은 제한 값이 있다, 
+
+이 것은 abandon 은 구독을 생성할 때 있는 "최대 배달 횟수" 를 의미한다. 즉 최대 배달 횟수가 10개로 설정되어있다면 abandon() 이벤트로 다시 보내주는 메세지 최대 갯수는 10번이라는 것이다.
+
+최대 배달 횟수에 대한 얘기는 [이 공식문서#impact-of-delivery-count](https://docs.microsoft.com/ko-kr/azure/service-bus-messaging/message-sessions#impact-of-delivery-count) 에서 알수 있다.
+
+![](.2020-11-01-azure_service_bus_images/5f2f02fe.png)
 
 abandon() 이 최대 배달 횟수의 최대치에 도달하면, 원본 메세지는 dead letter 처리 된다. 한국 번역판에 배달하지 못한 메세지로 되어있어서 번역상의 괴리감 떄문에 조금 헤맸다.
 
