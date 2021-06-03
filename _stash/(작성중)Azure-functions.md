@@ -362,9 +362,14 @@ https://docs.microsoft.com/en-us/java/api/com.microsoft.azure.functions.annotati
 
 서비스 버스 특정 큐에 메세지가 삽입되면 트리거 되는 녀석이다.
 
-특이한 것은 큐에 삽입된 메세지가 함수앱까지 도달이 되서 트리거 되면 큐의 메세지는 삭제된다.
+~~특이한 것은 큐에 삽입된 메세지가 함수앱까지 도달이 되서 트리거 되면 큐의 메세지는 삭제된다. 즉 이 말이 무엇이냐면, 큐에 대한 작업을 락킹 해서 처리가 무조건 되었을 때만 삭제된다는 트랜잭션 관점의 처리가 불가능하다.~~
 
-즉 이 말이 무엇이냐면, 큐에 대한 작업을 락킹 해서 처리가 무조건 되었을 때만 삭제된다는 트랜잭션 관점의 처리가 불가능하다.
+기본적으로 PEEK-LOCK 모드로 동작을 한다, 에러가 발생하면 ABANDON 되고 에러가 없으면 COMPLETE 처리 된다. 다만 바로 DEAD LETTER  메세지 트랜잭션을 직접 세밀하게 제어를 못할 뿐이다.
+
+https://docs.microsoft.com/ko-kr/azure/azure-functions/functions-bindings-service-bus-trigger?tabs=csharp#peeklock-behavior
+
+예를 들어 ABANDON 처리를 하지 않고 바로 DEAD LETTER 처리하고 싶은 시나리오나, 에러를 throw 해서 ABANDON 처리하는 거에 괴리감을 느끼는 코딩 스타일의 애매모함이 발생할수 있다.
+
 
 처음에는 파라미터 타입이 String 으로 해놔서그런줄 알았더니, 서비스 버스 큐에 접근가능한 인터페이스 자체가 없다.
 
