@@ -27,7 +27,9 @@ comments : false
   
   - issued by https://github.com/spring-projects/spring-framework/pull/26905
   
-  - added this to the 5.3.7 milestone
+  - Include to Spring-Framework 5.3.7 Release (https://github.com/spring-projects/spring-framework/releases/tag/v5.3.7)
+  
+    - Bug Fixes : UriComponentsBuilder handles invalid port numbers correctly
 
 
 #### [Microsoft/azure-maven-plugins](https://github.com/microsoft/azure-maven-plugins)
