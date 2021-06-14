@@ -78,6 +78,13 @@ https://openid.net/specs/openid-connect-core-1_0.html#IDToken
 }
 ```
 
+보조 클레임은
+
+"name"
+
+https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
+
+
 ### Oauth2 에서 추가 된 인증 종류
 
 #### 하이브리드 인증(id_token+code)
