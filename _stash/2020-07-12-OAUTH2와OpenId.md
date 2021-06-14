@@ -78,9 +78,15 @@ https://openid.net/specs/openid-connect-core-1_0.html#IDToken
 }
 ```
 
-보조 클레임은
+보조 클레임은 https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims 기준.
 
-"name"
+|키|유형|설명|예시|
+|---|---|---|---|
+|name|string| 사용자 이름|jhun|
+|nickname|string| 사용자 닉네임|hello_jhun|
+|email|string|사용자 이메일|jhun@jhun.com|
+|...|
+
 
 https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
 
