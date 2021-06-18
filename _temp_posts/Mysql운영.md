@@ -75,7 +75,38 @@ title:  "뭐 같은 sql 서버"
 author: "glqdlt"
 ---
 
+nvarchar 와 nchar 같은 형태는 처음 보았다.
+
+자세한 것은 MS 공식문서를 보면 알수 있다. (https://docs.microsoft.com/ko-kr/sql/t-sql/data-types/nchar-and-nvarchar-transact-sql?view=sql-server-ver15
+)
+
+앞의 prefix 가 n은 national 이란 의미이고, 유니코드를 간접적으로 의미한다.
+
+national 이 붙는 자료형을 썻을 때의 이점은 유니코드 문자를 저장할 길이 수를 가늠하기 쉽다는 점이다.
+
+non national은 아스키 문자열 기반이기 때문에,  
+
+national 이 붙은 키워드는 non-national 에 비해 같은 사이즈일 경우의 스토리지 용량 2배 가까이 크다.
+
+아래의 상황표를 보면 이해하기 쉽다.
+
+|example|type|byte|column size|
+|---|---|---|---|
+|hello|non-national|5|5|
+|hello|national|10|5|
+|안녕하세요|non-national|10|10|
+|안녕하세요|national|10|5|
+
+national 은 모든 글자를 유니코드로 저장하기 때문에 각 글자마다 2byte 를 먹는다. (다만 확장 유니코드 체계 65000 번 이후의 유니코드는 조합글자이기 때문에 4byte씩 먹는다)
+다만, 컬럼 사이즈는 유니코드로만 일관되게 저장이 되기 때문에 유추하기 쉽다. 한,영이 뒤섞여도 글자 갯수로 접근하면 되니깐.
+
+반면 non-national 의 경우 아스키코드로 저장이 되고, 지원을 넘어선 글자는 유니코드 체계로 저장이 된다.
+
+
+ 
+
 https://docs.microsoft.com/ko-kr/sql/t-sql/data-types/data-type-conversion-database-engine?view=sql-server-ver15
+
 
 varchar 컬럼에 인덱스가 잡혀있는데, 쿼리가 nvarchar 로 타입캐스팅이 일어나면서 varchar 인덱스를 타지 않는 이슈가 있었다.
 
