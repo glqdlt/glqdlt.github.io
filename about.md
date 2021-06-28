@@ -6,62 +6,24 @@ permalink: about
 comments : false
 ---
 
-# Jeon Ilwoong (Jhun Ilwoong)
+# Introduce
 
-<!-- <img src="https://avatars2.githubusercontent.com/u/13973041?s=460&v=4" style="height:180px;width:180px"/> -->
-
-## About
+Jeon Ilwoong
 
 + South Korea
-+ Web Developer(since 2014)
-<!-- + Like write posting, programing, drink -->
++ Web Developer (since 2014~)
 + dlfdnd0725@gmail.com
 
 ## OpenSource Contributions
 
-### Major
-
-#### [spring-projects/spring-framework](https://github.com/spring-projects/spring-framework)
-
-- [(Merged) UriComponentsBuilder handles invalid port correctly](https://github.com/spring-projects/spring-framework/commit/65797d04f2b7e3469102aacc18ec642f7183a645)
-  
-  - issued by https://github.com/spring-projects/spring-framework/pull/26905
-  
-  - Include to Spring-Framework 5.3.7 Release [https://github.com/spring-projects/spring-framework/releases/tag/v5.3.7](https://github.com/spring-projects/spring-framework/releases/tag/v5.3.7)
-  
-    - Bug Fixes : UriComponentsBuilder handles invalid port numbers correctly
-
-
-#### [Microsoft/azure-maven-plugins](https://github.com/microsoft/azure-maven-plugins)
-
-- [(Merged) fixed the possibility of deadlock.](https://github.com/microsoft/azure-maven-plugins/pull/1384)
-
-#### [Azure/azure-storage-java](https://github.com/Azure/azure-storage-java)
-
-- [(Merged) Update 'Code Sample'](https://github.com/Azure/azure-storage-java/pull/502)
-
-#### [apache/phoenix](https://github.com/apache/phoenix)  
-
-- [(Merged) PHOENIX-5130 removed 'static' keyword from 'private static enum'](https://github.com/apache/phoenix/pull/438)
-
-#### [apache/maven-javadoc-plugin](https://github.com/apache/maven-javadoc-plugin) 
-
-- [(Merged) [MJAVADOC-577] Modified the Wrong closing tag](https://github.com/apache/maven-javadoc-plugin/pull/20)
-
-### Minor
-
-#### [http3-explained](https://github.com/bagder/http3-explained)
-
-- [(Merged) (ko) fixed typo](https://github.com/bagder/http3-explained/pull/86)
-
-#### [okjsp/okky](https://github.com/okjsp/okky) 
-
-- [(Merged) fixed typo 'scope'](https://github.com/okjsp/okky/pull/173)
-
-#### [spring-guides/tut-spring-boot-oauth2](https://github.com/spring-guides/tut-spring-boot-oauth2)
-
-- [(Open) 'spring-security-oauth2-autoconfigure' version update](https://github.com/spring-guides/tut-spring-boot-oauth2/pull/100)
-
+|repository|date|label|detail|
+|---|---|---|---|
+|[spring-projects / spring-framework](https://github.com/spring-projects/spring-framework)|2021-05|type:bug|[(Merged) UriComponentsBuilder handles invalid port correctly](https://github.com/spring-projects/spring-framework/commit/65797d04f2b7e3469102aacc18ec642f7183a645)|
+|[Microsoft / azure-maven-plugins](https://github.com/microsoft/azure-maven-plugins)|2021-04|type:regression|[(Merged) fixed the possibility of deadlock.](https://github.com/microsoft/azure-maven-plugins/pull/1384)|
+|[Azure / azure-storage-java](https://github.com/Azure/azure-storage-java)|2019-10|type:enhancement|[(Merged) Update 'Code Sample'](https://github.com/Azure/azure-storage-java/pull/502)| 
+|[apache / phoenix](https://github.com/apache/phoenix)|2019-09|type:enhancement|[(Merged) PHOENIX-5130 removed 'static' keyword from 'private static enum'](https://github.com/apache/phoenix/pull/438)|
+|[http3-explained](https://github.com/bagder/http3-explained)|2019-03|type:documentation| [(Merged) (ko) fixed typo](https://github.com/bagder/http3-explained/pull/86)|
+|[apache / maven-javadoc-plugin](https://github.com/apache/maven-javadoc-plugin)|2019-02|type:bug|[(Merged) [MJAVADOC-577] Modified the Wrong closing tag](https://github.com/apache/maven-javadoc-plugin/pull/20)|
 
 ## Links
 
