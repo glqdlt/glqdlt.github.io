@@ -10,13 +10,51 @@ package javax.servlet{
 
 package org.springframework.security #D0EBBE{
 
+package org.springframework.security.web{
+
+package org.springframework.security.web.context{
+
+    interface SecurityContextRepository{
+
+        #locdContext(reuqestResponseHolder) : SecurityContext
+        #saveContext(context,request,response)
+        #conteainsContext(request): boolean
+
+    }
+
+    class HttpSessionSecurityContextRepository implements SecurityContextRepository{
+
+    }
+
+}
 
 
 package org.springframework.security.web.session {
     class ConcurrentSessionFilter implements Filter{
 
     }
+
+    class SessionManagementFilter implements Filter{
+
+    }
 }
+
+package org.springframework.security.web.authentication.session{
+    interface SessionAuthenticationStrategy{
+        #onAuthentication(authentication,request,response)
+    }
+
+    class CompositeSessionAuthenticationStrategy implements SessionAuthenticationStrategy{
+
+    }
+
+    class RegisterSessionAuthenticationStrategy implements SessionAuthenticationStrategy{
+
+    }
+}
+
+}
+
 
 
 package org.springframework.security.core.session{
@@ -87,8 +125,9 @@ package org.springframework.session.security{
 
 }
 
-
+RegisterSessionAuthenticationStrategy -> SessionRegistry
+SessionManagementFilter -> SecurityContextRepository
 ConcurrentSessionFilter -> SessionRegistry
-SpringSessionBackedSessionRegistry --> FindByIndexNameSessionRepository
+SpringSessionBackedSessionRegistry -> FindByIndexNameSessionRepository
 
 @enduml
