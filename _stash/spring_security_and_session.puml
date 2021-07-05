@@ -1,0 +1,94 @@
+@startuml
+
+package javax.servlet{
+
+    interface Filter{
+        #doFilter(request,response, filterChain)
+    }
+
+}
+
+package org.springframework.security #D0EBBE{
+
+
+
+package org.springframework.security.web.session {
+    class ConcurrentSessionFilter implements Filter{
+
+    }
+}
+
+
+package org.springframework.security.core.session{
+    interface SessionRegistry{
+
+        #getAllPrincipals() : List<Object>
+        #getAllSessions(principal, includeExpiredSessions) : List<SessionInformation>
+        #getSessionInformation(sessionId) : SessionInformation
+        #refreshLastRequest(sessionId)
+        #registerNewSession(sessionId, principal)
+        #removeSessionInformation(sessionId)
+
+    }
+
+    class SessionRegistryImpl implements SessionRegistry {
+
+    }
+}
+
+}
+
+
+package org.springframework.session #F5F5CA{
+    interface SessionRepository{
+
+        #SessionRepository()
+        #save(session)
+        #findById(id)
+        #deleteById(id)
+
+
+    }
+
+    interface FindByIndexNameSessionRepository extends SessionRepository{
+
+        #findByIndexNameAndIndexValue(indexName, indexValue)
+
+    }
+
+    class MapSessionRepository implements SessionRepository{
+
+    }
+
+
+
+package org.springframework.session.data.redis{
+
+
+    class RedisSessionRepository implements SessionRepository {
+
+    }
+
+    class RedisIndexedSessionRepository implements FindByIndexNameSessionRepository {
+
+    }
+}
+
+package org.springframework.session.security{
+
+        class SpringSessionBackedSessionRegistry implements SessionRegistry{
+
+        }
+
+    }
+
+
+
+
+}
+
+
+ConcurrentSessionFilter -> SessionRegistry
+SpringSessionBackedSessionRegistry --> FindByIndexNameSessionRepository
+
+@enduml
