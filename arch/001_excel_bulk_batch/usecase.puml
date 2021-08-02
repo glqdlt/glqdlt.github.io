@@ -1,0 +1,8 @@
+@startuml
+
+(엑셀 업로드) as (excel)
+
+User -> (excel)
+
+
+@enduml
