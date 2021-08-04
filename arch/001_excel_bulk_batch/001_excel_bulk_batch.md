@@ -30,7 +30,7 @@ Azure 에는 모든 리소스들의 로그들은 Azure Monitor 라는 솔루션�
 
 처음에는 아래의 구성으로 서비스를 운영하였다
 
-![](images/803da778.png)
+![](images/7589f856.png)
 
 ![](images/ba94c1a4.png)
 
@@ -57,8 +57,7 @@ rdb mysql 을 사용했는데 이유는 아래와 같다
 ## 개선점
 
 개선된 서비스 아키텍처는 아래와같다
-
-![](images/9f851f35.png)
+![](images/9fb68d9b.png)
 
 이벤트 전파를 위해 메세지 교환소인 azure service bus 를 사용했다. 
 

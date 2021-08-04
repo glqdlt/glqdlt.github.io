@@ -3,41 +3,47 @@
 cloud "공개 클라우드"{
 actor user as u
 component "GUI CMS" as cms
-component "API 게이트웨이" as eas
+component "Restful API BFF(back and forward)" as eas
 }
-cloud "공유 공간"{
+cloud "공유 스페이스"{
     component "MAIN_TOPIC" as asb
     database "통합 로그 뷰어 db" as total_log_db
 }
-node "엑셀 추출 배치 NODE" as en{
+cloud "엑셀 추출 배치 CONTEXT" as en{
     component "엑셀 API" as en_api
+    component "엑셀 QUEUE" as q1
+    node "BATCH NODE" as en_batch{
+        component "엑셀 스프링 배치1" as en_1
+        component "엑셀 스프링 배치2" as en_2
+    }
+    component "모니터링 툴" as en_cms
     database "azure blob storage" as db
-    component "엑셀 TOPIC" as q1
-    component "엑셀 스프링 배치1" as en_1
-    component "엑셀 스프링 배치2" as en_2
-    component "엑셀 로그 발송" as en_log
-    component "개발자 전용 CMS" as en_cms
-    database "엑셀 로그db" as log_db
+    db <-- en_1
+    db <-- en_2
+    node "DB" as en_db{
+        component "엑셀 로그 발송" as en_log
+        database "엑셀 로그db" as log_db
+    }
     en_cms -> log_db : 모니터링
-    q1 -> en_1
-    q1 -> en_2 : 123
     en_1 --> log_db
     en_2 -> log_db
     en_log -- log_db
     en_log --> total_log_db : 로그 싱크 보정
 }
-node "작업 처리 배치 NODE" as psn{
-    component "작업 TOPIC" as q2
-    component "작업 스프링 배치1" as psn_b_1
-    component "작업 스프링 배치2" as psn_b_2
-    component "작업 로그 발송" as psn_log
-    component "개발자 전용 CMS" as psn_cms
-    database "작업 로그db" as log_db2
-    psn_cms --> log_db2 : 모니터링
-    log_db2 <- psn_b_2
-    q2 -> psn_b_1
-    q2 --> psn_b_2
-    psn_b_1 -> log_db2
+node "작업 처리 배치 CONTEXT" as psn{
+    component "작업 QUEUE" as q2
+    node "batch" as psn_batch{
+        component "작업 스프링 배치1" as psn_b_1
+        component "작업 스프링 배치2" as psn_b_2
+    }
+    component "모니터링 툴" as psn_cms
+    node "DB" as psn_db{
+        component "작업 로그 발송" as psn_log
+        database "작업 로그db" as log_db2
+    }
+    psn_cms -> log_db2 : 모니터링
+    log_db2 <-- psn_b_2
+    log_db2 <-- psn_b_1
     total_log_db <-- psn_log : 로그 싱크 보정
     psn_log -- log_db2
 }
@@ -45,14 +51,18 @@ node "작업 처리 배치 NODE" as psn{
 
 cloud "외부 인프라 서버" as eps
 
+psn_b_1 --> eps
+psn_b_2 --> eps
+
 u -> cms : 1) 엑셀 업로드
 cms --> eas : 2) 엑셀 업로드
 eas ---> en_api: 3) 엑셀 업로드
 en_api --> db : 4) 엑셀 저장
-en_api -> en : 5) 엑셀 저장 이벤트 통보
-en --> db : 6) 엑셀에서 작업 목록 추출
-en ---> asb : 7) 작업 목록 추출 완료 통보
-asb --> psn : 8) 작업 목록 추출 완료 전파 및 작업 목록 전달
-psn ---> eps : 9) 작업 순차 처리
-psn --> asb : 10) 작업 완료 이벤트 통보
+en_api --> asb : 5) 엑셀 저장 이벤트 통보
+asb --> q1 : 6) 엑셀 저장 이벤트 전파
+q1 ---> en_batch : 6) 작업 배분
+en_batch -> asb : 7) 작업 완료 통보
+asb --> q2 : 8) 작업 목록 추출 완료 전파 및 작업 목록 전달
+q2 -> psn_batch : 9) 작업 배분
+asb <-- psn_batch : 10) 작업 완료 이벤트 통보
 @enduml
