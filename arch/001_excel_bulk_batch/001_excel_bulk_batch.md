@@ -86,7 +86,8 @@ https://docs.microsoft.com/en-us/azure/service-bus-messaging/service-bus-auto-fo
 
 ### azure service bus 를 통해 인터렉션 하면서 엑셀을 restful api인 이유
 
-원래 엑셀 전달도 메세지 교환소로 하려고 헀다, 이유는 간단하다. 메세지 용량 제한이 1mb 밖에 안되기 때문이었다. 그래서 restful api 로 엑셀을 특정 위치에 저장하고 처리하는 식으로했다. 
+원래 엑셀 전달도 메세지 교환소로 하려고 헀다, 이유는 간단하다. 메세지 용량 제한이 1mb 밖에 안되기 때문이었다. 그래서 restful api 로 엑셀을 특정 위치에 저장하고 처리하는 식으로했다. 만약 이를 처리하려면 azure event hubs 를 사용해야 한다. 
+재밌는 것이 service bus 는 rabbmit mq의 전신이 되는 amqp 프로토콜을 아답팅 가능하고, event hub 는 kafka 와 호환이 가능하다. 확실치는 않지만 service bus 는 rabbmitmq 를 전신으로 만든 기분이고, event hub 는 kafka 를 전신으로 만든 것 같다.
 
 ## pull vs push
 
