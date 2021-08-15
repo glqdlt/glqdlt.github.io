@@ -1,0 +1,59 @@
+@startuml
+
+class JsonFileController{
+    +postUploadJson(jsonText)
+}
+
+class JsonService{
+    +uploadJson(text)
+}
+
+class ImageController{
+
+    +postImageUpload(multipartForm)
+
+}
+
+class ImageService{
+    +uploadImage(file)
+
+}
+
+interface JsonHandler{
+    #
+}
+
+interface ImageHandler{
+
+    #uploadImage(file)
+
+}
+
+class AzureImageHandler implements ImageHandler{
+    -imageFormatRegex
+    +uploadImage(file)
+    -validImageFormat(file)
+}
+
+class AzureBlobSdk{
+    +upload(file)
+}
+
+interface ResourceHandler{
+    +upload(file)
+}
+
+class AzureBlobHandler implements ResourceHandler{
+    +upload(file)
+}
+
+
+
+
+ImageController -> ImageService
+ImageService -> ImageHandler
+AzureImageHandler -> AzureBlobHandler
+AzureBlobHandler -> AzureBlobSdk
+
+
+@enduml
