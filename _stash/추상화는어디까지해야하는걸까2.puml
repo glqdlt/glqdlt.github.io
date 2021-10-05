@@ -1,0 +1,33 @@
+@startuml
+
+class ResourceController{
+
+    +postUpload(multipartForm)
+
+}
+
+class ResourceService{
+
+    +saveResource(file)
+
+}
+
+
+class AzureBlobSdk{
+    +upload(file)
+}
+
+interface ResourceHandler{
+    +upload(file)
+}
+
+class AzureBlobHandler implements ResourceHandler{
+    +upload(file)
+}
+
+ResourceController ->  ResourceService
+ResourceService -> ResourceHandler
+AzureBlobHandler -> AzureBlobSdk
+
+
+@enduml

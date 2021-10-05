@@ -1,0 +1,41 @@
+@startuml
+
+node "interface" as i{
+    actor user
+    rectangle "GUI tool" as cms
+}
+user --> cms : 0) 소스 업로드
+
+node "worker node" as wn{
+    circle "worker manager" as ws
+    rectangle "batch worker" as b1
+    rectangle "batch worker" as b2
+
+}
+cloud "target" as api{
+    storage "resource" as aa
+}
+
+
+b2 --> api : 5) 작업 처리
+b1 -> api : 5) 작업 처리
+
+b1 <- ws : 3) 작업 분배 \n '/dir/excel_1.xls'
+ws --> b2 : 3) 작업 분배 \n '/dir/excel_2.xls'
+
+
+node "storage"{
+    database "rdb" as rdb
+    storage "file storage" as file
+}
+
+
+cms -> rdb : 1) 작업 등록
+file <- cms : 1) 소스 업로드
+rdb <-- ws : 2) 작업 대상 관찰 (폴링)
+file <-- b2 : 4) 소스 획득 \n '/dir/excel_2.xls'
+file <-- b1 : 4) 소스 획득 \n '/dir/excel_1.xls'
+
+
+
+@enduml
