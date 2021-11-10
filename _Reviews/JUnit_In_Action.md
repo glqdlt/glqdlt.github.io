@@ -336,6 +336,7 @@ DBUnit 은 처음 알게되었는데, 나 같은 경우 평소에 그냥 test �
  
 - https://www.baeldung.com/java-dbunit
 - https://techblog.woowahan.com/2650/
+- https://springtestdbunit.github.io/spring-test-dbunit/
 
 ## 17.2.1 예제 애플리케이션
 ## 17.2.2 DbUnit 설정 및 예제 애플리케이션 실행하기
