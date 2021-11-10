@@ -86,8 +86,67 @@
 > 거리값을 double 형으로 받아들이는 공개 메서드와, 이를 검증하는 블랙박스 테스트를 떠올려보자. 어느 시점에 파라미터가 나타내는 의미가 마일(mile)에서 킬로미터로 바뀌어버렸다. 컴파일은 여전히 잘 되겠지만, 동작할 떄 문제를 일으킬 것이다. <BR/>
 >잘못된 부분을 찾아주는 단위 테스트가 없다면, 여러분은 디버깅과  성난 고객 상대에 숱한 시간을 허비하게 될 것이다. 반드시 모든 공개 메서드를 테스트해야 하는 이유이다. -p94
 ## 5.2.2 종속성을 줄여라
+> 단위 테스트는 코드를 고립시켜 검증함을 기억하라. 단위 테스트는 대상 클래스를 생성하고, 사용하고, 그 정확성을 확인해야 한다. 테스트 케이스는 단순 명료해야 한다. -p94
+
+> 클래스가 다수의 다른 클래스들에 종속되어 특정 상태로 셋팅되어 있다면, 테스트도 복잡해진다. 아마 복잡한 목 객체가 요구될지도 모른다. <BR/> 종속성을 줄이는 한 방법은 코드에서 객체 생성을 담당하는 메서드(팩토리)와 애플리케이션 로직 수행을 처리하는 메서드를 분리하는 것이다. -p94
+
+```java
+class Vehicle{
+    Driver d = new Driver();
+    boolean hasDriver = true;
+    private void setHasDriver(boolean hasDriver){
+        this.hasDriver = hasDriver;
+    }
+}
+```
+> Vehicle 객체는 자신이 생성될 떄마다, Driver 객체도 함께 생성한다. 개념이 섞여 버린 경우이다. -p95
+
+
+```java
+class Vehicle{
+    Driver d;
+    Vehicle(Driver d){
+        this.d = d;
+    }
+    boolean hasDriver = true;
+    private void setHasDriver(boolean hasDriver){
+        this.hasDriver = hasDriver;
+    }
+} 
+```
+
+> 이제 목(mock) Driver 를 만들어 Vehicle 클래스 생성 시 건네주는 것이 가능해졌다. -p95
+
 ## 5.2.3 생성자는 간단하게 만들어라
+.
 ## 5.2.4 최소 지식의 원칙을 따르라
+
+> 디미터의 법칙(The Law of Demeter), 혹은 최소 지식의 원칙은 클래스는 반드시 자신에게 꼭 필요한 만큼만 알아야 한다는 설계 가이드라인이다. -p96
+
+```java
+class Car{
+    private Driver driver;
+    Car(Context context){
+        this.driver = context.getDriver();
+    }
+}
+```
+
+> 이 예에서는 Car 의 생성자에 Context 객체를 넘겨주고 있다. 이 경우 Car 클래스는 Context 객체가 getDriver 메서드를 가지고 있음을 알아야만 하므로 디미터의 법칙에 위배된다. 이 생성자를 테스트하려면 생성자 호출에 앞서 Context 객체가 유효한지부터 확인해야 한다. <br/>
+>적절한 해법은 최소 지식의 원칙을 적용하여 꼭 필요한 경우에만 메서드와 생성자에 참고를 건네는 것이다.  -p96
+
+```java
+class Car{
+    private Driver driver;
+    Car(Driver driver){
+        this.driver = driver;
+    }
+}
+```
+
+> 여기서 핵심은 '객체를 요구하되, 객체를 검색하지는 말라. 그리고 애플리케이션에서 꼭 필요한 객체만 요청하라' 이다. -p97
+
+
 ## 5.2.5 숨겨진 종속성과 전역 상태를 피하라
 ## 5.2.6 싱글톤의 장단점
 ## 5.2.7 제너릭 메서드를 애용하라
