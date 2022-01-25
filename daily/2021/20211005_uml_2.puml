@@ -1,0 +1,56 @@
+@startuml
+
+
+package org.springframework.session{
+
+class SpringSessionFilter
+
+interface FindByIndexNameSessionRepository extends SessionRepository{}
+
+class RedisOperationsSessionRepository<RedisSession> implements FindByIndexNameSessionRepository{
+    + void save(RedisSession session);
+    + RedisSession findSession(String sessionId);
+}
+
+class RedisSession{}
+
+
+RedisOperationsSessionRepository -> RedisSession
+}
+
+
+package com.mycomp.client.sdk{
+class MycompRestfulApiClient<MySession> implements SessionRepository{}
+
+class MySession{}
+
+MycompRestfulApiClient -> MySession
+
+MycompRestfulApiClient --> HttpWebClient
+}
+
+interface SpringSessionFilter implements Filter{}
+
+SpringSessionFilter --> SessionRepository
+
+package com.mycomp.authserver{
+
+class SessionController{
+    + void update(MySession session)
+    + void delete(String sessionId)
+    + MySession save(String sessionId)
+    + MySession create(String sessionId)
+
+    - MySession convert(RedisSession redisSession)
+    - RedisSession convert(MySession redisSession)
+}
+
+RedisOperationsSessionRepository o-- SessionController
+
+RedisSession <-- SessionController
+
+MySession <- SessionController
+
+HttpWebClient -.. SessionController : HTTP 통신
+
+@enduml

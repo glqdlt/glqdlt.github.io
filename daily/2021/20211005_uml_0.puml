@@ -1,0 +1,36 @@
+@startuml
+
+interface Session{}
+
+interface ExpiringSession extends Session{}
+
+interface SessionRepository<S extends Session>{
++{abstract} S createSession();
++{abstract} void save(S session);
++{abstract} S getSession(String id);
++{abstract} void delete(String id);
+
+}
+
+class MapSessionRepository implements SessionRepository{}
+
+interface FindByIndexNameSessionRepository extends SessionRepository{
++{abstract} Map<String, S> findByIndexNameAndIndexValue(String indexName, String indexValue);
+}
+
+class RedisSession implements ExpiringSession{}
+
+class JdbcOperationsSessionRepository implements FindByIndexNameSessionRepository{}
+
+class RedisOperationsSessionRepository<RedisSession> implements FindByIndexNameSessionRepository{}
+
+class MongoOperationsSessionRepository implements FindByIndexNameSessionRepository{}
+
+SessionRepository --> Session
+
+RedisSession --> RedisOperationsSessionRepository
+
+'ExpiringSession <- MapSessionRepository
+
+
+@enduml

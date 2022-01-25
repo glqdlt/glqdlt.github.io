@@ -1,0 +1,23 @@
+@startuml
+
+
+package org.springframework.session{
+
+class SpringSessionFilter
+
+interface FindByIndexNameSessionRepository extends SessionRepository{}
+
+class RedisOperationsSessionRepository<RedisSession> implements FindByIndexNameSessionRepository{}
+
+class RedisSession{}
+
+}
+
+interface SpringSessionFilter implements Filter{}
+
+SpringSessionFilter --> SessionRepository
+
+FindByIndexNameSessionRepository -> RedisSession
+
+@enduml
+
