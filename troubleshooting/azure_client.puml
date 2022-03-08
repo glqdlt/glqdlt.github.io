@@ -1,0 +1,35 @@
+@startuml
+
+interface AzureBlobClient{
+    +upload()
+    +download()
+}
+
+class AzureClientFacotry{
+    +make(String connectionString) : AzureClient
+}
+
+package com.microsoft.azure{
+
+    class AzureClient{
+
+
+   }
+
+}
+
+class SimpleAzureBlobClient implements AzureBlobClient{
+
+    getAzureClient()
+
+    +upload()
+    +download()
+
+}
+
+SimpleAzureBlobClient --o AzureClient
+AzureClientFacotry --> AzureClient
+
+
+
+@enduml

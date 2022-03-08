@@ -1,0 +1,46 @@
+@startuml
+
+interface AzureBlobClient{
+    +upload()
+    +download()
+}
+
+package com.microsoft.azure{
+
+    class AzureClient{
+
+
+   }
+
+}
+
+class SimpleAzureBlobClient implements AzureBlobClient{
+
+    getAzureClient()
+
+    +upload()
+    +download()
+
+}
+
+
+
+class TokenAzureBlobClient implements AzureBlobClient{
+
+    getAzureClient()
+
+    reGenerateAccessToken()
+
+    +upload()
+    +download()
+
+}
+
+SimpleAzureBlobClient --> AzureClient
+TokenAzureBlobClient --> AzureClient
+
+
+SimpleAzureBlobClient *- TokenAzureBlobClient
+
+
+@enduml
