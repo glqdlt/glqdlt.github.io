@@ -73,3 +73,7 @@ https://docs.microsoft.com/ko-kr/azure/databricks/dev-tools/api/latest/aad/app-a
 https://docs.microsoft.com/ko-kr/azure/active-directory/develop/access-tokens#token-formats-and-ownership
 
 
+엑세스 토큰은 기본적으로 수명이 1시간~2시간 이다. 샘플 예제를 통해 돌려봤는데 2시간 만기로 나온다.
+
+https://docs.microsoft.com/ko-kr/azure/active-directory/develop/active-directory-configurable-token-lifetimes#access-tokens
+
