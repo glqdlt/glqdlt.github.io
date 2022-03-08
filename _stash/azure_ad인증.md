@@ -65,3 +65,11 @@ https://docs.microsoft.com/ko-kr/azure/azure-resource-manager/management/overvie
 
 https://docs.microsoft.com/ko-kr/azure/databricks/dev-tools/api/latest/aad/app-aad-token
 
+
+## 엑세스 토큰 분석
+
+아래 문서에 잘 나와있다
+
+https://docs.microsoft.com/ko-kr/azure/active-directory/develop/access-tokens#token-formats-and-ownership
+
+
