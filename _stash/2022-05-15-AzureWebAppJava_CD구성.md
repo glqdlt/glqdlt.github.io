@@ -65,17 +65,6 @@ jar, war 아티팩트만 빌드하여 cd 하면 됨으로 image registry 구축 
 
 
 
-10:36:11.053 [main] DEBUG org.springframework.web.client.RestTemplate - HTTP GET https://zkcdas-wplad01.azurewebsites.net/
-10:36:11.054 [main] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
-10:36:11.075 [main] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
-10:36:11.075 [main] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "text/plain;charset=UTF-8"
-jhun2
-10:36:11.177 [main] DEBUG org.springframework.web.client.RestTemplate - HTTP GET https://zkcdas-wplad01.azurewebsites.net/
-10:36:11.177 [main] DEBUG org.springframework.web.client.RestTemplate - Accept=[text/plain, application/json, application/*+json, */*]
-10:36:11.301 [main] DEBUG org.springframework.web.client.RestTemplate - Response 200 OK
-10:36:11.301 [main] DEBUG org.springframework.web.client.RestTemplate - Reading to [java.lang.String] as "text/plain;charset=UTF-8"
-jhun3
-
 
 
 런타임 환경변수를 관리할수있는 방안만 찾아보면 이슈없을듯
