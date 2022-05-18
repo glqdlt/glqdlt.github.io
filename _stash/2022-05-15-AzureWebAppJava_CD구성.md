@@ -1,21 +1,41 @@
-paas 에는 기본적으로 container image 가 필요하다. 추상적으로는 container image 라 불리고 대부분 도커 이미지를 사용한다. 이런 연유로 paas 에서 cd 를 구성하려고 보면 image registry 라는 것이 필요하다며 사람을 피곤하게 한다. 
+PAAS 도입은 이번이 처음은 아니다. 2020년에 동아시아 프로젝트를 진행할 때에도 시도했었기 때문에 2년이 지나서 다시 시도 하게 되었다.
 
-image registry 는 container image 저장소이다. paas 가 yum이나 apt 처럼 운영 호스트에서 실행에 필요한 container image를 다운로드 받아 실행하는 형태이기 때문에 필요하다. 
+당시 PAAS 를 도입하려던 목적은 서비스 무중단 배포 때문이었다. 예전이나 지금이나 조직에서는 전통적인 방안(VM 기반, IAAS)으로 서비스 운영 중에 있는 데, 서비스 배포 과정에서 서버가 재부팅 되다 보니 서비스 가용성에 문제가 있다. 가용성 측면을 위해서 웹서버 앞단에 로드밸런서 역활을 하는 Azure App Gateway (AG) 가 있기는 하다. 다만 배포 과정에서는 라우팅되는 백엔드 풀의 모든 서버가 모두 재시작하기 때문에 의미가 없었다.  로드밸런서는 예상치 못한 서버의 사망에 대비한 것일 뿐, CD 에는 접점이 없다는 이야기이다.
 
-보편적으로 container image 를 빌드하고 image registry 에 업로드하는 CI를 구성한다. 이후 paas 에서 image registry 에서 이미지를 다운로드 받아 실행하는 것이 보편적인 PAAS의 CI/CD 구성이다.
+ AG 에 BG 배포처럼 배포 시에는 라우팅 경로를 수정하는 식으로도 고민해봤으나, 사람이 직접 GUI 에서 핸들링 해야 하는 방안만 알고 있던 터라 어려웠다. 직접 AG 를 제어하는 Restful API 를 사용해서 라우팅을 제어하는 시스템 개발도 고민도 했었다. 개발이야 시간이 필요할 뿐 어떻게든 하겠지만, 시스템과 CD 와 연계 방법이 잘 떠오르지 않아서 포기했다.
 
-container image 를 빌드하는 것은 다양한 레퍼런스 문서와 메이븐 플러그인이 있기에 어렵지 않게 할 수 있다. 문제는 image registry 의 구축인데, 이를 구축 해 본 적도 없는 데 사내의 까다로운 보안규정에 맞는 폐쇄망 구성을 해야하기 때문이다.
-
-이런 까닭에 image registry 없이 paas 구성을 할수 있을 지를 연구해보았다. devops 플러그인을 천천히 살펴보던 중 2가지 아이디어가 떠올랐다.
-
-devops 에서 azure webapp 에 바로 deploy 할수있는 plugin이 존재한다. 다만 이 경우 해당 webapp 의 service pirincipal 발급이 필요하다.
-
-devops 에서 webapp 의 ftps 배포하기를 사용하는 방안이다. ftp upload plugin 을 사용해서 할수있다.
+그래서 시도한 것이 PAAS 의 도입이었다. Azure 홈페이지를 보면 PAAS 는 만능이며 전지전능한 신이다. PAAS의 장점을 읽다 보면 고민을 한 내가 바보 같단 느낌마저 든다. 
 
 
+ ![](.2022-05-15-AzureWebAppJava_CD구성_images/049a9b9b.png)
 
-첫번째 방안은 service principal 발급 방안이 오래걸리기 때문에, 후자로 진행했다.
+PAAS 에 대해서는 생소하지 않았다. 2018년도에 도커를 다루어 봤던 경험이 있던 까닭이다. 2019년에는 이곳에 입사하자마자 가장 먼저 한 일이, 도커 기반으로 Maven Nexus Repository 구축을 했었다.
 
+ 
+
+PAAS 에서는 기본적으로 container image 가 필요하다. 마케팅의 측면으로 아얘 대놓고 CAAS(Container As A Service) 라는 이름으로도 얘기 되는 곳도 있다. Azure 에서는 추상적으로 container image 얘기 되는 데, 사실 도커 이미지를 사용한다. 이런 까닭에 Azure WebApp 에서 CD 를 구성하려고 보면, 종종 image registry 라는 것이 필요하다며 사람을 피곤하게 한다.
+
+image registry 는 container image 저장소이다. container image 는 linux conatiner (대표적으로 도커) 에서 실행할 이미지를 말하는 것인데, 우리 만들고 배포할 어플리케이션이라고 이해해도 무관하다. 리눅스로 치면 yum이나 apt 처럼 운영 될 호스트 서버에서 실행에 필요한 container image를 다운로드 받아 실행하는 형태이기 때문에 필요하다. 
+
+일반적으로 PAAS 기반의 웹 서비스 운영에서는 CI 단계에서 java 소스를 container image 를 빌드하고 image registry 에 업로드한다. 이후 CD 단계에서는 배포될 운영 호스트에서 직접 image registry 에서 이미지를 다운로드(다운로드가 아닌 pull 당겨간다고도 표현한다) 받아 스스로 실행하는 것이 보편적인 PAAS의 CI/CD 구성이다.
+
+container image 를 빌드 하는 것은 구글링을 해보면 다양한 레퍼런스 문서를 쉽게 찾을 수 있고, 메이븐 플러그인도 잘 만들어져 있기에 어렵지 않게 할 수 있다. 문제는 image registry 의 구축인데 이를 구축하는 것이 조금 까다롭다. 더군다나 자사의 까다로운 보안 규정에 맞는 인프라 구성을 해야하는 이슈도 있어 쉽지 않다.
+
+이런 이유로 2020년에 PAAS 도입을 실패했었다. (사실 꼭 CD 문제로 도입이 실패된 건 아니다. 당시에 PAAS webapp 과 IAAS Mysql 간의 통신 단절 문제도 있었고, 여러가지 이유가 더 있기는 했다) 
+
+ 
+
+2년 동안 image registry 없이 paas 구성을 할 수 있을 지를 고민했었다. 2년 내내 고민한 것은 절대 아니고, 언젠가는 해야지 해야지 벼루고만 있었다. 어느 날 (글을 쓰는 지금)  문득 Azure Devops 를 살펴보고 있었는 데,  azure devops 에 에이전트가 늘어난 것을 확인했다. 이 중에 나의 고민을 해결해줄 법한 녀석들도 보여서 2가지 아이디어를 떠올렸다.
+
+azure webapp deploy 라는 에이전트가 있다. 이 녀석은 devops에서 jar, war 아티팩트만 준비되면 webapp 에 direct deploy 하는 에이전트이다. 다만 이 경우 배포할 webapp 의 service pirincipal 발급이 필요하다. (아마 direct deploy 하는 과정에서 webapp management 권한이 필요해서 일 것이다.)
+
+ftp upload 에이전트가 있다. ftp 로 webapp 에 직접 업로드 하고, 스크립트로 실행하는 식이다.
+
+ 
+
+첫번째 방안은 service principal 발급 방안이 오래 걸리기 때문에, service principal 발급을 신청하고 그 동안 후자를 먼저 진행했다.
+
+ 
 
 
 업로드 위치는 아무곳이나 해도 된다.  톰캣이 아닌 java se 를 런타임으로 하는 경우 실행 스크립트를 별도로 설정해줘야하기 때문에 상관이없기 때문이다.(https://docs.microsoft.com/ko-kr/troubleshoot/azure/general/faqs-app-service-linux#built-in-images)
