@@ -722,12 +722,10 @@ RDB 기반의 JPA 에 비해 상속 구조 표현이 매우 쉬워진다.
 
 다만 예외사항이 있다
 
-추상 클래스인 SomeLog  를 저장하고 싶다면 몽고DB에 저장은 되지만, 저장된 것을 다시 자바로 읽어들이게 될 때는 문제가 발생한다. 
+추상 클래스인 SomeLog.class 의 객체를 몽고 DB에 저장하고 싶다면 몽고DB에 저장은 가능하다. 다만 저장된 것을 자바 객체로 다시 읽어들일 때 문제가 발생한다. 
 ![](../images/48d89551.png)
 
-
-읽어들이는 과정에서 저장된 문서(mongo document)를 추상클래스를 구현한 익명 클래스의 인스턴스로 매핑을 시도하는 데, 추상클래스의 추상 메소드를 익명클래스에서 어떻게 구현해야 할 지 판단이 안 서기 때문에 매핑 불가능 에러를 내뿜는 걸 볼 수 있다.
-
+읽어들이는 과정에서 저장된 문서를 추상클래스를 구현한 익명 클래스의 인스턴스로 매핑을 시도하게 되는 데, 추상클래스의 추상 메소드를 익명클래스에서 어떻게 구현해야 할 지 판단이 안 서는 문제로 매핑이 불가능하다는 에러가 발생 한다.
 
 ```
 2021-02-01 17:18:29.382 ERROR 16912 --- [nio-8080-exec-4] o.a.c.c.C.[.[.[/].[dispatcherServlet]    : Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed; nested exception is org.springframework.data.mapping.MappingException: No property this$0 found on entity class com.example.mmongo.mmongoexample.SomeController$1 to bind constructor parameter to!] with root cause 
