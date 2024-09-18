@@ -56,15 +56,15 @@ Oauth2 가 인증의 전이를 의미하지만, 실제 인증에 쓰여지는 �
 
 OpenID 가 Oauth2.0 에서 확장되는 부분이 이 부분이다. ID토큰은 JWT 를 기본 자료타입으로 사용하는 데, JWT 의 페이로드에 들어가야 하는 클레임을 표준 스펙으로 정의 해두었다.
 
-https://openid.net/specs/openid-connect-core-1_0.html?_fsi=JxLS7CDE#IDToken
+https://openid.net/specs/openid-connect-core-1_0.html#IDToken
 
 모든 사양은 위 레퍼런스에서 참고하면 되고, 아래는 필수에 해당하는 부분만 번역하였다.
 
 |키|필수|설명|예시 값|
 |---|---|---|---|
-|iss|o|인증을 허가한 주체를 의미함.|https://www.myAuth.com|
-|sub|o|인증주체에서 유저를 식별하는 ID 고유 값. |user1234|
-|aud|o|토큰을 사용할 CLIENT 대상 식별값을 의미한다| myApplication|
+|iss|o|인증을 허가한 주체를 의미한다. 일반적으로 인증 허가 서버의 URL 을 기입한다.|https://www.myAuth.com|
+|sub|o| subject 라는 의미이기에 '주제' 라는 개념은 상황에 따르 다르다. OpenID에서 주제는 유저 ID를 의미한다. 유저 고유한 아이덴티티를 구별할수 있는 것이 들어간다. ID 또는 정수, 해시 등으로 사용자를 구분할수 있는 값이다. 일반적으로 이메일을 많이 쓴다. |user@user.com|
+|aud|o|토큰을 사용할 CLIENT 대상을 말한다. 클라이언트 식별값(client_id 클레임과 동일)이 들어간다.| myApplication|
 |exp|o|토큰 만료 시각을 의미한다|2021-02-01T00:00:00|
 |iat|o| 토큰이 발행된 시간 | 2021-01-01T00:00, UTC 시간이며 RFC3339|
 
@@ -77,6 +77,19 @@ https://openid.net/specs/openid-connect-core-1_0.html?_fsi=JxLS7CDE#IDToken
     "iat" : "1311280969"
 }
 ```
+
+보조 클레임은 https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims 기준.
+
+|키|유형|설명|예시|
+|---|---|---|---|
+|name|string| 사용자 이름|jhun|
+|nickname|string| 사용자 닉네임|hello_jhun|
+|email|string|사용자 이메일|jhun@jhun.com|
+|...|
+
+
+https://openid.net/specs/openid-connect-core-1_0.html#StandardClaims
+
 
 ### Oauth2 에서 추가 된 인증 종류
 

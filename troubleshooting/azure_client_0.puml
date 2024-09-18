@@ -1,0 +1,25 @@
+@startuml
+
+interface AzureBlobClient{
+    +upload()
+    +download()
+}
+
+class WEB_SERVICE_WebAPP_1{
+
+}
+
+class GAME_2WebAPP_2 {
+
+}
+
+class GAME3_WebAPP_3 {
+
+}
+
+AzureBlobClient <-- WEB_SERVICE_WebAPP_1
+AzureBlobClient <-- GAME_2WebAPP_2
+AzureBlobClient <-- GAME3_WebAPP_3
+
+
+@enduml

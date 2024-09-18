@@ -1,0 +1,45 @@
+@startuml
+
+actor user as u
+u -> "GUI CMS" as cms : 엑셀 업로드
+activate u
+activate cms
+cms -> "배치 API 서버" as api : 엑셀 업로드
+database "큐 및 로그저장 Mysql" as db
+activate api
+api->  db : 엑셀 저장
+api -> db : 작업 메타데이터 저장
+api --> cms :
+deactivate api
+return 업로드 완료 응답
+deactivate cms
+deactivate u
+
+"엑셀 추출 배치" as en -> db : 작업 메타데이터 폴링
+activate en
+en -> db : 작업 상태 갱신 '시작'
+en -> db : 엑셀 획득
+en -> en : 엑셀에서 작업 목록 변환
+activate en
+deactivate en
+en -> db : 작업 목록 저장
+en -> db : 엑셀 제거
+en -> db : 작업 상태 갱신 '종료'
+deactivate en
+
+"작업 처리 배치" as eas -> db : 작업 메타데이터 폴링
+activate eas
+eas -> db : 작업 상태 갱신 '시작'
+eas -> db : 작업 목록 획득
+eas -> eas : 작업 준비(외부 인프라 인터렉션)
+activate eas
+deactivate eas
+eas -> "외부 인프라 서버" as eps : 외부 인프라 인터렉션
+activate eps
+eps --> eas : 결과 통보
+deactivate eps
+eas -> db : 작업 상태 갱신 '종료'
+deactivate eas
+
+
+@enduml
